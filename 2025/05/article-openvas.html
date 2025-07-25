@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scanning Like a Ghost - OpenVAS in Podman</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <nav><a href="/index.html">Home</a> | <a href="/static/services.html">Services</a> | <a href="/static/about.html">About</a></nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Scanning Like a Ghost - OpenVAS</h2>
+ <div class="outline-text-2">
+ <p>
+OpenVAS is a katana forged for vulnerability scanning: <br /></p>
+
+ <ul class="org-ul"> <li>open source <br /></li>
+ <li>container-ready <br /></li>
+ <li>minimal noise <br /></li>
+ <li>maximum signal <br /></li>
+</ul> <p>
+It thrives in Docker. <br />
+But what happens in the daemonless, rootless underworld? <br /></p>
+
+ <p>
+The Ghost maps the terrain. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>Sharpen the blade</h3>
+ <div class="outline-text-3">
+ <p>
+The Docker Compose file is a map. Follow it to find the way in Podman: <br /> <a href="https://greenbone.github.io/docs/latest/_static/docker-compose.yml">https://greenbone.github.io/docs/latest/_static/docker-compose.yml</a> <br /></p>
+
+ <p>
+ <code>podman-compose</code> still limps. It won't create volumes for you. <br /></p>
+
+ <p>
+volumes.txt: <br /></p>
+ <pre class="example">
+gpg_data_vol
+scap_data_vol
+cert_data_vol
+data_objects_vol
+gvmd_data_vol
+psql_data_vol
+vt_data_vol
+notus_data_vol
+psql_socket_vol
+gvmd_socket_vol
+ospd_openvas_socket_vol
+redis_socket_vol
+openvas_data_vol
+openvas_log_data_vol
+</pre>
+
+ <p>
+Manually carve them out: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh"> <span style="color: #8ac6f2; font-weight: bold;">while </span> <span style="color: #e5786d;">read</span> i;  <span style="color: #8ac6f2; font-weight: bold;">do</span> podman volume create $ <span style="color: #cae682;">i</span>;  <span style="color: #8ac6f2; font-weight: bold;">done</span> < volumes.txt 
+</pre>
+</div>
+
+ <p>
+Your  <code>podman-compose.yaml</code> must be transformed for Podman: <br /></p>
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">version</span>:  <span style="color: #95e454;">"3.8"</span>
+
+ <span style="color: #cae682;">services</span>:
+   <span style="color: #cae682;">vulnerability-tests</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/vulnerability-tests
+     <span style="color: #cd5c5c;">environment</span>:
+       <span style="color: #cae682;">FEED_RELEASE</span>:  <span style="color: #95e454;">"24.10"</span>
+     <span style="color: #cae682;">volumes</span>:
+      - vt_data_vol:/mnt
+
+   <span style="color: #cae682;">notus-data</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/notus-data
+     <span style="color: #cae682;">volumes</span>:
+      - notus_data_vol:/mnt
+
+   <span style="color: #cae682;">scap-data</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/scap-data
+     <span style="color: #cae682;">volumes</span>:
+      - scap_data_vol:/mnt
+
+   <span style="color: #cae682;">cert-bund-data</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/cert-bund-data
+     <span style="color: #cae682;">volumes</span>:
+      - cert_data_vol:/mnt
+
+   <span style="color: #cae682;">dfn-cert-data</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/dfn-cert-data
+     <span style="color: #cae682;">volumes</span>:
+      - cert_data_vol:/mnt
+     <span style="color: #cae682;">depends_on</span>:
+      - cert-bund-data
+
+   <span style="color: #cae682;">data-objects</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/data-objects
+     <span style="color: #cd5c5c;">environment</span>:
+       <span style="color: #cae682;">FEED_RELEASE</span>:  <span style="color: #95e454;">"24.10"</span>
+     <span style="color: #cae682;">volumes</span>:
+      - data_objects_vol:/mnt
+
+   <span style="color: #cae682;">report-formats</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/report-formats
+     <span style="color: #cd5c5c;">environment</span>:
+       <span style="color: #cae682;">FEED_RELEASE</span>:  <span style="color: #95e454;">"24.10"</span>
+     <span style="color: #cae682;">volumes</span>:
+      - data_objects_vol:/mnt
+     <span style="color: #cae682;">depends_on</span>:
+      - data-objects
+
+   <span style="color: #cae682;">gpg-data</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/gpg-data
+     <span style="color: #cae682;">volumes</span>:
+      - gpg_data_vol:/mnt
+
+   <span style="color: #cae682;">redis-server</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/redis-server
+     <span style="color: #cae682;">restart</span>: on-failure
+     <span style="color: #cae682;">volumes</span>:
+      - redis_socket_vol:/run/redis/
+
+   <span style="color: #cae682;">pg-gvm</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/pg-gvm:stable
+     <span style="color: #cae682;">restart</span>: on-failure
+     <span style="color: #cae682;">volumes</span>:
+      - psql_data_vol:/var/lib/postgresql
+      - psql_socket_vol:/var/run/postgresql
+
+   <span style="color: #cae682;">gvmd</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/gvmd:stable
+     <span style="color: #cae682;">restart</span>: on-failure
+     <span style="color: #cae682;">volumes</span>:
+      - gvmd_data_vol:/var/lib/gvm
+      - scap_data_vol:/var/lib/gvm/scap-data/
+      - cert_data_vol:/var/lib/gvm/cert-data
+      - data_objects_vol:/var/lib/gvm/data-objects/gvmd
+      - vt_data_vol:/var/lib/openvas/plugins
+      - psql_data_vol:/var/lib/postgresql
+      - gvmd_socket_vol:/run/gvmd
+      - ospd_openvas_socket_vol:/run/ospd
+      - psql_socket_vol:/var/run/postgresql
+     <span style="color: #cae682;">depends_on</span>:
+       <span style="color: #cae682;">pg-gvm</span>:
+         <span style="color: #cae682;">condition</span>: service_started
+       <span style="color: #cae682;">scap-data</span>:
+         <span style="color: #cae682;">condition</span>: service_completed_successfully
+       <span style="color: #cae682;">cert-bund-data</span>:
+         <span style="color: #cae682;">condition</span>: service_completed_successfully
+       <span style="color: #cae682;">dfn-cert-data</span>:
+         <span style="color: #cae682;">condition</span>: service_completed_successfully
+       <span style="color: #cae682;">data-objects</span>:
+         <span style="color: #cae682;">condition</span>: service_completed_successfully
+       <span style="color: #cae682;">report-formats</span>:
+         <span style="color: #cae682;">condition</span>: service_completed_successfully
+
+   <span style="color: #cae682;">gsa</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/gsa:stable
+     <span style="color: #cae682;">restart</span>: on-failure
+     <span style="color: #cae682;">ports</span>:
+      - 127.0.0.1:9392:9392
+     <span style="color: #cae682;">volumes</span>:
+      - gvmd_socket_vol:/run/gvmd
+     <span style="color: #cae682;">depends_on</span>:
+      - gvmd
+
+   <span style="color: #cae682;">configure-openvas</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/openvas-scanner:stable
+     <span style="color: #cae682;">volumes</span>:
+      - openvas_data_vol:/mnt
+      - openvas_log_data_vol:/var/log/openvas
+     <span style="color: #8ac6f2; font-weight: bold;">command</span>:
+      - /bin/sh
+      - -c
+      - |
+         <span style="color: #95e454;">printf "table_driven_lsc = yes\nopenvasd_server = http://openvasd:80\n" > /mnt/openvas.conf</span>
+        sed  <span style="color: #95e454;">"s/127/128/"</span> /etc/openvas/openvas_log.conf | sed  <span style="color: #95e454;">'s/gvm/openvas/'</span> > /mnt/openvas_log.conf
+        chmod 644 /mnt/openvas.conf
+        chmod 644 /mnt/openvas_log.conf
+        touch /var/log/openvas/openvas.log
+        chmod 666 /var/log/openvas/openvas.log
+
+   <span style="color: #cae682;">openvas</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/openvas-scanner:stable
+     <span style="color: #cae682;">restart</span>: on-failure
+     <span style="color: #cae682;">volumes</span>:
+      - openvas_data_vol:/etc/openvas
+      - openvas_log_data_vol:/var/log/openvas
+     <span style="color: #8ac6f2; font-weight: bold;">command</span>:
+      - /bin/sh
+      - -c
+      - |
+         <span style="color: #95e454;">cat /etc/openvas/openvas.conf</span>
+        tail -f /var/log/openvas/openvas.log
+     <span style="color: #cae682;">depends_on</span>:
+       <span style="color: #cae682;">configure-openvas</span>:
+         <span style="color: #cae682;">condition</span>: service_completed_successfully
+
+   <span style="color: #cae682;">openvasd</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/openvas-scanner:stable
+     <span style="color: #cae682;">restart</span>: on-failure
+     <span style="color: #8ac6f2; font-weight: bold;">hostname</span>: openvasd
+     <span style="color: #cd5c5c;">environment</span>:
+       <span style="color: #cae682;">OPENVASD_MODE</span>: service_notus
+       <span style="color: #cae682;">GNUPGHOME</span>: /etc/openvas/gnupg
+       <span style="color: #cae682;">LISTENING</span>: 0.0.0.0:80
+     <span style="color: #cae682;">volumes</span>:
+      - openvas_data_vol:/etc/openvas
+      - openvas_log_data_vol:/var/log/openvas
+      - gpg_data_vol:/etc/openvas/gnupg
+      - notus_data_vol:/var/lib/notus
+     <span style="color: #cae682;">depends_on</span>:
+       <span style="color: #cae682;">vulnerability-tests</span>:
+         <span style="color: #cae682;">condition</span>: service_completed_successfully
+       <span style="color: #cae682;">configure-openvas</span>:
+         <span style="color: #cae682;">condition</span>: service_completed_successfully
+       <span style="color: #cae682;">gpg-data</span>:
+         <span style="color: #cae682;">condition</span>: service_completed_successfully
+
+   <span style="color: #cae682;">ospd-openvas</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/ospd-openvas:stable
+     <span style="color: #cae682;">restart</span>: on-failure
+     <span style="color: #8ac6f2; font-weight: bold;">hostname</span>: ospd-openvas.local
+     <span style="color: #cae682;">cap_add</span>:
+      - NET_ADMIN
+      - NET_RAW
+     <span style="color: #cae682;">security_opt</span>:
+      - seccomp=unconfined
+      - apparmor=unconfined
+     <span style="color: #8ac6f2; font-weight: bold;">command</span>:
+      [
+         <span style="color: #95e454;">"ospd-openvas"</span>,
+         <span style="color: #95e454;">"-f"</span>,
+         <span style="color: #95e454;">"--config"</span>,
+         <span style="color: #95e454;">"/etc/gvm/ospd-openvas.conf"</span>,
+         <span style="color: #95e454;">"--notus-feed-dir"</span>,
+         <span style="color: #95e454;">"/var/lib/notus/advisories"</span>,
+         <span style="color: #95e454;">"-m"</span>,
+         <span style="color: #95e454;">"666"</span>,
+       <span style="color: #cae682;">]
+    volumes</span>:
+      - gpg_data_vol:/etc/openvas/gnupg
+      - vt_data_vol:/var/lib/openvas/plugins
+      - notus_data_vol:/var/lib/notus
+      - ospd_openvas_socket_vol:/run/ospd
+      - redis_socket_vol:/run/redis/
+      - openvas_data_vol:/etc/openvas/
+      - openvas_log_data_vol:/var/log/openvas
+     <span style="color: #cae682;">depends_on</span>:
+       <span style="color: #cae682;">redis-server</span>:
+         <span style="color: #cae682;">condition</span>: service_started
+       <span style="color: #cae682;">gpg-data</span>:
+         <span style="color: #cae682;">condition</span>: service_completed_successfully
+       <span style="color: #cae682;">vulnerability-tests</span>:
+         <span style="color: #cae682;">condition</span>: service_completed_successfully
+       <span style="color: #cae682;">configure-openvas</span>:
+         <span style="color: #cae682;">condition</span>: service_completed_successfully
+
+   <span style="color: #cae682;">gvm-tools</span>:
+     <span style="color: #cae682;">image</span>: registry.community.greenbone.net/community/gvm-tools
+     <span style="color: #cae682;">volumes</span>:
+      - gvmd_socket_vol:/run/gvmd
+      - ospd_openvas_socket_vol:/run/ospd
+     <span style="color: #cae682;">depends_on</span>:
+      - gvmd
+      - ospd-openvas
+
+ <span style="color: #cae682;">volumes</span>:
+   <span style="color: #cae682;">gpg_data_vol</span>:
+   <span style="color: #cae682;">scap_data_vol</span>:
+   <span style="color: #cae682;">cert_data_vol</span>:
+   <span style="color: #cae682;">data_objects_vol</span>:
+   <span style="color: #cae682;">gvmd_data_vol</span>:
+   <span style="color: #cae682;">psql_data_vol</span>:
+   <span style="color: #cae682;">vt_data_vol</span>:
+   <span style="color: #cae682;">notus_data_vol</span>:
+   <span style="color: #cae682;">psql_socket_vol</span>:
+   <span style="color: #cae682;">gvmd_socket_vol</span>:
+   <span style="color: #cae682;">ospd_openvas_socket_vol</span>:
+   <span style="color: #cae682;">redis_socket_vol</span>:
+   <span style="color: #cae682;">openvas_data_vol</span>:
+   <span style="color: #cae682;">openvas_log_data_vol</span>:
+</pre>
+</div>
+
+ <p>
+Pull in the the arsenal: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman-compose -f podman-compose.yaml pull
+</pre>
+</div>
+
+ <p>
+OpenVAS is not monolithic. <br />
+Each container does one job. <br />
+Silent. Sharp. Modular. <br /></p>
+
+ <p>
+Summon the system: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman-compose -f podman-compose.yaml up -d
+</pre>
+</div>
+
+ <p>
+Some containers like  <code>vulnerability-tests</code>,  <code>notus-data</code>,  <code>scap-data</code> are ghosts themselves. <br />
+They appear, inject knowledge, vanish. <br /></p>
+
+ <p>
+In case of noise - logs never lie: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman-compose -f podman-compose.yaml logs -f
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Cut</h3>
+ <div class="outline-text-3">
+ <p>
+Once online, scan like a specter. <br />
+Open browser ->  <a href="http://localhost:9392">http://localhost:9392</a> <br /></p>
+
+ <p>
+Use credentials: <br /></p>
+
+ <p>
+ <code>admin / admin</code> <br /></p>
+
+ <p>
+Then change the password. <br />
+The shadows are always watching. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>A Ghost's vision is limited… for now</h3>
+ <div class="outline-text-3">
+ <p>
+When you log in: <br /></p>
+
+ <blockquote>
+ <p>
+You are currently using the free Greenbone Community Feed - this shows only a few vulnerabilities for business critical enterprise software such as MS Exchange, Cisco, VMware, Citrix and many more. <br />
+Over 60% of all relevant exploits remain hidden. <br /></p>
+</blockquote>
+
+ <p>
+Translation? <br />
+You're flying low-res.  <a href="https://www.greenbone.net/en/feed-comparison/">The Community Feed is a shadow of the full arsenal.</a> <br /></p>
+
+ <p>
+Ghosts don't panic. They adapt. <br /></p>
+
+ <p>
+If you're hunting in the enterprise jungle, you either: <br /></p>
+
+ <ul class="org-ul"> <li>Maintain multiple scanners <br /></li>
+ <li>Supplement with external intel <br /></li>
+ <li>Or switch to the Greenbone Enterprise Feed - at a price. <br /></li>
+</ul> <p>
+In this operation we fly free. <br /></p>
+
+ <p>
+But always remember: <br /> <b> <b>60% of the cracks are in the dark.</b></b> <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Clean it up</h3>
+ <div class="outline-text-3">
+ <p>
+No trace. No fingerprint. No echo. <br /></p>
+
+ <p>
+Stop the containters: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman-compose down
+</pre>
+</div>
+
+ <p>
+Purge the volumes: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh"> <span style="color: #8ac6f2; font-weight: bold;">while </span> <span style="color: #e5786d;">read</span> i;  <span style="color: #8ac6f2; font-weight: bold;">do</span> podman volume rm openvas_$ <span style="color: #cae682;">i</span>;  <span style="color: #8ac6f2; font-weight: bold;">done</span> < volumes.txt 
+</pre>
+</div>
+
+ <p>
+Erase the images: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman image ls |grep greenbone |awk  <span style="color: #95e454;">'{print $3}'</span> |xargs podman image rm --
+</pre>
+</div>
+
+ <p>
+The system breathes clean. <br />
+Only the ghost remains. <br /></p>
+
+ <p>
+— <br /></p>
+
+ <p>
+ <b>Whisper to DeadSwitch on Matrix:</b>  <code>@deadswitch:matrix.org</code> <br /> <i>Maybe the Ghost signals back.</i> <br /></p>
+
+ <p>
+ <b>DeadSwitch | The Silent Architect</b> <br /> <i>In silence, I rise. In structure, I endure.</i> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Ghost Operator | All rights reserved.</p></footer>
+</body>
+</html>

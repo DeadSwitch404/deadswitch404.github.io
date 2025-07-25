@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ansible Automation For Ghosts - Semaphore UI</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <nav><a href="/index.html">Home</a> | <a href="/static/services.html">Services</a> | <a href="/static/about.html">About</a></nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2> <span class="done DONE">DONE</span> Ansible Automation For Ghosts - Semaphore UI</h2>
+ <div class="outline-text-2">
+</div>
+
+ <div class="outline-3">
+ <h3>Mission of the Ghost</h3>
+ <div class="outline-text-3">
+ <p>
+Ansible is a sharp blade. <br /></p>
+
+ <ul class="org-ul"> <li>open source <br /></li>
+ <li>command line <br /></li>
+ <li>fast and efficient <br /></li>
+ <li>Ghost approved <br /></li>
+</ul> <p>
+For operators craving API-driven command, Semaphore rises from Ansible's silent core. <br /></p>
+
+ <ul class="org-ul"> <li>open source <br /></li>
+ <li>fast, Go language based <br /></li>
+ <li>UI <br /></li>
+ <li>API <br /></li>
+</ul> <p>
+DeadSwitch maps it. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Requirements</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>Debian 12 (with hardened kernel preferred) <br /></li>
+ <li>Podman installed and functional (v4 or later) <br /></li>
+ <li>Environment variables set securely or managed via  <code>.env</code> <br /></li>
+ <li>Terminal access with elevated privileges or configured rootless Podman <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 1: Create the podman volume</h3>
+ <div class="outline-text-3">
+ <p>
+Persistent volume for the MySQL data: <br /></p>
+
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman volume create semaphore_mysql
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 2: Deploy containers with Podman Compose</h3>
+ <div class="outline-text-3">
+ <p>
+With Podman Compose you can whisper to Podman and deploy the MySQL and Semaphore containers together. <br /></p>
+
+ <p>
+In production you  <b>must</b> use environment files: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">env_file</span>:
+  - .env
+</pre>
+</div>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">version</span>:  <span style="color: #95e454;">"3.9"</span>
+
+ <span style="color: #cae682;">services</span>:
+   <span style="color: #cae682;">mysql</span>:
+     <span style="color: #cae682;">image</span>: docker.io/mysql:lts
+     <span style="color: #8ac6f2; font-weight: bold;">hostname</span>: mysql
+     <span style="color: #cae682;">volumes</span>:
+      - semaphore_mysql:/var/lib/mysql
+     <span style="color: #cd5c5c;">environment</span>:
+       <span style="color: #cae682;">MYSQL_RANDOM_ROOT_PASSWORD</span>:  <span style="color: #95e454;">'yes'</span>
+       <span style="color: #cae682;">MYSQL_DATABASE</span>: semaphore
+       <span style="color: #cae682;">MYSQL_USER</span>: semaphore
+       <span style="color: #cae682;">MYSQL_PASSWORD</span>: semaphore
+
+   <span style="color: #cae682;">semaphore</span>:
+     <span style="color: #cae682;">image</span>: docker.io/semaphoreui/semaphore:latest
+     <span style="color: #cae682;">ports</span>:
+      - 3000:3000
+     <span style="color: #cd5c5c;">environment</span>:
+       <span style="color: #cae682;">SEMAPHORE_DB_USER</span>: semaphore
+       <span style="color: #cae682;">SEMAPHORE_DB_PASS</span>: semaphore
+       <span style="color: #cae682;">SEMAPHORE_DB_HOST</span>: mysql
+       <span style="color: #cae682;">SEMAPHORE_DB_PORT</span>: 3306
+       <span style="color: #cae682;">SEMAPHORE_DB_DIALECT</span>: mysql
+       <span style="color: #cae682;">SEMAPHORE_DB</span>: semaphore
+       <span style="color: #cae682;">SEMAPHORE_PLAYBOOK_PATH</span>: /tmp/semaphore/
+       <span style="color: #cae682;">SEMAPHORE_ADMIN_PASSWORD</span>: changeme
+       <span style="color: #cae682;">SEMAPHORE_ADMIN_NAME</span>: admin
+       <span style="color: #cae682;">SEMAPHORE_ADMIN_EMAIL</span>: admin@localhost
+       <span style="color: #cae682;">SEMAPHORE_ADMIN</span>: admin
+       <span style="color: #cae682;">SEMAPHORE_ACCESS_KEY_ENCRYPTION</span>: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
+       <span style="color: #cae682;">SEMAPHORE_LDAP_ACTIVATED</span>:  <span style="color: #95e454;">'no'</span>
+       <span style="color: #cae682;">SEMAPHORE_LDAP_HOST</span>: dc01.local.example.com
+       <span style="color: #cae682;">SEMAPHORE_LDAP_PORT</span>:  <span style="color: #95e454;">'636'</span>
+       <span style="color: #cae682;">SEMAPHORE_LDAP_NEEDTLS</span>:  <span style="color: #95e454;">'yes'</span>
+       <span style="color: #cae682;">SEMAPHORE_LDAP_DN_BIND</span>:  <span style="color: #95e454;">'uid=bind_user,cn=users,cn=accounts,dc=local,dc=shiftsystems,dc=net'</span>
+       <span style="color: #cae682;">SEMAPHORE_LDAP_PASSWORD</span>:  <span style="color: #95e454;">'ldap_bind_account_password'</span>
+       <span style="color: #cae682;">SEMAPHORE_LDAP_DN_SEARCH</span>:  <span style="color: #95e454;">'dc=local,dc=example,dc=com'</span>
+       <span style="color: #cae682;">SEMAPHORE_LDAP_SEARCH_FILTER</span>:  <span style="color: #95e454;">"(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"</span>
+       <span style="color: #cae682;">TZ</span>: UTC
+     <span style="color: #cae682;">depends_on</span>:
+      - mysql
+
+ <span style="color: #cae682;">volumes</span>:
+   <span style="color: #cae682;">semaphore_mysql</span>:
+</pre>
+</div>
+
+ <p>
+Note: Podman Compose supports the same syntax as Docker Compose but is a separate tool. Install with: <br /></p>
+
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">pip install podman-compose
+</pre>
+</div>
+
+ <p>
+Deploy using: <br /></p>
+
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman-compose -f podman-compose.yaml up
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 3: First contact</h3>
+ <div class="outline-text-3">
+ <p>
+Initiate secure access using a hardened browser: <br /></p>
+
+ <p>
+ <a href="http://localhost:3000/">http://localhost:3000/</a> <br /></p>
+
+ <p>
+Credentials: whatever you defined in the environment above. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 4: Harden</h3>
+ <div class="outline-text-3">
+ <p>
+This is only the echo. <br /></p>
+
+ <ul class="org-ul"> <li>Wrap behind a reverse proxy (Caddy, Traefik, or Nginx). <br /></li>
+ <li>Enforce HTTPS (Let's Encrypt or internal CA). <br /></li>
+ <li>Rotate admin password. Strip LDAP if unused. <br /></li>
+ <li>Lock containers to loopback if accessed only locally. <br /></li>
+ <li>Use systemd units generated from Podman. <br /></li>
+</ul> <p>
+Your playbook is now mapped. <br /></p>
+
+ <p>
+— <br /></p>
+
+ <p>
+Write to DeadSwitch on Matrix:  <code>@deadswitch:matrix.org</code> <br />
+Maybe he whispers back… <br /></p>
+
+ <p>
+ <b>DeadSwitch | The Cyber Ghost</b> <br /> <i>"In silence, we rise. In the switch, we fade."</i> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Ghost Operator | All rights reserved.</p></footer>
+</body>
+</html>
