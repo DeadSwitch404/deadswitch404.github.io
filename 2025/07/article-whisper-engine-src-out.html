@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Whisper Engine Source Code Is Available</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="The Whisper Engine Source Code Is Available" />
+ <meta property="og:description" content="From Emacs Org Mode to your website – from one window. The Whisper Engine is open-source now." />
+ <meta property="og:image" content="/static/img/forest-hacking.jpg" />
+ <meta property="og:url" content="https://deadswitch.github.io/2025/07/article-whisper-engine-src-out.html" />
+</head>
+<body>
+  <nav><a href="/index.html">Home</a> | <a href="/static/services.html">Services</a> | <a href="/static/about.html">About</a></nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>The Whisper Engine Source Code Is Available</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/forest-hacking.jpg" alt="forest-hacking.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+DeadSwitch delivers. Again. <br />
+The  <b>Whisper Engine</b> is now  <b>open-source</b>. <br />
+Explore and audit the code on  <a href="https://github.com/DeadSwitch404/whisper-engine">GitHub</a>. <br /></p>
+
+ <p>
+Current version:  <b>0.0.8</b> – under heavy development. <br />
+This is not just another static site generator. <br />
+Whisper Engine is for those who demand  <b>simplicity, privacy, and control from inside Emacs</b>. <br /></p>
+
+ <p>
+It's not an abandoned concept. DeadSwitch runs on it. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>Features</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>Paginated index page <br /></li>
+ <li>Configurable number of articles per page <br /></li>
+ <li>Automated HTML directory cleanup (with safe zones) <br /></li>
+ <li>Articles sorted by date (newest first) <br /></li>
+ <li>Teaser + thumbnail support <br /></li>
+ <li>Customizable CSS & HTML <br /></li>
+ <li>Zero JavaScript, zero telemetry –  <b>pure signal</b> <br /></li>
+ <li>Fully self-contained, auditable Emacs Lisp source <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Quick Start</h3>
+ <div class="outline-text-3">
+ <ol class="org-ol"> <li> <p>
+Clone the repository: <br /></p>
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">git clone https://github.com/deadswitch404/whisper-engine.git
+ <span style="color: #e5786d;">cd</span> whisper-engine
+</pre>
+</div></li>
+
+ <li>Open  <code>whisper-engine.el</code> in Emacs and configure: <br /> <ul class="org-ul"> <li> <code>ds/org-article-dir</code> <br /></li>
+ <li> <code>ds/public-article-dir</code> <br /></li>
+ <li> <code>ds/site-url</code> <br /></li>
+</ul></li>
+
+ <li> <p>
+Build your site: <br /></p>
+ <div class="org-src-container" data-lang="emacs-lisp">
+<pre class="src src-emacs-lisp">(load-file  <span style="color: #95e454;">"/path/to/whisper-engine.el"</span>)
+(ds/build-site)
+</pre>
+</div></li>
+
+ <li>Serve  <code>ds/public-article-dir</code> via your web server. <br /></li>
+</ol></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Org File Metadata</h3>
+ <div class="outline-text-3">
+ <p>
+Every Org article uses keywords and properties: <br /></p>
+
+ <div class="org-src-container" data-lang="org">
+<pre class="src src-org"> <span style="color: #b3b3b3;">#+TITLE:</span>  <span style="color: #afeeee; font-weight: bold;">Article Title
+</span> <span style="color: #b3b3b3;">#+AUTHOR:</span>  <span style="color: #afeeee;">DeadSwitch | The Cyber Ghost
+</span> <span style="color: #b3b3b3;">#+DATE:</span>  <span style="color: #afeeee;"><2025-05-23 Fri>
+</span> <span style="color: #99968b;">#+READY_FOR_DEPLOY: t</span>
+ <span style="color: #87cefa;">:PROPERTIES:</span>
+ <span style="color: #8ac6f2; font-weight: bold;">:TEASER:</span> Short teaser text for index.
+ <span style="color: #8ac6f2; font-weight: bold;">:IMAGE:</span> /static/img/image.jpg
+ <span style="color: #87cefa;">:END:</span>
+</pre>
+</div>
+
+ <ul class="org-ul"> <li>Only  <code>#+READY_FOR_DEPLOY: t</code> gets published. <br /></li>
+ <li> <code>:IMAGE:</code> points to a thumbnail for the index page. <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Demo</h3>
+ <div class="outline-text-3">
+ <p>
+ <a href="https://deadswitch404.github.io">Whisper Engine in action → https://deadswitch404.github.io</a> <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Whisper of the Ghost</h3>
+ <div class="outline-text-3">
+ <p>
+The Whisper Engine lives. <br />
+Test it. Use it. Or let it fade into silence. <br /></p>
+
+ <blockquote>
+ <p>
+No trackers. No scripts. No compromise. <br /></p>
+</blockquote>
+
+ <p>
+ <b>Matrix Signal:</b>  <code>@deadswitch:matrix.org</code> <br /> <i>Maybe the Ghost whispers back.</i> <br /></p>
+
+ <p>
+ <b>DeadSwitch | The Silent Architect</b> <br /> <i>"In silence, I rise. In storms, I endure."</i> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Ghost Operator | All rights reserved.</p></footer>
+</body>
+</html>
