@@ -276,3 +276,9 @@ img.post-image {
   margin: 2em auto;
   border-radius: 8px;
 }
+
+.category {
+    font-weight: bold;
+    color: #888;
+    margin-left: 8px;
+}
