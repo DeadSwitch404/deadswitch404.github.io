@@ -275,7 +275,7 @@ img.post-image {
   height: auto;
   margin: 2em auto;
   border-radius: 8px;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
 img.post-image:hover {
