@@ -275,6 +275,12 @@ img.post-image {
   height: auto;
   margin: 2em auto;
   border-radius: 8px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+img.post-image:hover {
+    opacity: 0.6;
+    transform: scale(1.03);
 }
 
 .category {
