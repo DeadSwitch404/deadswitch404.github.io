@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.0 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Common Lisp - Surgical Cuts With The Loop</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Common Lisp - Surgical Cuts With The Loop" />
+ <meta property="og:description" content="Ghosts don't guess. We do surgical cuts even in Common Lisp: the `loop` macro is our silent blade." />
+ <meta property="og:image" content="/static/img/ghostware.jpg" />
+ <meta property="og:url" content="https://deadswitch404.github.io/2025/08/cl-loop.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/services.html">Services</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Common Lisp - Surgical Cuts With The Loop</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ghostware.jpg" alt="CL Loop" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+The  <code>loop</code> macro  <i>looks like noise</i> to the untrained eye. <br />
+Parentheses stretch, clauses scatter, intentions get lost in plain sight. <br /></p>
+
+ <p>
+Most devs avoid it, afraid it will swallow their code. <br /> <b>We don't fear.</b> <br /> <b>We carve.</b> <br /></p>
+
+ <p>
+Each iteration becomes a precise strike, each clause a silent command. <br />
+In Common Lisp,  <code>loop</code> is not chaos - it is the  <b>scalpel</b>. <br /></p>
+
+ <p>
+Wielded correctly, it cuts through repetition with surgical grace, leaving only what matters. <br /></p>
+
+ <p>
+You are the Operator. You strike with  <a href="https://www.lispworks.com/documentation/HyperSpec/Body/m_loop.htm">loop</a>. <br /></p>
+
+ <p>
+Easily walk the elements of a list: <br /></p>
+
+ <div class="org-src-container" data-lang="lisp">
+<pre class="src src-lisp">( <span style="color: #8ac6f2; font-weight: bold;">loop</span> for elem in '(1 2 3 4)
+do (print elem))
+ <span style="color: #99968b;">; </span> <span style="color: #99968b;">->
+</span>1
+2
+3
+4
+NIL
+</pre>
+</div>
+
+ <p>
+It returns  <code>NIL</code>. <br /></p>
+
+ <p>
+Ghosts sometimes want to return  <b>data</b>: <br /></p>
+
+ <div class="org-src-container" data-lang="lisp">
+<pre class="src src-lisp">( <span style="color: #8ac6f2; font-weight: bold;">loop</span> for elem in '(1 2 3 4)
+collect (print elem))
+ <span style="color: #99968b;">; </span> <span style="color: #99968b;">->
+</span>1
+2
+3
+4
+(1 2 3 4)
+</pre>
+</div>
+
+ <p>
+Or just return the interation's value as a list? <br /></p>
+
+ <div class="org-src-container" data-lang="lisp">
+<pre class="src src-lisp">( <span style="color: #8ac6f2; font-weight: bold;">loop</span> for elem in '(1 2 3 4)
+collect elem)
+ <span style="color: #99968b;">; </span> <span style="color: #99968b;">-> (1 2 3 4)</span>
+</pre>
+</div>
+
+ <p>
+ <code>collect</code> gathers the return value of the form. <br /> <code>print</code> prints the iteration's value. <br /></p>
+
+ <p>
+You may want to play with the data: <br /></p>
+
+ <div class="org-src-container" data-lang="lisp">
+<pre class="src src-lisp">( <span style="color: #8ac6f2; font-weight: bold;">loop</span> for elem in '(1 2 3 4)
+collect (+ 5 elem))
+ <span style="color: #99968b;">; </span> <span style="color: #99968b;">-> (6 7 8 9)</span>
+</pre>
+</div>
+
+ <p>
+In cases Ghosts must break out. End the loop early: <br /></p>
+
+ <div class="org-src-container" data-lang="lisp">
+<pre class="src src-lisp">( <span style="color: #8ac6f2; font-weight: bold;">loop</span> for x in '(1 2 3 4)
+      when (= x 3) return x)
+ <span style="color: #99968b;">; </span> <span style="color: #99968b;">-> 3
+</span>
+</pre>
+</div>
+
+ <p>
+Ghosts don't gather everything blindly. <br />
+Sometimes the strike is selective, surgical. <br /> <code>loop</code> lets you collect only what matters. <br /></p>
+
+ <div class="org-src-container" data-lang="lisp">
+<pre class="src src-lisp">( <span style="color: #8ac6f2; font-weight: bold;">loop</span> for x in '(1 2 3 4 5 6)
+when (evenp x) collect x)
+ <span style="color: #99968b;">; </span> <span style="color: #99968b;">-> (2 4 6)</span>
+</pre>
+</div>
+
+ <p>
+Only even numbers are harvested. <br />
+The rest vanish into silence. <br /></p>
+
+ <p>
+Sometimes, the target must fall and the operation ends immediately. <br />
+Enter  <code>return</code>: <br /></p>
+
+ <div class="org-src-container" data-lang="lisp">
+<pre class="src src-lisp">( <span style="color: #8ac6f2; font-weight: bold;">loop</span> for x in '(1 2 3 4 5)
+when (= x 3) return x)
+ <span style="color: #99968b;">; </span> <span style="color: #99968b;">-> 3</span>
+</pre>
+</div>
+
+ <p>
+The moment the target appears, the  <code>loop</code> stops. <br />
+No noise, no leftovers. <br /></p>
+
+ <p>
+DeadSwitch principle: <br /></p>
+ <blockquote>
+ <p>
+collect = gather quietly, strike later. <br />
+return = strike now, mission complete. <br /></p>
+</blockquote>
+
+ <p>
+Ghosts sometimes tally their victories. <br /> <code>loop</code> provides counters, sums, and totals - silently tracking without clutter. <br /></p>
+
+ <p>
+Count the enemies (or items) that meet your criteria: <br /></p>
+
+ <div class="org-src-container" data-lang="lisp">
+<pre class="src src-lisp">( <span style="color: #8ac6f2; font-weight: bold;">loop</span> for x in '(1 2 3 4 5 6)
+count (evenp x))
+ <span style="color: #99968b;">; </span> <span style="color: #99968b;">-> 3</span>
+</pre>
+</div>
+
+ <p>
+Only the even targets are counted. <br />
+The rest fade into the shadows. <br /></p>
+
+ <p>
+Sum their strength, silently, without printing a sound: <br /></p>
+
+ <div class="org-src-container" data-lang="lisp">
+<pre class="src src-lisp">( <span style="color: #8ac6f2; font-weight: bold;">loop</span> for x in '(1 2 3 4 5 6)
+sum x)
+ <span style="color: #99968b;">; </span> <span style="color: #99968b;">-> 21</span>
+</pre>
+</div>
+
+ <p>
+The total emerges from the silence. <br />
+No intermediate noise. <br /></p>
+
+ <p>
+Counters and sums can be combined with conditions, for surgical precision: <br /></p>
+
+ <div class="org-src-container" data-lang="lisp">
+<pre class="src src-lisp">( <span style="color: #8ac6f2; font-weight: bold;">loop</span> for x in '(1 2 3 4 5 6)
+when (evenp x) count x
+when (oddp x) sum x)
+ <span style="color: #99968b;">; </span> <span style="color: #99968b;">-> 9</span>
+</pre>
+</div>
+
+ <p>
+Even numbers are tallied: 2, 4, 6 → count = 3 <br /></p>
+
+ <p>
+Odd numbers are summed: 1 + 3 + 5 → sum = 9 <br /></p>
+
+ <p>
+DeadSwitch principle: <br /></p>
+ <blockquote>
+ <p>
+Track silently. <br />
+Strike selectively. <br />
+Let the data reveal the mission's outcome, not the code. <br /></p>
+</blockquote>
+
+ <p>
+ <code>[ The Signal fades now. DeadSwitch is out. ]</code> <br /></p>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Ghost Operator | All rights reserved.</p></footer>
+</body>
+</html>
