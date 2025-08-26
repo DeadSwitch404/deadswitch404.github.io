@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.0 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Manipulation With Ansible – Ghost Transformations</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Data Manipulation With Ansible – Ghost Transformations" />
+ <meta property="og:description" content="This is how a Ghost Operators bend Ansible's data streams. Haunt the data like a Ghost." />
+ <meta property="og:image" content="/static/img/ops-tactics.jpg" />
+ <meta property="og:url" content="https://deadswitch404.github.io/2025/08/ghost-transform-ansible.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/services.html">Services</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Data Manipulation With Ansible – Ghost Transformations</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ops-tactics.jpg" alt="Ghost Transformations" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+When you run with  <b>Ansible</b>, you are not just pushing configs. <br />
+You are  <i>bending streams of data</i>: facts, variables, conditions. <br /></p>
+
+ <p>
+Like a Ghost Operator, you read the environment, transform the streams, <br />
+and act silently on the system. <br /></p>
+
+ <p>
+This is a  <i>field manual</i> for data manipulation in Ansible. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>Phase I – Scouting the Battlefield (Reading Data)</h3>
+ <div class="outline-text-3">
+ <p>
+First you gather intelligence. <br />
+Ansible collects  <b>facts</b> by default. <br /></p>
+
+ <p>
+These facts are your reconnaissance:  <i>network interfaces, mountpoints, OS data</i>. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Gather facts</span>
+   <span style="color: #cae682;">ansible.builtin.setup</span>:
+</pre>
+</div>
+
+ <p>
+Once collected, you can see them with: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">ansible -m setup target_host
+</pre>
+</div>
+
+ <p>
+Facts like  <code>ansible_mounts</code> or  <code>ansible_env.USER</code> become your ghostly eyes. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Phase II – Shaping Reality (Transformations)</h3>
+ <div class="outline-text-3">
+ <p>
+The Ghost doesn't act on raw data.  <b>He bends it.</b> <br /></p>
+
+ <p>
+Use filters,  <code>set_fact</code>, or Jinja2 transformations to reshape the intel: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Extract datastore mountpoint</span>
+   <span style="color: #8ac6f2; font-weight: bold;">set_fact</span>:
+     <span style="color: #cae682;">datastore_mount</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.mount </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+   <span style="color: #cae682;">loop</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> ansible_facts['ansible_mounts'] </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+   <span style="color: #e5786d;">when</span>:  <span style="color: #95e454;">"'/data/disk1' in item.mount"</span>
+</pre>
+</div>
+
+ <p>
+Now you hold a ghost-variable:  <code>datastore_mount</code>. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Phase III – Silent Execution (Operations)</h3>
+ <div class="outline-text-3">
+ <p>
+With transformed data, you strike. <br />
+Conditionals make the operation stealthy-only when the target exists. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Create symlink to datastore</span>
+   <span style="color: #cae682;">ansible.builtin.file</span>:
+     <span style="color: #cae682;">src</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> datastore_mount </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">dest</span>:  <span style="color: #95e454;">"/home/</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> ansible_env.USER </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">/datastore"</span>
+     <span style="color: #cae682;">state</span>: link
+   <span style="color: #e5786d;">when</span>: datastore_mount is defined
+</pre>
+</div>
+
+ <p>
+The link appears. Silent. Functional. Invisible. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Phase IV – Additional Ghost Moves</h3>
+ <div class="outline-text-3">
+ <p>
+Other common Ghost Transformations: <br /></p>
+ <ul class="org-ul"> <li>Parsing interfaces to pick the primary IP. <br /></li>
+ <li>Building dynamic file paths from environment variables. <br /></li>
+ <li>Filtering lists and dicts to choose the right target. <br /></li>
+ <li>Combining host vars with inventory vars for hybrid ops. <br /></li>
+</ul> <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Pick primary interface</span>
+   <span style="color: #8ac6f2; font-weight: bold;">set_fact</span>:
+     <span style="color: #cae682;">primary_ip</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> ansible_facts['ansible_default_ipv4']['address'] </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Build dynamic log path</span>
+   <span style="color: #8ac6f2; font-weight: bold;">set_fact</span>:
+     <span style="color: #cae682;">log_path</span>:  <span style="color: #95e454;">"/var/log/</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> ansible_env.USER </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">/ops.log"</span>
+</pre>
+</div>
+
+ <p>
+Each move is a transformation. Each transformation is control. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Final Word</h3>
+ <div class="outline-text-3">
+ <p>
+The Ghost doesn't fight with brute force. <br />
+He bends data until the system aligns with his will. <br /></p>
+
+ <blockquote>
+ <p>
+Fear the silence. Fear the switch. <br /></p>
+</blockquote>
+
+ <p>
+ <code>[ TRANSMISSION ENDS ]</code> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Ghost Operator | All rights reserved.</p></footer>
+</body>
+</html>
