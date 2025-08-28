@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.0 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghost Transformations II – Merging Data And Filtering The Shadows</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Ghost Transformations II – Merging Data And Filtering The Shadows" />
+ <meta property="og:description" content="Advanced Ghost Moves: merging data, templating, and filtering JSON/YAML like a Ghost." />
+ <meta property="og:image" content="/static/img/ops-tactics.jpg" />
+ <meta property="og:url" content="https://deadswitch404.github.io/2025/08/ghost-transform-2.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/services.html">Services</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Ghost Transformations II – Merging Data And Filtering The Shadows</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ops-tactics.jpg" alt="Ghost Transformations II" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+A Ghost Operator never touches data blindly. <br />
+He merges streams, templates them, and filters JSON and YAML until only what matters remains. <br /></p>
+
+ <p>
+This is your next field manual for advanced data operations in Ansible. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>Phase I – Collecting Intel from Multiple Streams</h3>
+ <div class="outline-text-3">
+ <p>
+You may have multiple sources of facts: host vars, inventory vars, registered results. <br />
+Merging them is like layering ghost signals. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Merge facts from multiple sources</span>
+   <span style="color: #8ac6f2; font-weight: bold;">set_fact</span>:
+     <span style="color: #cae682;">combined_facts</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> hostvars['host1'] | combine(hostvars['host2']) </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <p>
+Each merge hides the operator's intention: one silent variable that holds all intel. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Phase II – Ghost Templates (Dynamic Rendering)</h3>
+ <div class="outline-text-3">
+ <p>
+Templates let you shape reality. A Ghost uses them to generate configs, paths, or commands on the fly. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Create a dynamic configuration file</span>
+   <span style="color: #8ac6f2; font-weight: bold;">template</span>:
+     <span style="color: #cae682;">src</span>:  <span style="color: #95e454;">"templates/ghost.conf.j2"</span>
+     <span style="color: #cae682;">dest</span>:  <span style="color: #95e454;">"/etc/ghost/ghost.conf"</span>
+</pre>
+</div>
+
+ <p>
+Inside  <code>ghost.conf.j2</code>, Jinja2 logic bends the data: loops, conditionals, and filters. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Phase III – JSON and YAML Filtering</h3>
+ <div class="outline-text-3">
+ <p>
+Not all data is immediately useful. The Ghost extracts only what matters. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Filter JSON from API</span>
+   <span style="color: #8ac6f2; font-weight: bold;">set_fact</span>:
+     <span style="color: #cae682;">active_users</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> api_response.json.users | selectattr('active','equalto',True) | list </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Extract paths from YAML inventory</span>
+   <span style="color: #8ac6f2; font-weight: bold;">set_fact</span>:
+     <span style="color: #cae682;">data_dirs</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> yaml_inventory['hosts'] | map(attribute='data_path') | list </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <p>
+Filters, maps, and selects are your spectral knives: precise, silent, lethal. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Phase IV – Combined Ghost Moves</h3>
+ <div class="outline-text-3">
+ <p>
+Merge, filter, and template together: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Merge host facts and filter mounted disks</span>
+   <span style="color: #8ac6f2; font-weight: bold;">set_fact</span>:
+     <span style="color: #cae682;">mounted_data_disks</span>: >-
+       <span style="color: #e5786d;">{{</span> <span style="color: #cae682;">
+        (hostvars['host1'] | combine(hostvars['host2'])).ansible_mounts
+        | selectattr('mount', 'match', '/data/.*')
+        | list
+      </span> <span style="color: #e5786d;">}}</span>
+</pre>
+</div>
+
+ <p>
+The Ghost never acts on raw chaos. <br />
+He merges, he filters, he templates - and only then strikes. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Final Word</h3>
+ <div class="outline-text-3">
+ <p>
+Advanced Ghost Transformations are about precision. <br />
+Merge the streams. Filter the shadows. Template the outcome. <br /></p>
+
+ <blockquote>
+ <p>
+Fear the silence. Fear the switch. <br /></p>
+</blockquote>
+
+ <p>
+ <code>[ TRANSMISSION ENDS ]</code> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Ghost Operator | All rights reserved.</p></footer>
+</body>
+</html>
