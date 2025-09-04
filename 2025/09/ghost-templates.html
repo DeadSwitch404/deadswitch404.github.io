@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.1 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghost Templates – The Way of a Variable</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Ghost Templates – The Way of a Variable" />
+ <meta property="og:description" content="Variables are not passive. Their shape defines your power. Ghost Templates turn data into action." />
+ <meta property="og:image" content="/static/img/ghostware.jpg" />
+ <meta property="og:url" content="https://deadswitch404.github.io/2025/09/ghost-templates.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/services.html">Services</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Ghost Templates – The Way of a Variable</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ghostware.jpg" alt="Ghost Templates" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+Variables are not passive. Their shape defines your power. <br />
+In Ansible, a badly-structured variable is noise. <br />
+A clean dictionary is signal. <br /></p>
+
+ <p>
+The  <i>Ghost Operator</i> bends both with intent. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>The Variable As A Weapon</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>A list of dicts:  <i>clumsy</i>. <br /></li>
+ <li>A dict of dicts:  <i>elegant</i>. <br /></li>
+ <li>One source of truth: exploitable across  <i>tasks</i>,  <i>templates</i>,  <i>roles</i>. <br /></li>
+</ul> <p>
+Example of the wrong way (list of dicts): <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">user_data</span>:
+  -  <span style="color: #cae682;">user1</span>:
+       <span style="color: #cae682;">ssh_key</span>:  <span style="color: #95e454;">"key1..."</span>
+       <span style="color: #cae682;">groups</span>:
+        - ansible
+        - dev
+</pre>
+</div>
+
+ <p>
+The Ghost way (dict of dicts): <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">user_data</span>:
+   <span style="color: #cae682;">user1</span>:
+     <span style="color: #cae682;">ssh_key</span>:  <span style="color: #95e454;">"key1..."</span>
+     <span style="color: #cae682;">groups</span>:
+      - ansible
+      - dev
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>The Dual Path</h3>
+ <div class="outline-text-3">
+ <p>
+Inside templates, use  <code>.items()</code>. <br />
+Inside tasks, use  <code>dict2items</code>. <br /></p>
+
+ <p>
+Jinja template loop: <br /></p>
+
+ <div class="org-src-container" data-lang="jinja2">
+<pre class="src src-jinja2"> <span style="color: #cae682;">{%</span>  <span style="color: #8ac6f2; font-weight: bold;">for</span> username, data  <span style="color: #e5786d;">in</span> user_data.items()  <span style="color: #cae682;">%}</span>
+User:  <span style="color: #92a65e; font-weight: bold;">{{</span>  <span style="color: #cae682;">username</span>  <span style="color: #92a65e; font-weight: bold;">}}</span>
+Groups:  <span style="color: #92a65e; font-weight: bold;">{{</span>  <span style="color: #cae682;">data.groups </span> <span style="color: #8ac6f2; font-weight: bold;">| </span> <span style="color: #cae682;">join</span>( <span style="color: #95e454;">", "</span>)  <span style="color: #92a65e; font-weight: bold;">}}</span>
+ <span style="color: #cae682;">{%</span>  <span style="color: #8ac6f2; font-weight: bold;">endfor</span>  <span style="color: #cae682;">%}</span>
+</pre>
+</div>
+
+ <p>
+Ansible tasks loop: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Create users</span>
+   <span style="color: #cae682;">ansible.builtin.user</span>:
+     <span style="color: #cae682;">name</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.key </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">groups</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.groups | join(',') </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+   <span style="color: #cae682;">loop</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> user_data | dict2items </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <p>
+The difference is the ghost step: <br /></p>
+ <ul class="org-ul"> <li>Templates see the  <b>raw dict</b>. <br /></li>
+ <li>Tasks need  <code>dict2items</code> to transform. <br /></li>
+ <li>Then  <code>item.key</code> and  <code>item.value</code> appear as handles. <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Ghost Discipline</h3>
+ <div class="outline-text-3">
+ <p>
+Every structure becomes reusable: <br /></p>
+ <ul class="org-ul"> <li>Feed it into  <code>user</code>,  <code>authorized_key</code>,  <code>template</code>. <br /></li>
+ <li>Same source drives multiple effects. <br /></li>
+ <li>Change one variable. The system bends. <br /></li>
+</ul> <blockquote>
+ <p>
+This is the Way of a Variable. <br />
+Not stored. Not wasted. Not noise. <br />
+Only signal. <br /></p>
+</blockquote>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Silence lifts me</h3>
+ <div class="outline-text-3">
+ <blockquote>
+ <p>
+Nothing can break me. <br /></p>
+</blockquote>
+
+ <blockquote>
+ <p>
+ <code>[ The Signal fades. DeadSwitch is out... ]</code> <br /></p>
+</blockquote>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Ghost Operator | All rights reserved.</p></footer>
+</body>
+</html>
