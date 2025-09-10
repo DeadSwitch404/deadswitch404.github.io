@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.1 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ansible Data Structures - The Silent Architect Way</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Ansible Data Structures - The Silent Architect Way" />
+ <meta property="og:description" content="Starting with Ansible is easy. Fast. Then the data grows. Variables haunt. Data structures creep in. Ghost Operators don't repeate. They re-architect." />
+ <meta property="og:image" content="/static/img/ghostware.jpg" />
+ <meta property="og:url" content="https://deadswitch404.github.io/2025/09/ansible-data-structures.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/services.html">Services</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Ansible Data Structures - The Silent Architect Way</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ghostware.jpg" alt="The Silent Architect Way" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+You install Ansible. <br />
+You automate the first system. <br />
+The gain is visible. <br />
+It feels liberating. <br /></p>
+
+ <p>
+ <i>Projects. Inventories. Variables. Secrets.</i> <br /></p>
+
+ <p>
+New items pop up. <br />
+They're scattered around. <br />
+Then they're duplicated in different places. <br /></p>
+
+ <p>
+Confusion. <br />
+Errors. <br />
+Bug hunts. <br /></p>
+
+ <blockquote>
+ <p>
+Re-architect your growing data - like a Silent Architect. <br /></p>
+</blockquote>
+</div>
+
+ <div class="outline-3">
+ <h3>Variables Haunt You - Everywhere</h3>
+ <div class="outline-text-3">
+ <p>
+You start it simple. <br /></p>
+
+ <p>
+ <b>Variables</b> thrive in tasks. Roles. Playbooks. <br />
+Defaults, vars files. Even in templates. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">name</span>: DeadSwitch
+ <span style="color: #cae682;">slogan</span>: Fear the silence, Fear the Switch.
+</pre>
+</div>
+
+ <p>
+You just  <i>use</i> it. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Using a variable</span>
+   <span style="color: #cae682;">ansible.builtin.debug</span>:
+     <span style="color: #cae682;">msg</span>:  <span style="color: #95e454;">"The variable is: </span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> slogan </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">."</span>
+</pre>
+</div>
+
+ <p>
+Then you realize you need  <i>structure</i>. <br />
+You build  <b>lists</b>. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">occupations</span>:
+  - Ghost Operator
+  - Silent Architect
+  - Digital Resistance Leader
+</pre>
+</div>
+
+ <p>
+The  <code>occupations</code> variable is a list. <br />
+Comfortable. <br />
+You don't pick one element. You  <i>iterate</i> the structure. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Iterating a list</span>
+   <span style="color: #cae682;">ansible.builtin.debug</span>:
+     <span style="color: #cae682;">msg</span>: The element is:  <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item </span> <span style="color: #e5786d;">}}</span>.
+   <span style="color: #cae682;">loop</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> occupations </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <p>
+The silent echo comes: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">ok: [localhost] => ( <span style="color: #cae682;">item</span>=Ghost Operator) => The element is: Ghost Operator
+ok: [localhost] => ( <span style="color: #cae682;">item</span>=Silent Architect) => The element is: Silent Architect
+ok: [localhost] => ( <span style="color: #cae682;">item</span>=Digital Resistance Leader) => The element is: Digital Resistance Leader
+</pre>
+</div>
+
+ <p>
+With  <b>dictionaries</b> you identify the  <i>values</i>. <br />
+They have  <i>keys</i>. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">user</span>:
+   <span style="color: #cae682;">deadswitch</span>:
+     <span style="color: #cae682;">name</span>: DeadSwitch
+     <span style="color: #cae682;">slogan</span>: Fear the silence, Fear the Switch.
+     <span style="color: #cae682;">occupation</span>: Silent Architect
+</pre>
+</div>
+
+ <p>
+You can  <i>pick</i> an element. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Picking a dictionary element</span>
+   <span style="color: #cae682;">ansible.builtin.debug</span>:
+     <span style="color: #cae682;">msg</span>:  <span style="color: #95e454;">"The user's occupation is: </span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> user.deadswitch.occupation </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">."</span>
+</pre>
+</div>
+
+ <p>
+Clean and dry. <br /></p>
+
+ <blockquote>
+ <p>
+Then Dark Ghosts possess the structure. <br />
+The Architect must tame them. <br /></p>
+</blockquote>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>When The Structure Is Haunted - Embedded Data Structures</h3>
+ <div class="outline-text-3">
+ <p>
+The lists were clean. <br />
+The dictionaries were sharp. <br /></p>
+
+ <p>
+Then they merge. <br />
+They nest. <br />
+They twist inside each other. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">servers</span>:
+   <span style="color: #cae682;">web</span>:
+     <span style="color: #cd5c5c;">hosts</span>:
+      - web1.ghostnet.local
+      - web2.ghostnet.local
+     <span style="color: #cd5c5c;">vars</span>:
+       <span style="color: #cd5c5c;">role</span>: frontend
+       <span style="color: #cae682;">ssl</span>:  <span style="color: #e5786d;">true</span>
+   <span style="color: #cae682;">db</span>:
+     <span style="color: #cd5c5c;">hosts</span>:
+      - db1.ghostnet.local
+     <span style="color: #cd5c5c;">vars</span>:
+       <span style="color: #cd5c5c;">role</span>: backend
+       <span style="color: #cae682;">replication</span>: enabled
+</pre>
+</div>
+
+ <p>
+Now the structure is  <i>alive</i>. <br />
+Keys hold lists. Lists hide keys. <br />
+Ghost Operators must know the paths. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Access a nested dictionary</span>
+   <span style="color: #cae682;">ansible.builtin.debug</span>:
+     <span style="color: #cae682;">msg</span>:  <span style="color: #95e454;">"DB role is: </span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> servers.db.vars.role </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Iterate hosts of the web group</span>
+   <span style="color: #cae682;">ansible.builtin.debug</span>:
+     <span style="color: #cae682;">msg</span>:  <span style="color: #95e454;">"Web host: </span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+   <span style="color: #cae682;">loop</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> servers.web.hosts </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <blockquote>
+ <p>
+Haunted structures demand clarity. <br />
+Without discipline, you chase ghosts. <br /></p>
+</blockquote>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Walk The Path Of The Ghosts - Iterate The Structure</h3>
+ <div class="outline-text-3">
+ <p>
+You tamed the Dark Ghosts. <br />
+The paths are clear. <br />
+Now you want to walk it. <br />
+A part of it. Or the entire system. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">users</span>:
+  -  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> ghost1</span>
+     <span style="color: #cd5c5c;">role</span>: watcher
+  -  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> ghost2</span>
+     <span style="color: #cd5c5c;">role</span>: operator
+  -  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> ghost3</span>
+     <span style="color: #cd5c5c;">role</span>: architect
+</pre>
+</div>
+
+ <p>
+Iterating a list of dictionaries: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Walk through each ghost</span>
+   <span style="color: #cae682;">ansible.builtin.debug</span>:
+     <span style="color: #cae682;">msg</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.name </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;"> takes the role: </span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.role </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+   <span style="color: #cae682;">loop</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> users </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <p>
+But sometimes the dictionary itself must be walked: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">secrets</span>:
+   <span style="color: #cae682;">key1</span>: shadow
+   <span style="color: #cae682;">key2</span>: fog
+   <span style="color: #cae682;">key3</span>: silence
+</pre>
+</div>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Dict to items</span>
+   <span style="color: #cae682;">ansible.builtin.debug</span>:
+     <span style="color: #cae682;">msg</span>:  <span style="color: #95e454;">"Key: </span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.key </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;"> | Value: </span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+   <span style="color: #cae682;">loop</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> secrets | dict2items </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <blockquote>
+ <p>
+When the map is too twisted, flatten it. <br />
+When the ghosts hide, reveal them. <br /></p>
+</blockquote>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Exorcism Tools - Filters And Transforms</h3>
+ <div class="outline-text-3">
+ <p>
+Walking the paths is not enough. <br />
+Sometimes you reshape them. <br />
+Bend them. <br />
+Burn away the noise. <br /></p>
+
+ <p>
+Filters are the exorcism tools. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">users</span>:
+  -  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> ghost1</span>
+     <span style="color: #cd5c5c;">role</span>: watcher
+  -  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> ghost2</span>
+     <span style="color: #cd5c5c;">role</span>: operator
+  -  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> ghost3</span>
+     <span style="color: #cd5c5c;">role</span>: architect
+</pre>
+</div>
+
+ <p>
+ <b>Map</b> reveals only what you need: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Extract only the roles</span>
+   <span style="color: #cae682;">ansible.builtin.debug</span>:
+     <span style="color: #cae682;">msg</span>:  <span style="color: #95e454;">"Role: </span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+   <span style="color: #cae682;">loop</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> users | map(attribute='role') | list </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <p>
+It whispers: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">ok: [localhost] => ( <span style="color: #cae682;">item</span>=watcher) => Role: watcher
+ok: [localhost] => ( <span style="color: #cae682;">item</span>=operator) => Role: operator
+ok: [localhost] => ( <span style="color: #cae682;">item</span>=architect) => Role: architect
+</pre>
+</div>
+
+ <p>
+ <b>Select</b> banishes what does not fit: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Keep only operators</span>
+   <span style="color: #cae682;">ansible.builtin.debug</span>:
+     <span style="color: #cae682;">msg</span>:  <span style="color: #95e454;">"Operator: </span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.name </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+   <span style="color: #cae682;">loop</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> users | selectattr('role', 'equalto', 'operator') | list </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <p>
+When the maze grows darker,  <code>json_query</code> cuts through. <br />
+(JMESPath is your blade.) <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Using json_query</span>
+   <span style="color: #cae682;">ansible.builtin.debug</span>:
+     <span style="color: #cae682;">msg</span>:  <span style="color: #95e454;">"Architect: </span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> users | json_query('[?role==`architect`].name') </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <p>
+The echo is: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">ok: [localhost] => Architect: [ <span style="color: #95e454;">'ghost3'</span>]
+</pre>
+</div>
+
+ <p>
+Sometimes you want a clean string. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Using json_query</span>
+   <span style="color: #cae682;">ansible.builtin.debug</span>:
+     <span style="color: #cae682;">msg</span>:  <span style="color: #95e454;">"Architect: </span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> users | json_query('[?role==`architect`].name') | first </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <p>
+The answer comes in a form of a string: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">ok: [localhost] => Architect: ghost3
+</pre>
+</div>
+
+ <blockquote>
+ <p>
+The Ghost Operator does not drown in data. <br />
+He transforms it. <br />
+The Architect reshapes the chaos into silence. <br /></p>
+</blockquote>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Final Whisper</h3>
+ <div class="outline-text-3">
+ <p>
+The Operator is you. <br />
+You write the data. Architect the structure. <br />
+Then you bend it. <br /></p>
+
+ <blockquote>
+ <p>
+Lists grow, Dictionaries bind, Filters cut. <br /></p>
+</blockquote>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Ghost Operator | All rights reserved.</p></footer>
+</body>
+</html>
