@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.1 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Life Of The Ansible Data - Merging Dimensions</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="The Life Of The Ansible Data - Merging Dimensions" />
+ <meta property="og:description" content="Ansible is nothing without data. Variables come from every direction. Ghost Operators filter and merge the structures." />
+ <meta property="og:image" content="/static/img/ghostware.jpg" />
+ <meta property="og:url" content="https://deadswitch404.github.io/2025/09/the-life-of-ansible-data.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/services.html">Services</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>The Life Of The Ansible Data - Merging Dimensions</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ghostware.jpg" alt="Merging Dimensions" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+ <i>Tasks.</i> <br /> <i>Roles.</i> <br /> <i>Templates.</i> <br /> <i>Playbooks.</i> <br /></p>
+
+ <p>
+What are they without data? Without  <b>variables</b>? <br /></p>
+
+ <p>
+They can pop up from every direction. <br />
+It's the Ghost Operator's task to handle them. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>Mission Briefing</h3>
+ <div class="outline-text-3">
+ <p>
+ <b>Write a role</b>: create new users on freshly orchestrated systems. <br /></p>
+
+ <p>
+ <b>Requirements:</b> <br /></p>
+ <ul class="org-ul"> <li>Idempotence <br /></li>
+ <li>Sane defaults <br /></li>
+ <li>Only orchestration (no user management) <br /></li>
+ <li>Keep it simple <br /></li>
+ <li>Declare variables only once <br /></li>
+</ul> <p>
+ <b>Configured parameters:</b> <br /></p>
+
+ <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides"> <colgroup> <col class="org-left"></col> <col class="org-left"></col> <col class="org-left"></col></colgroup> <thead> <tr> <th scope="col" class="org-left">Parameter</th>
+ <th scope="col" class="org-left">Mandatory?</th>
+ <th scope="col" class="org-left">Comment</th>
+</tr></thead> <tbody> <tr> <td class="org-left">Username</td>
+ <td class="org-left">yes</td>
+ <td class="org-left">Break playbook run if not provided</td>
+</tr> <tr> <td class="org-left">Password</td>
+ <td class="org-left">yes</td>
+ <td class="org-left">Lock user with "!" or "*" (default), or set the password</td>
+</tr> <tr> <td class="org-left">Full name (GECOS)</td>
+ <td class="org-left">no</td>
+ <td class="org-left">Defaults to the username</td>
+</tr> <tr> <td class="org-left">Additional groups</td>
+ <td class="org-left">no</td>
+ <td class="org-left">List or defaults to []</td>
+</tr> <tr> <td class="org-left">Shell</td>
+ <td class="org-left">no</td>
+ <td class="org-left">Defaults to "/bin/bash"</td>
+</tr> <tr> <td class="org-left">SSH public key</td>
+ <td class="org-left">no</td>
+ <td class="org-left"> </td>
+</tr></tbody></table> <p>
+One Ansible run must create and configure the new users on the system. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Data Structures - The First Model</h3>
+ <div class="outline-text-3">
+ <p>
+ <i>Simplicity and only one declaration.</i> <br /></p>
+
+ <p>
+The first data-model, a  <code>users.yml</code> file for  <code>host_vars</code> or  <code>group_vars</code>: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">users</span>:
+   <span style="color: #cae682;">deadswitch</span>:
+     <span style="color: #cae682;">full_name</span>:  <span style="color: #95e454;">"DeadSwitch"</span>
+     <span style="color: #8ac6f2; font-weight: bold;">shell</span>:  <span style="color: #95e454;">"/bin/bash"</span>
+     <span style="color: #cae682;">ssh_key</span>:  <span style="color: #95e454;">"..."</span>
+     <span style="color: #cae682;">password</span>:  <span style="color: #95e454;">"$6$secret hash"</span>
+     <span style="color: #cae682;">groups</span>:
+      - ansible
+      - operator
+</pre>
+</div>
+
+ <p>
+An Operator can loop the data: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Orchestrate the system users</span>
+   <span style="color: #cae682;">ansible.builtin.user</span>:
+     <span style="color: #cae682;">name</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.key </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">comment</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.full_name | default(item.key) </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">append</span>:  <span style="color: #e5786d;">yes</span>
+     <span style="color: #cae682;">create_home</span>:  <span style="color: #e5786d;">yes</span>
+     <span style="color: #cae682;">groups</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.groups | default([]) </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #8ac6f2; font-weight: bold;">shell</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.shell | default('/bin/bash') </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">password</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.password | default('*') </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">update_password</span>: on_create
+     <span style="color: #cae682;">state</span>: present
+   <span style="color: #cae682;">loop</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> users | dict2items </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+
+-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Deploy the SSH public keys</span>
+   <span style="color: #cae682;">ansible.builtin.authorized_key</span>:
+     <span style="color: #8ac6f2; font-weight: bold;">user</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.key </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">key</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.ssh_key </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+   <span style="color: #e5786d;">when</span>: item.value.ssh_key is defined
+   <span style="color: #cae682;">loop</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> users | dict2items </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <p>
+The Ghost is in the details. Ghost Operators see it immediately. <br /></p>
+
+ <p>
+ <b>Strengths:</b> <br /></p>
+ <ol class="org-ol"> <li>One, manageable data structure. <br /></li>
+ <li>The playbook can scale. <br /></li>
+ <li>Sane defaults are set. <br /></li>
+</ol> <p>
+ <b>Blocker:</b> <br /></p>
+ <ol class="org-ol"> <li>The password hash is exposed in  <b>plain text</b>. <br /></li>
+</ol> <blockquote>
+ <p>
+This data-model doesn't survive the wild. <br /></p>
+</blockquote>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Protecting The Sensitive Data - The Second Model</h3>
+ <div class="outline-text-3">
+ <p>
+ <i>The same structure - with a clinical cut.</i> <br /></p>
+
+ <ul class="org-ul"> <li>The  <code>Orchestrate the system users</code> task loops the current data flawlessly. <br /></li>
+ <li>The  <code>password</code> field is the risk. <br /></li>
+ <li>Encrypting everything with Ansible Vault is heavy. Too heavy. <br /></li>
+</ul> <p>
+You must remove the  <code>password</code> field from the data structure: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">users</span>:
+   <span style="color: #cae682;">deadswitch</span>:
+     <span style="color: #cae682;">full_name</span>:  <span style="color: #95e454;">"DeadSwitch"</span>
+     <span style="color: #8ac6f2; font-weight: bold;">shell</span>:  <span style="color: #95e454;">"/bin/bash"</span>
+     <span style="color: #cae682;">ssh_key</span>:  <span style="color: #95e454;">"..."</span>
+     <span style="color: #cae682;">groups</span>:
+      - ansible
+      - operator
+</pre>
+</div>
+
+ <p>
+The task scales. Leave it untouched. <br />
+A new task would break the  <code>update_password: on_create</code> logic. <br /></p>
+
+ <p>
+ <b>Where do you put the password?</b> <br /></p>
+
+ <p>
+In an Ansible Vault encrypted new file:  <code>vault.yml</code> <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">vault_users</span>:
+   <span style="color: #cae682;">deadswitch</span>:
+     <span style="color: #cae682;">password</span>:  <span style="color: #95e454;">"$6$secret hash"</span>
+</pre>
+</div>
+
+ <p>
+One user - two dimensions: <br /></p>
+ <ul class="org-ul"> <li>General data in the  <code>users.yml</code>. <br /></li>
+ <li>Secret data in the  <code>vault.yml</code>. <br /></li>
+</ul> <p>
+A Ghost Operator can merge the dimensions: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Merge users with vault_users</span>
+   <span style="color: #cae682;">ansible.builtin.set_fact</span>:
+     <span style="color: #cae682;">merged_users</span>:  <span style="color: #95e454;">"{{ users | ansible.builtin.combine(vault_users | default({}), recursive=True) }}"</span>
+
+-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Orchestrate the system users</span>
+   <span style="color: #cae682;">ansible.builtin.user</span>:
+     <span style="color: #cae682;">name</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.key </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">comment</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.full_name | default(item.key) </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">append</span>:  <span style="color: #e5786d;">yes</span>
+     <span style="color: #cae682;">create_home</span>:  <span style="color: #e5786d;">yes</span>
+     <span style="color: #cae682;">groups</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.groups | default([]) </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #8ac6f2; font-weight: bold;">shell</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.shell | default('/bin/bash') </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">password</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.password | default('*') </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">update_password</span>: on_create
+     <span style="color: #cae682;">state</span>: present
+   <span style="color: #cae682;">loop</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> merged_users | dict2items </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+</pre>
+</div>
+
+ <p>
+Sharp. <br />
+Surgical. <br />
+Clean. <br /></p>
+
+ <p>
+General info comes from one direction, the secrets come from another dimension. <br /></p>
+
+ <blockquote>
+ <p>
+No data exposure. No human-readable secrets in the variables. <br /></p>
+</blockquote>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>The Final Dimension</h3>
+ <div class="outline-text-3">
+ <p>
+Ansible still bleeds: variables leak. <br />
+On the screen. In the  <code>ansible.log</code> file. <br /></p>
+
+ <p>
+No secret data shall be visible: <br />
+The  <code>no_log: yes</code> option for the task will prevent to log the password hash on the screen. <br /></p>
+
+ <p>
+Yet, the  <code>merged_users</code> dictionary will persist in the facts. <br /></p>
+
+ <p>
+A solution to merge the dimensions in-place in the task: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Orchestrate the system users</span>
+   <span style="color: #cae682;">ansible.builtin.user</span>:
+     <span style="color: #cae682;">name</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.key </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">comment</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.full_name | default(item.key) </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">append</span>:  <span style="color: #e5786d;">yes</span>
+     <span style="color: #cae682;">create_home</span>:  <span style="color: #e5786d;">yes</span>
+     <span style="color: #cae682;">groups</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.groups | default([]) </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #8ac6f2; font-weight: bold;">shell</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.shell | default('/bin/bash') </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">password</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> item.value.password | default('*') </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>
+     <span style="color: #cae682;">update_password</span>: on_create
+     <span style="color: #cae682;">state</span>: present
+   <span style="color: #cae682;">no_log</span>:  <span style="color: #e5786d;">yes</span>
+   <span style="color: #cae682;">loop</span>:  <span style="color: #95e454;">"{{ users | ansible.builtin.combine(vault_users | default({}), recursive=True) | dict2items }}"</span>
+</pre>
+</div>
+
+ <blockquote>
+ <p>
+The system obeys. <br />
+No leaks. No echoes. <br />
+Only execution. <br /></p>
+</blockquote>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Ghost Operator | All rights reserved.</p></footer>
+</body>
+</html>
