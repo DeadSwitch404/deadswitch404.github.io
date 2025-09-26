@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.1 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ansible With SOPS - Secret Handling On Ghost Level</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Ansible With SOPS - Secret Handling On Ghost Level" />
+ <meta property="og:description" content="Ghost Operators handle secrets silently. SOPS is a surgical blade for it." />
+ <meta property="og:image" content="/static/img/ops-tactics.jpg" />
+ <meta property="og:url" content="https://deadswitch404.github.io/2025/09/ansible-sops.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/services.html">Services</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Ansible With SOPS - Secret Handling On Ghost Level</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ops-tactics.jpg" alt="Ansible With SOPS" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+ <a href="https://getsops.io/">SOPS: Secrets OPerationS</a> - A silent tool for Ghost Operators. Silent Architects. <br /></p>
+
+ <p>
+Ansible Vault safeguards your data. <br /></p>
+
+ <ul class="org-ul"> <li>The team grows. <br /></li>
+ <li>The data is more complex. <br /></li>
+ <li>Encrypted files are too much noise. <br /></li>
+</ul> <p>
+SOPS restores the signal. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>Get Your New Blade</h3>
+ <div class="outline-text-3">
+ <p>
+Download the SOPS Linux binary from  <a href="https://github.com/getsops/sops/releases">Github</a>. <br />
+Verify the binary with  <code>SHA256</code> checksum. <br />
+Move it to the  <code>$PATH</code>. <br /></p>
+
+ <p>
+Create or import your GPG keys. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Sharpen The Blade</h3>
+ <div class="outline-text-3">
+ <p>
+Configure SOPS to use the SOPS GPG fingerprint. <br /></p>
+
+ <p>
+Get the fingerprint: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg --list-keys
+</pre>
+</div>
+
+ <p>
+Copy and use it: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell"> <span style="color: #e5786d;">export</span>  <span style="color: #cae682;">SOPS_PGP_FP</span>= <span style="color: #95e454;">"27846AFA62AC8475754E28ACFC0537D05D1D146B"</span>
+</pre>
+</div>
+
+ <p>
+Test it. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sops edit test.sops.yaml
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>The Silent Ansible Upgrade</h3>
+ <div class="outline-text-3">
+ <p>
+Install the Ansible SOPS collection if missing: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">ansible-galaxy collection install community.sops
+</pre>
+</div>
+
+ <p>
+In the  <code>ansible.cfg</code> enable the SOPS vars plugin: <br /></p>
+
+ <div class="org-src-container" data-lang="ini">
+<pre class="src src-ini">[defaults]
+vars_plugins_enabled = host_group_vars,community.sops.sops
+</pre>
+</div>
+
+ <p>
+The  <code>host_vars</code> or  <code>group_vars</code> files' extension must be: <br /></p>
+ <ul class="org-ul"> <li>.sops.yaml <br /></li>
+ <li>.sops.yml <br /></li>
+</ul> <p>
+Configure the SOPS creation rules in the  <code>.sops.yaml</code> file: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #99968b;">---</span>
+ <span style="color: #cae682;">creation_rules</span>:
+  -  <span style="color: #cae682;">path_regex</span>: inventories/.*\.sops\.yml
+     <span style="color: #cae682;">key_groups</span>:
+      -  <span style="color: #cae682;">pgp</span>:
+          - 27846AFA62AC8475754E28ACFC0537D05D1D146B
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>The Ghosts In Action</h3>
+ <div class="outline-text-3">
+ <p>
+Create a SOPS encrypted file in  <code>host_vars</code> or  <code>group_vars</code>. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sops edit inventories/host_vars/hostname.yml
+</pre>
+</div>
+
+ <p>
+Remove the  <b>example content</b> and add your data. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #99968b;">---</span>
+ <span style="color: #cae682;">my_data</span>:
+  - Hello
+  - this is from
+  - SOPS
+</pre>
+</div>
+
+ <p>
+Ansible can decrypt and use it. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #99968b;">---</span>
+-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> SOPS test</span>
+   <span style="color: #cd5c5c;">hosts</span>: hostname
+
+   <span style="color: #cd5c5c;">tasks</span>:
+    -  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Echo the test variable</span>
+       <span style="color: #cae682;">ansible.builtin.debug</span>:
+         <span style="color: #cae682;">var</span>: my_data
+</pre>
+</div>
+
+ <p>
+The system bends to you, Ghost Operator. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Sharpening For The Team</h3>
+ <div class="outline-text-3">
+ <p>
+Operators rotate. Keys must too. <br /></p>
+</div>
+
+ <div class="outline-4">
+ <h4>Add a new teammate</h4>
+ <div class="outline-text-4">
+ <p>
+Import their public GPG key: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg --import teammate_pubkey.asc
+</pre>
+</div>
+
+ <p>
+Update the  <code>key_groups</code> in  <code>.sops.yaml</code> with their fingerprint: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">creation_rules</span>:
+  -  <span style="color: #cae682;">path_regex</span>: inventories/.*\.sops\.yml
+     <span style="color: #cae682;">key_groups</span>:
+      -  <span style="color: #cae682;">pgp</span>:
+          - Your Fingerprint
+          - Teammate Fingerprint
+</pre>
+</div>
+
+ <p>
+Re-encrypt the files so SOPS includes both keys: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sops updatekeys inventories/host_vars/ghost-infra.sops.yml
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>Remove a teammate</h4>
+ <div class="outline-text-4">
+ <p>
+Delete their fingerprint from  <code>.sops.yaml</code>. <br /></p>
+
+ <p>
+Re-encrypt again: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sops updatekeys inventories/host_vars/ghost-infra.sops.yml
+</pre>
+</div>
+
+ <p>
+Only the fingerprints listed will keep future access. <br /></p>
+</div>
+</div>
+</div>
+
+
+ <div class="outline-3">
+ <h3>Final Whisper</h3>
+ <div class="outline-text-3">
+ <blockquote>
+ <p>
+Silence keeps the secrets. SOPS keeps them safe. <br /></p>
+</blockquote>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Ghost Operator | All rights reserved.</p></footer>
+</body>
+</html>
