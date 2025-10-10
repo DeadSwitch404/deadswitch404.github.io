@@ -98,7 +98,7 @@ Disable federation to eliminate metadata leaks. <br /></p>
 In  <code>homeserver.yaml</code>: <br /></p>
 
  <div class="org-src-container" data-lang="yaml">
-<pre class="src src-yaml"> <span style="color: #cae682;">enable_federation</span>:  <span style="color: #e5786d;">false</span>
+<pre class="src src-yaml"> <span style="color: #cae682;">federation_ip_range_blacklist</span>: [ <span style="color: #95e454;">"0.0.0.0/0"</span>]
  <span style="color: #cae682;">federation_domain_whitelist</span>: []
 </pre>
 </div>
@@ -113,13 +113,7 @@ No external lookups or pings leave your network. <br /></p>
  <h3>Element Call Beta</h3>
  <div class="outline-text-3">
  <p>
-Room-level conference calls use  <b>WebRTC</b> through Element Call. <br />
-Enable it with: <br /></p>
-
- <div class="org-src-container" data-lang="yaml">
-<pre class="src src-yaml"> <span style="color: #cae682;">calls_enabled</span>:  <span style="color: #e5786d;">true</span>
-</pre>
-</div>
+Room-level conference calls use  <b>WebRTC</b> through Element Call. <br /></p>
 
  <p>
  <b>coturn</b> manages ICE candidates. <br />
