@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.1 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synapse Self-Hosted Server For The Ghosts</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Synapse Self-Hosted Server For The Ghosts" />
+ <meta property="og:description" content="Building a private Matrix homeserver to defend your silence and secure encrypted communication." />
+ <meta property="og:image" content="/static/img/ops-tactics.jpg" />
+ <meta property="og:url" content="https://deadswitch404.github.io/2025/10/synapse-for-ghost-ops.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/services.html">Services</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Synapse Self-Hosted Server For The Ghosts</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ops-tactics.jpg" alt="ops-tactics.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+Encrypted communication is the first line of defense against surveillance and compromise. <br /></p>
+
+ <p>
+When data travels unencrypted, it becomes a breadcrumb trail for anyone watching the path. <br /></p>
+
+ <p>
+Small and medium enterprises hold trade secrets, client lists, and financial records. <br />
+A single leak can destroy trust, reputation, and revenue. <br /></p>
+
+ <p>
+Matrix is a federated protocol built on open standards. <br /></p>
+
+ <p>
+Its end-to-end encryption relies on  <b>Olm</b> and  <b>Megolm</b>. <br />
+Messages are encrypted on the sender's device and can only be decrypted by intended recipients. <br />
+No central authority ever stores plaintext. <br /></p>
+
+ <p>
+ <b>Synapse</b>, the reference Matrix homeserver, is light enough for a single node yet robust enough to scale. <br /></p>
+
+ <p>
+It supports: <br /></p>
+ <ul class="org-ul"> <li>TLS for all HTTP traffic <br /></li>
+ <li>WebSocket encryption for real-time sync <br /></li>
+ <li>Optional TURN via  <b>coturn</b> for media relay <br /></li>
+</ul> <p>
+Deploying with  <b>Let's Encrypt</b> keeps certificates valid and trusted at no cost. <br />
+A simple  <b>certbot</b> job renews them automatically. <br /></p>
+
+ <p>
+TURN is required for voice and video when NAT traversal fails. <br /> <b>coturn</b> can run on the same host or a dedicated relay. <br />
+Use shared-secret authentication instead of static credentials and bind it to your Synapse instance. <br />
+This keeps media encrypted end-to-end while routing through TURN. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>Hardening</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>Disable unused Synapse modules <br /></li>
+ <li>Enforce TLS for all clients <br /></li>
+ <li>Restrict inbound traffic to ports 8448 (Synapse) and 3478/5349 (coturn) <br /></li>
+ <li>Enable two-factor authentication for admin users <br /></li>
+ <li>Back up the homeserver database, configuration, and media store <br /></li>
+</ul> <p>
+Encrypt backups with  <b>GPG</b>, rotate daily, and keep at least one copy offline for disaster recovery. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>PostgreSQL Backend</h3>
+ <div class="outline-text-3">
+ <p>
+Synapse defaults to  <b>SQLite</b>, but  <b>PostgreSQL</b> is recommended for production. <br />
+ACID guarantees keep data consistent under load. <br />
+Encrypt the database at rest if the host is shared or untrusted. <br />
+Use  <code>pg_dump</code> with  <b>GPG</b> for secure, portable snapshots. <br />
+Regularly  <code>VACUUM</code> and  <code>ANALYZE</code> to maintain performance. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Federation Off</h3>
+ <div class="outline-text-3">
+ <p>
+Disable federation to eliminate metadata leaks. <br /></p>
+
+ <p>
+In  <code>homeserver.yaml</code>: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">enable_federation</span>:  <span style="color: #e5786d;">false</span>
+ <span style="color: #cae682;">federation_domain_whitelist</span>: []
+</pre>
+</div>
+
+ <p>
+The server will then accept only local users and rooms. <br />
+No external lookups or pings leave your network. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Element Call Beta</h3>
+ <div class="outline-text-3">
+ <p>
+Room-level conference calls use  <b>WebRTC</b> through Element Call. <br />
+Enable it with: <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml"> <span style="color: #cae682;">calls_enabled</span>:  <span style="color: #e5786d;">true</span>
+</pre>
+</div>
+
+ <p>
+ <b>coturn</b> manages ICE candidates. <br />
+Beta status means occasional instability - test in a staging room before production. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Final Whisper</h3>
+ <div class="outline-text-3">
+ <p>
+Every ghost deserves silence that only they can hear. <br />
+Privacy is not a luxury; it is a right. <br /></p>
+
+ <p>
+Secure your conversations. <br />
+Stay quiet. Stay alive. <br /></p>
+
+ <p>
+ <b>DeadSwitch | The Silent Architect</b> <br /> <span class="underline">In silence, I rise. In the storm, I endure.</span> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Ghost Operator | All rights reserved.</p></footer>
+</body>
+</html>
