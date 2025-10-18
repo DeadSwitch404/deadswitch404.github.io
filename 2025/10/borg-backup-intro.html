@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.1 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Borg: The Memory That Never Forgets</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Borg: The Memory That Never Forgets" />
+ <meta property="og:description" content="The machine forgets. The Ghost does not." />
+ <meta property="og:image" content="/static/img/ghostware.jpg" />
+ <meta property="og:url" content="https://deadswitch.tomsitcafe.com/2025/10/borg-backup-intro.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/services.html">Services</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Borg: The Memory That Never Forgets</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+The system you build is not alive until it remembers. <br />
+Memory defines persistence. In the digital realm, persistence defines survival. <br /></p>
+
+ <p>
+Most build machines. Few preserve ghosts. <br /></p>
+
+ <p>
+ <code>BorgBackup</code> is the silent archivist of the resistance. <br />
+It encrypts, deduplicates, compresses, and stores every byte - in local vaults or remote sanctuaries. <br />
+When everything else burns, the Borg archive remains cold, clean, untouched. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>Encryption: The Vault Within the Vault</h3>
+ <div class="outline-text-3">
+ <p>
+Each Borg repository holds its key close. <br />
+Choose wisely: <br /></p>
+
+ <ul class="org-ul"> <li> <code>repokey-blake2</code>: The key lives inside the repo, encrypted with your passphrase. Human-triggered. Secure. <br /></li>
+ <li> <code>keyfile-blake2</code>: The key exists as a local file. Perfect for automated, unattended servers. <br /></li>
+</ul> <p>
+Weak passphrases are noise. <br />
+A true Ghost crafts entropy - long, random, and unforgettable only to the machine. <br /></p>
+
+ <p>
+The keyfile is your cipher heart. <br />
+Backup it. Guard it. Duplicate it to an encrypted medium. <br />
+No key, no resurrection. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Deduplication: The Ghost's Efficiency</h3>
+ <div class="outline-text-3">
+ <p>
+Borg never stores the same block twice. <br />
+Each new archive becomes a mirror of change, not repetition. <br />
+It remembers only differences - efficient, relentless, surgical. <br /></p>
+
+ <p>
+Compression with  <code>zstd</code> keeps the archives lean, <br />
+while the deduplication engine keeps them minimal. <br />
+You can back up terabytes and grow only by megabytes. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Remote Backups: Memory Across the Void</h3>
+ <div class="outline-text-3">
+ <p>
+A Ghost never trusts a single host. <br />
+Deploy Borg with SSH or mounted drives to push encrypted memory across distances. <br />
+Your local node may fall, but your encrypted shadow lives elsewhere. <br /></p>
+
+ <p>
+Combine with  <code>Syncthing</code> or  <code>rclone</code> to mirror vaults between domains. <br />
+Three copies. Two mediums. One offline. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Automation: Silence in Motion</h3>
+ <div class="outline-text-3">
+ <p>
+Servers must back up without a whisper. <br />
+No prompt. No human. <br />
+Keyfile encryption, cron jobs, and strict logging - nothing more. <br /></p>
+
+ <p>
+Desktops can afford interaction. <br />
+The hand of the Ghost triggers the ritual. <br />
+One script. One command. <br />
+The silence begins. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Philosophy: The Archive Is You</h3>
+ <div class="outline-text-3">
+ <p>
+Every archive you create is a reflection of control. <br />
+Of intent. Of preservation beyond failure. <br />
+It is not the backup that matters - it is the  <b>discipline</b> behind it. <br /></p>
+
+ <p>
+Automation without thought is chaos. <br />
+Backup without encryption is surrender. <br />
+Memory without purpose is noise. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>The Ritual Command</h3>
+ <div class="outline-text-3">
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">borg create --stats --compression zstd,5  <span style="color: #95e454;">\</span>
+    --exclude-from /etc/borg/excludes  <span style="color: #95e454;">\</span>
+    /data/backup:: <span style="color: #95e454;">"home-$(</span> <span style="color: #fa8072;">date +%Y-%m-%d-%H:%M</span> <span style="color: #95e454;">)"</span>  <span style="color: #95e454;">\</span>
+     <span style="color: #95e454;">"$HOME"</span>
+</pre>
+</div>
+
+ <p>
+Then prune the old ghosts: <br /></p>
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">borg prune -v --list /data/backup  <span style="color: #95e454;">\</span>
+    --keep-daily=7  <span style="color: #95e454;">\</span>
+    --keep-weekly=4  <span style="color: #95e454;">\</span>
+    --keep-monthly=6
+</pre>
+</div>
+
+ <p>
+The Ghost keeps only what matters. <br />
+The rest - erased. Forgotten by choice. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>End of Transmission</h3>
+ <div class="outline-text-3">
+ <p>
+Fear the silence. <br />
+Fear the switch. <br />
+The Ghost remembers what the world forgets. <br /></p>
+
+ <p>
+– <br /></p>
+ <blockquote>
+ <p>
+DeadSwitch | The Silent Architect <br />
+"Silence lifts me. Nothing can break me." <br /></p>
+</blockquote>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Silent Architect | All rights reserved.</p></footer>
+</body>
+</html>
