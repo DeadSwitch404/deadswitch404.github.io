@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.1 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protecting The Wire - Semaphore Behind SSL Proxy</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Protecting The Wire - Semaphore Behind SSL Proxy" />
+ <meta property="og:description" content="Automation isn't safe by default. Lock it down. Semaphore behind SSL - for Operators only." />
+ <meta property="og:image" content="/static/img/ghostware.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2025/10/ssl-semaphore.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Protecting The Wire - Semaphore Behind SSL Proxy</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" /> <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Mission Brief</h3>
+ <div class="outline-text-3">
+ <p>
+Plain text communication is loud. It's bleeding data. <br />
+Prying eyes can see every bit in the wire. <br /></p>
+
+ <p>
+You have to isolate the backend - the Semaphore UI and MySQL containers stay locked down. Unreachable for the external work. <br />
+Open a tiny hole on the stronghold to the world - the frontend is an NginX SSL proxy. <br /></p>
+
+ <p>
+You use: <br /></p>
+ <ul class="org-ul"> <li> <code>Podman</code> pod for network and container isolation <br /></li>
+ <li>The  <code>Semaphore</code> and  <code>MySQL</code> containers without exposing them to the world <br /></li>
+ <li>An  <code>NginX</code> proxy container with SSL <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Requirements</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>Debian 12 (with hardened kernel preferred) <br /></li>
+ <li>Podman installed and functional (v4 or later) <br /></li>
+ <li>Working MySQL container <br /></li>
+ <li>Functioning Semaphore UI container <br /></li>
+ <li>X509 certificates for HTTPS <br /></li>
+ <li>NginX configuration for the reverse proxy <br /></li>
+ <li>Terminal access <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 1: Create The Pod For The Configuration</h3>
+ <div class="outline-text-3">
+ <p>
+The pod exposes only an HTTPS port for the NginX proxy: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman pod create -p 4430:443 p_semaphore
+</pre>
+</div>
+
+ <p>
+Non-root containers use ports above 1000. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 2: Activate The MySQL Container</h3>
+ <div class="outline-text-3">
+ <p>
+Run the database container assigned to the pod: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman run --rm -d  <span style="color: #95e454;">\</span>
+       --pod p_semaphore  <span style="color: #95e454;">\</span>
+       -v semaphore_mysql:/var/lib/mysql  <span style="color: #95e454;">\</span>
+       --name semaphore_mysql  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">MYSQL_RANDOM_ROOT_PASSWORD</span>= <span style="color: #95e454;">'yes'</span>  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">MYSQL_DATABASE</span>=semaphore  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">MYSQL_USER</span>=semaphore  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">MYSQL_PASSWORD</span>=semaphore  <span style="color: #99968b;"># </span> <span style="color: #99968b;">DO NOT USE IN PROD \
+</span>       docker.io/mysql:lts
+</pre>
+</div>
+
+ <ul class="org-ul"> <li>No open ports. <br /></li>
+ <li>No exposure. <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 3: Initiate The Semaphore Container</h3>
+ <div class="outline-text-3">
+ <p>
+Assign and run Semaphore in the pod: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman run --rm -d  <span style="color: #95e454;">\</span>
+       --pod p_semaphore  <span style="color: #95e454;">\</span>
+       --name semaphore  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">SEMAPHORE_DB_USER</span>=semaphore  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">SEMAPHORE_DB_PASS</span>=semaphore  <span style="color: #99968b;"># </span> <span style="color: #99968b;">DO NOT USE IN PROD \
+</span>       -e  <span style="color: #cae682;">SEMAPHORE_DB_HOST</span>=127.0.0.1  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">SEMAPHORE_DB_PORT</span>=3306  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">SEMAPHORE_DB_DIALECT</span>=mysql  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">SEMAPHORE_DB</span>=semaphore  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">SEMAPHORE_PLAYBOOK_PATH</span>=/tmp/semaphore/  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">SEMAPHORE_ADMIN_PASSWORD</span>=changeme  <span style="color: #99968b;"># </span> <span style="color: #99968b;">DO NOT USE IN PROD \
+</span>       -e  <span style="color: #cae682;">SEMAPHORE_ADMIN_NAME</span>=admin  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">SEMAPHORE_ADMIN_EMAIL</span>=admin@localhost  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">SEMAPHORE_ADMIN</span>=admin  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">SEMAPHORE_ACCESS_KEY_ENCRYPTION</span>= <span style="color: #cae682;">gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU</span>=  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">SEMAPHORE_LDAP_ACTIVATED</span>= <span style="color: #95e454;">'no'</span>  <span style="color: #95e454;">\</span>
+       -e  <span style="color: #cae682;">TZ</span>=UTC  <span style="color: #95e454;">\</span>
+       docker.io/semaphoreui/semaphore:latest
+</pre>
+</div>
+
+ <ul class="org-ul"> <li>No exposed ports. <br /></li>
+ <li>The DB host is  <code>127.0.0.1</code> in the pod. <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 4: The Mask To The World - NginX Reverse Proxy</h3>
+ <div class="outline-text-3">
+</div>
+ <div class="outline-4">
+ <h4>NginX Configuration</h4>
+ <div class="outline-text-4">
+ <p>
+You set up the only exposure here. No mistakes. <br /></p>
+
+ <p>
+The  <code>nginx-conf/nginx.conf</code> file must be brief. No fluff. <br /></p>
+
+ <p>
+Clients connect over  <b>SSL</b> on port  <code>4430</code> - they are forwarded to the NginX port  <code>443</code> in Podman. <br />
+NginX from  <code>443</code> forwards the connection to Semaphore's port  <code>3000</code> (Default UI port).  <i>It's sealed. Never exposed.</i> <br /></p>
+
+ <pre class="example">
+server {
+    listen 443 ssl;
+    server_name semaphore.local;
+ 
+    ssl_certificate /etc/nginx/cert.pem;
+    ssl_certificate_key /etc/nginx/key.pem;
+ 
+    location / {
+        proxy_pass http://127.0.0.1:3000/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	      proxy_set_header X-Forwarded-Proto $scheme;
+	      proxy_set_header X-Forwarded-Port $port;
+	      proxy_set_header X-Forwarded-Host $host:$port;
+        proxy_set_header X-Forwarded-Server $host;
+    }
+}
+</pre>
+
+ <p>
+In a Podman pod the nework is separated. Containers "see" each other. <br /></p>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>X509 Certificates</h4>
+ <div class="outline-text-4">
+ <p>
+ <b>Always</b> use valid certificates in production systems. They are your chain of trust. <br /></p>
+
+ <p>
+For testing you can create your own files. <br /> <b>Never</b> use self-signed certificates in prod. A warning in the browser is the killer of trust. <br /></p>
+
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">mkdir certs &&  <span style="color: #e5786d;">cd</span> certs
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+ <span style="color: #e5786d;">cd</span> ..
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>Proxy Container</h4>
+ <div class="outline-text-4">
+ <p>
+Assign and run the reverse proxy in the pod: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman run --rm -d  <span style="color: #95e454;">\</span>
+       --pod p_semaphore  <span style="color: #95e454;">\</span>
+       --name semaphore_proxy  <span style="color: #95e454;">\</span>
+       -v ./nginx-conf/nginx.conf:/etc/nginx/conf.d/default.conf:ro  <span style="color: #95e454;">\</span>
+       -v ./certs/cert.pem:/etc/nginx/cert.pem  <span style="color: #95e454;">\</span>
+       -v ./certs/key.pem:/etc/nginx/key.pem  <span style="color: #95e454;">\</span>
+       docker.io/library/nginx
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 5: Verify The Setup</h3>
+ <div class="outline-text-3">
+ <p>
+ <i>Log in.</i> <br /> <i>Check the logs.</i> <br /> <i>Verify your setup.</i> <br /></p>
+
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman pod logs p_semaphore
+</pre>
+</div>
+
+ <p>
+Does it work? Seal it. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 6: Generating The Pod Configuration File</h3>
+ <div class="outline-text-3">
+ <p>
+You built a system. Don't rebuild it by hand. <br />
+Create a Kubernetes-compatible  <b>pod</b> configuration. <br /></p>
+
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman kube generate -f semaphore-pod.yaml p_semaphore
+</pre>
+</div>
+
+ <p>
+You may have to edit the file a bit. Remove the noise. Keep the data. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 7: Security Considerations - Hardening</h3>
+ <div class="outline-text-3">
+ <ol class="org-ol"> <li>Offload secrets to  <code>.env</code> files or a secrets manager - never bake them into scripts. <br /></li>
+ <li>Don't use self-signed certificates. Use valid  <i>Let's Encrypt</i> or other ones. <br /></li>
+ <li>Never trust. Verify. Monitor. Check. <br /></li>
+</ol></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Ghost Thoughts</h3>
+ <div class="outline-text-3">
+ <p>
+Networks and systems are full of evil ghosts with prying eyes. <br />
+Unencrypted flows scream louder than logs. Silence them. <br /></p>
+
+ <p>
+ <b>Secure the wire - use SSL, encrypt your connections.</b> <br /></p>
+
+ <blockquote>
+ <p>
+"They left Semaphore open on port 3000. We tunneled in through that silence." <br /></p>
+</blockquote>
+
+ <p>
+— <br /></p>
+
+ <p>
+ <b>DeadSwitch | The Silent Architect</b> <br /> <i>"Fear the silence. Fear the switch"</i> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Silent Architect | All rights reserved.</p></footer>
+</body>
+</html>
