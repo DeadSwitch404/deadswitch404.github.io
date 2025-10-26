@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.1 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ghost Logs - The Journalctl</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Ghost Logs - The Journalctl" />
+ <meta property="og:description" content="Ghosts don't leave traces. They curate them. With journalctl." />
+ <meta property="og:image" content="/static/img/ops-tactics.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2025/10/article-ghost-logs-journalctl.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Ghost Logs - The Journalctl</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ops-tactics.jpg" alt="ops-tactics.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+Systemd is with us. Some operators embrace it. <br />
+Others curse its name. <br />
+Still, the system must run. Operate. Log. <br /></p>
+
+ <p>
+Logs are not just noise. <br />
+They are footsteps. <br />
+If you want to trace them - you use journalctl. <br />
+If you can't use it, you're blind in a fog of noise. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>Permanent Traces - Persistent Logs</h3>
+ <div class="outline-text-3">
+ <p>
+Logs can't help if they disappear at a reboot. <br />
+Still, some systems erase them. Quietly. Without a trace. <br />
+Ghosts don't destroy logs. <br /></p>
+
+ <p>
+Make sure the data persists. <br />
+It must not fill up the disk. <br />
+Protect from DoS. <br /></p>
+
+ <p>
+In the  <code>/etc/systemd/journald.conf</code> add the following lines: <br /></p>
+
+ <div class="org-src-container" data-lang="conf">
+<pre class="src src-conf">[ <span style="color: #92a65e; font-weight: bold;">Journal</span>]
+ <span style="color: #cae682;">Storage</span>=persistent
+ <span style="color: #cae682;">SystemMaxUse</span>=500M
+ <span style="color: #cae682;">RateLimitIntervalSec</span>=30s
+ <span style="color: #cae682;">RateLimitBurst</span>=1000
+</pre>
+</div>
+
+ <p>
+Clean. Tactical. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Traces Hold Value - But Only To The Eyes That See</h3>
+ <div class="outline-text-3">
+ <p>
+The journal keeps the data. <br />
+But only Operators can see it. <br /></p>
+
+ <p>
+Logs since the current boot: <br /></p>
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo journalctl -b
+</pre>
+</div>
+
+ <p>
+Logs since the previous boot: <br /></p>
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo journalctl -b -1    <span style="color: #99968b;"># </span> <span style="color: #99968b;">One boot ago
+</span>sudo journalctl -b -2    <span style="color: #99968b;"># </span> <span style="color: #99968b;">Two boots ago</span>
+</pre>
+</div>
+
+ <p>
+Sometimes Ghost Ops require continuous observation of the logs. <br />
+The follow mode whispers: <br /></p>
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo journalctl -f
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Times, Dates & Services? The Journal Obeys The Ghost</h3>
+ <div class="outline-text-3">
+ <p>
+Ghosts look for precision. <br />
+Precision comes from narrowing down the findings. <br /></p>
+
+ <p>
+They narrow by service.  <b>By unit</b>. <br /></p>
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo journalctl -u sshd.service
+</pre>
+</div>
+
+ <p>
+They filter  <b>by time</b>: <br /></p>
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo journalctl --since  <span style="color: #95e454;">"10 minutes ago"</span>
+sudo journalctl --since  <span style="color: #95e454;">"2025-06-26 10:00:00"</span> --until  <span style="color: #95e454;">"2025-06-26 11:00:00"</span>
+</pre>
+</div>
+
+ <p>
+You are the Operator. <br />
+Ghost Ops searches leave no noise. Only truth. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>The Ghost Whispers</h3>
+ <div class="outline-text-3">
+ <p>
+Systemd is here. Journalctl is a blade. <br />
+Some listen to the noise and bend - <br />
+their blade is dull, useless. <br />
+Ghosts sharpen it to cut. <br /></p>
+
+ <p>
+ <b>No noise. Only signal.</b> <br /></p>
+
+ <blockquote>
+ <p>
+Ghosts don't bend to the system. <br />
+They shape it for their taste. <br /></p>
+</blockquote>
+
+ <p>
+ <b>DeadSwitch | The Silent Architect</b> <br /> <i>"Fear the silence. Fear the Switch."</i> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Silent Architect | All rights reserved.</p></footer>
+</body>
+</html>
