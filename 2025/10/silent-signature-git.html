@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.1 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Silent Signature: Why Every Commit Matters</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="The Silent Signature: Why Every Commit Matters" />
+ <meta property="og:description" content="Signed commits turn every patch into a silent, unforgeable audit trail. Learn why the key matters." />
+ <meta property="og:image" content="/static/img/ops-tactics.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2025/10/silent-signature-git.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>The Silent Signature: Why Every Commit Matters</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ops-tactics.jpg" alt="ops-tactics.jpg" class="post-image" /> <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Integrity over Chaos</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>Each commit is a signed statement. <br /></li>
+ <li>Without a GPG tag the history can be altered without notice. <br /></li>
+ <li>A rogue change becomes invisible until you audit manually. <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Authenticity in the Open Source Trenches</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>Other developers can verify that the patch came from the claimed author. <br /></li>
+ <li>Trust is built on cryptographic proof, not on polite email chains. <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Non‑Repudiation for the Paranoid</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>Signed commits tie a developer to their work. <br /></li>
+ <li>In audits or legal disputes the signature proves authorship. <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Operational Efficiency</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>Tools like  <code>git log --show-signature</code> flag errors immediately. <br /></li>
+ <li>CI pipelines can reject unsigned pushes automatically. <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Practical Setup in an Emacs Org Environment</h3>
+ <div class="outline-text-3">
+ <ol class="org-ol"> <li> <p>
+Generate a key if you don't have one: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">gpg --full-generate-key
+</pre>
+</div></li>
+
+ <li> <p>
+Tell Git the key to use per repository: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">git config user.signingkey YOUR_KEY_ID
+git config commit.gpgSign true
+</pre>
+</div></li>
+
+ <li> <p>
+Verify a signed commit: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">git log --show-signature -1
+</pre>
+</div></li>
+</ol></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Bottom Line: Silence Is Power</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>A signed history is a silent guardrail. <br /></li>
+ <li>In an offline, hardened system every byte counts. <br /></li>
+ <li>Adopt signing and let the cryptographic silence speak for you. <br /></li>
+</ul> <p>
+ <b>DeadSwitch | The Silent Architect</b> <br /> <i>"Fear the silence. Fear the Switch."</i> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Silent Architect | All rights reserved.</p></footer>
+</body>
+</html>
