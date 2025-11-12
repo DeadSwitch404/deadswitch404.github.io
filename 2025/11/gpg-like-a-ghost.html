@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.2 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPG Like A Ghost</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- Mastodon link -->
+  <link rel="me" href="https://mastodon.social/@silentarchitect">
+  <meta property="og:title" content="GPG Like A Ghost" />
+ <meta property="og:description" content="In the shadows, keys are silent guardians. Master sleeps offline. Subkeys move unseen. Ghost-level OPSEC is control without exposure." />
+ <meta property="og:image" content="/static/img/signals.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2025/11/gpg-like-a-ghost.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>GPG Like A Ghost</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/signals.jpg" alt="signals.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+In the shadows, your keys are not just tools. <br />
+They are silent guardians - your signature, your protection. <br /></p>
+
+ <blockquote>
+ <p>
+Ghost-level OPSEC is a life style. <br /></p>
+</blockquote>
+
+ <p>
+The  <b>master key</b> lives offline, unseen, untouchable. <br /> <b>Subkeys</b> move in the world, doing your bidding without exposing your heart. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>Install GPG</h3>
+ <div class="outline-text-3">
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo apt install gnupg2
+</pre>
+</div>
+
+ <p>
+No network whispers. Only the tool. Only control. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Forge the Master Key</h3>
+ <div class="outline-text-3">
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg --full-gen-key
+</pre>
+</div>
+
+ <ul class="org-ul"> <li>RSA, 4096 bits. <br /></li>
+ <li>Expire it. Time limits exposure. <br /></li>
+ <li>Identity: Ghost Operator. <br /></li>
+ <li>Comment: Silent operations. <br /></li>
+ <li>Email: optional, OPSEC-friendly. <br /></li>
+ <li>Passphrase: a vault in words. <br /></li>
+</ul> <p>
+Record it in KeepassXC. Offline. Hidden. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Establish Absolute Trust</h3>
+ <div class="outline-text-3">
+ <p>
+Trust nothing. Except yourself. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg --edit-key ghost@silent.org
+</pre>
+</div>
+
+ <ul class="org-ul"> <li>In  <code>gpg</code> prompt:  <code>trust</code>. <br /></li>
+ <li>Level 5. <br /></li>
+ <li> <code>save</code>. <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Subkeys: The Shadows You Send Out</h3>
+ <div class="outline-text-3">
+ <p>
+Master key sleeps. Subkeys act. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg --edit-key ghost@silent.org
+</pre>
+</div>
+
+ <ul class="org-ul"> <li> <code>addkey</code> <br /></li>
+ <li>Type: sign or encrypt. <br /></li>
+ <li>4096 bits. <br /></li>
+ <li>Expiration. <br /></li>
+ <li> <code>save</code> <br /></li>
+</ul> <p>
+View your sentinels: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg --list-secret-keys ghost@silent.org
+
+sec   rsa4096 2025-11-12 [SC] [expires: 2026-11-12]
+      ABCD1234ABCD1234ABCD1234ABCD1234ABCD1234
+uid           [ultimate] Ghost Operator (Silent Ops)  <a href="mailto:ghost%40silent.org"><ghost@silent.org></a>
+ssb   rsa4096 2025-11-12 [E] [expires: 2026-11-12]
+ssb   rsa4096 2025-11-12 [S] [expires: 2026-11-12]
+</pre>
+</div>
+
+ <p>
+Subkeys carry your work. <br /></p>
+
+ <ul class="org-ul"> <li> <code>[E]</code> for Encryption. <br /></li>
+ <li> <code>[S]</code> for Signing. <br /></li>
+</ul> <p>
+ <b>Passphrase?</b> <br />
+It belongs to the master. They never have their own. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Backup the Master</h3>
+ <div class="outline-text-3">
+ <p>
+Offline. Locked. Sealed. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg --armor --export-secret-keys ghost@silent.org > master_key.asc
+</pre>
+</div>
+
+ <p>
+Symmetric armor: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg -c master_key.asc
+</pre>
+</div>
+
+ <p>
+Keep this in multiple secure places. <br />
+Test restore in a VM. <br />
+Only then, delete the master from active machines. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Backup Subkeys</h3>
+ <div class="outline-text-3">
+ <p>
+Subkeys move, master sleeps. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg --armor --export-secret-subkeys ghost@silent.org > subkeys.asc
+</pre>
+</div>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg -c subkeys.asc
+</pre>
+</div>
+
+ <p>
+Secure backups. <br />
+Offline and online. <br />
+Redundancy is survival. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Remove Master from Active Machine</h3>
+ <div class="outline-text-3">
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg --delete-secret-and-public-keys ghost@silent.org
+</pre>
+</div>
+
+ <p>
+Offline. Always. The guardian sleeps. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Deploy Subkeys on Clients</h3>
+ <div class="outline-text-3">
+ <p>
+Subkeys act. Master remains unseen. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg --import subkeys.asc
+</pre>
+</div>
+
+ <p>
+Capabilities: <br /></p>
+
+ <ul class="org-ul"> <li>Encrypt your data. <br /></li>
+ <li>Decrypt with privacy. <br /></li>
+ <li>Sign your work. <br /></li>
+</ul> <p>
+Check deployed subkeys: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">gpg --list-secret-keys --keyid-format LONG ghost@silent.org
+
+sec#  rsa4096/DEADBEAFDEADBEAF 2025-11-12 [SC] [expires: 2026-11-12]
+      ABCD1234ABCD1234ABCD1234ABCD1234ABCD1234
+uid                 [ unknown] Ghost Operator (Silent Ops)  <a href="mailto:ghost%40silent.org"><ghost@silent.org></a>
+ssb   rsa4096/FEEDC0DEFEEDC0DE 2025-11-12 [E] [expires: 2026-11-12]
+</pre>
+</div>
+
+ <p>
+ <code>sec#</code> = master not present. Subkeys alone. <br /></p>
+
+ <p>
+Only the master can reshape the shadows. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Backup Strategy</h3>
+ <div class="outline-text-3">
+ <ol class="org-ol"> <li>Master key <br /> <ul class="org-ul"> <li>USB (LUKS, offline) <br /></li>
+ <li>Encrypted cloud (symmetric, e.g. ProtonPass) <br /></li>
+</ul></li>
+
+ <li>Subkeys <br /> <ul class="org-ul"> <li>Offline vault (KeepassXC) <br /></li>
+ <li>Encrypted cloud (ProtonDrive) <br /></li>
+ <li>Subkeys are managed via the master; the master remains sealed when not actively needed. <br /></li>
+</ul></li>
+</ol> <p>
+Overhead is minimal. <br />
+Control is total. <br />
+Subkeys can be restored without touching the sleeping master. <br /></p>
+
+ <p>
+ <code>[ Fear the Silence. Fear the Switch. ]</code> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Silent Architect | All rights reserved.</p></footer>
+</body>
+</html>
