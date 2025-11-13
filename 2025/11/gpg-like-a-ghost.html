@@ -37,9 +37,9 @@ They are silent guardians - your signature, your protection. <br /></p>
 Ghost-level OPSEC is a life style. <br /></p>
 </blockquote>
 
- <p>
-The  <b>master key</b> lives offline, unseen, untouchable. <br /> <b>Subkeys</b> move in the world, doing your bidding without exposing your heart. <br /></p>
-</div>
+ <ul class="org-ul"> <li>The  <b>master key</b> lives  <i>offline</i>,  <i>unseen</i>,  <i>untouchable</i>. <br /></li>
+ <li> <b>Subkeys</b> move in the world, doing your bidding  <i>without exposing</i> your heart. <br /></li>
+</ul></div>
 
  <div class="outline-3">
  <h3>Install GPG</h3>
@@ -63,9 +63,9 @@ No network whispers. Only the tool. Only control. <br /></p>
 </div>
 
  <ul class="org-ul"> <li>RSA, 4096 bits. <br /></li>
- <li>Expire it. Time limits exposure. <br /></li>
- <li>Identity: Ghost Operator. <br /></li>
- <li>Comment: Silent operations. <br /></li>
+ <li>Expiration is protection. <br /></li>
+ <li>Identity:  <i>Ghost Operator</i>. <br /></li>
+ <li>Comment:  <i>Silent operations</i>. <br /></li>
  <li>Email: optional, OPSEC-friendly. <br /></li>
  <li>Passphrase: a vault in words. <br /></li>
 </ul> <p>
@@ -77,7 +77,7 @@ Record it in KeepassXC. Offline. Hidden. <br /></p>
  <h3>Establish Absolute Trust</h3>
  <div class="outline-text-3">
  <p>
-Trust nothing. Except yourself. <br /></p>
+Trust nothing. Except  <b>yourself</b>. <br /></p>
 
  <div class="org-src-container" data-lang="shell">
 <pre class="src src-shell">gpg --edit-key ghost@silent.org
@@ -123,8 +123,8 @@ ssb   rsa4096 2025-11-12 [S] [expires: 2026-11-12]
  <p>
 Subkeys carry your work. <br /></p>
 
- <ul class="org-ul"> <li> <code>[E]</code> for Encryption. <br /></li>
- <li> <code>[S]</code> for Signing. <br /></li>
+ <ul class="org-ul"> <li> <code>[E]</code> for encryption. <br /></li>
+ <li> <code>[S]</code> for signing. <br /></li>
 </ul> <p>
  <b>Passphrase?</b> <br />
 It belongs to the master. They never have their own. <br /></p>
@@ -205,11 +205,11 @@ Subkeys act. Master remains unseen. <br /></p>
 </div>
 
  <p>
-Capabilities: <br /></p>
+ <b>Capabilities:</b> <br /></p>
 
- <ul class="org-ul"> <li>Encrypt your data. <br /></li>
- <li>Decrypt with privacy. <br /></li>
- <li>Sign your work. <br /></li>
+ <ul class="org-ul"> <li> <i>Encrypt</i> your data. <br /></li>
+ <li> <i>Decrypt</i> with privacy. <br /></li>
+ <li> <i>Sign</i> your work. <br /></li>
 </ul> <p>
 Check deployed subkeys: <br /></p>
 
@@ -234,11 +234,11 @@ Only the master can reshape the shadows. <br /></p>
  <div class="outline-3">
  <h3>Backup Strategy</h3>
  <div class="outline-text-3">
- <ol class="org-ol"> <li>Master key <br /> <ul class="org-ul"> <li>USB (LUKS, offline) <br /></li>
+ <ol class="org-ol"> <li> <b>Master key</b> <br /> <ul class="org-ul"> <li>USB (LUKS, offline) <br /></li>
  <li>Encrypted cloud (symmetric, e.g. ProtonPass) <br /></li>
 </ul></li>
 
- <li>Subkeys <br /> <ul class="org-ul"> <li>Offline vault (KeepassXC) <br /></li>
+ <li> <b>Subkeys</b> <br /> <ul class="org-ul"> <li>Offline vault (KeepassXC) <br /></li>
  <li>Encrypted cloud (ProtonDrive) <br /></li>
  <li>Subkeys are managed via the master; the master remains sealed when not actively needed. <br /></li>
 </ul></li>
