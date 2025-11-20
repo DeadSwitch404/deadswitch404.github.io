@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.0.2 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silent Drop: Wireguard Ansible Role From The Silent Architect</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- Mastodon link -->
+  <link rel="me" href="https://mastodon.social/@silentarchitect">
+  <meta property="og:title" content="Silent Drop: Wireguard Ansible Role From The Silent Architect" />
+ <meta property="og:description" content="It's out now: The Silent Architect's Wireguard role is available. DeadSwitch doesn't signal on noisy channels. Neither you shoud." />
+ <meta property="og:image" content="/static/img/ghostware.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2025/11/silent-drop-wireguard-role.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Silent Drop: Wireguard Ansible Role From The Silent Architect</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+If you read this, you already know what a VPN is. <br /></p>
+
+ <p>
+ <i>OpenVPN</i> was once the standard. <br /> <i>IPSec</i> handled the corporate network jungle. <br /></p>
+
+ <blockquote>
+ <p>
+Complexity is a danger. A liability. <br /></p>
+</blockquote>
+
+ <p>
+This is where  <i>Wireguard</i> strikes. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>Wireguard - The Silent Guardian</h3>
+ <div class="outline-text-3">
+ <p>
+It's not a huge app. <br />
+WireGuard lives in the Linux kernel.  <i>Other systems run it in user space - same protocol, same silence.</i> <br /></p>
+
+ <ul class="org-ul"> <li>Simple configuration. <br /></li>
+ <li>Modern cryptography. <br /></li>
+ <li>Light footprint. <br /></li>
+ <li>Auditable code size. <br /></li>
+</ul> <blockquote>
+ <p>
+Wireguard is like The Silent Architect - no fluff, no over-complication. <br /></p>
+</blockquote>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Ansible - The Moving Hands Of Precision</h3>
+ <div class="outline-text-3">
+ <p>
+Ansible is trusted. <br />
+Simple. <br /></p>
+
+ <p>
+It already proved its capabilities. <br />
+It has its place in the  <b>GhostWare</b>. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>The Wireguard Ansible Role - A Silent Drop From DeadSwitch</h3>
+ <div class="outline-text-3">
+ <p>
+ <i>OpenVPN</i> and the  <i>OpenVPN Ansible Role</i> has been field tested for long - now retired. <br /></p>
+
+ <p>
+ <b>DeadSwitch adapts:</b> <br /></p>
+ <ul class="org-ul"> <li>Wireguard hums silently on the Ghost Infra. <br /></li>
+ <li>Ansible and the new role handles its deployment. <br /></li>
+</ul> <p>
+Privacy and digital freedom is for everyone - so the new role is  <b>open-source</b>: <br /></p>
+
+ <p>
+ <a href="https://github.com/DeadSwitch404/ds-wireguard">DeadSwitch Wireguard Role on GitHub</a> <br /></p>
+
+ <ul class="org-ul"> <li>Audit. <br /></li>
+ <li>Use. <br /></li>
+ <li>Share. <br /></li>
+ <li>Criticize. <br /></li>
+</ul> <p>
+It's simple. <br />
+Idempotent. <br />
+Safe by design. <br /></p>
+
+ <p>
+It handles the peers' configuration. <br /></p>
+
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Deploy Wireguard VPN server</span>
+   <span style="color: #cd5c5c;">hosts</span>: vpn-servers
+   <span style="color: #e5786d;">become</span>:  <span style="color: #e5786d;">true</span>
+   <span style="color: #cd5c5c;">roles</span>:
+    -  <span style="color: #cd5c5c;">role</span>: ds-wireguard
+       <span style="color: #cd5c5c;">vars</span>:
+         <span style="color: #cae682;">wg_vpn_network</span>: 10.200.200.1/24
+         <span style="color: #cae682;">wg_vpn_interface</span>: wg0
+         <span style="color: #cae682;">wg_vpn_port</span>: 51820
+         <span style="color: #cae682;">wg_network_interface</span>: enp1s0
+         <span style="color: #cae682;">vault_wg_private_key</span>:  <span style="color: #95e454;">"</span> <span style="color: #e5786d;">{{</span> <span style="color: #cae682;"> vault_wg_private_key </span> <span style="color: #e5786d;">}}</span> <span style="color: #95e454;">"</span>    <span style="color: #99968b;"># </span> <span style="color: #99968b;">Optional
+</span>         <span style="color: #cae682;">wg_peers</span>:
+           <span style="color: #cae682;">iron</span>:
+             <span style="color: #cae682;">public_key</span>: e2V40zdPiX43lqOamcoEI8J10uKaXWBeKwf+spWDWgc=
+             <span style="color: #cae682;">allowed_ips</span>: 10.200.200.2/32
+</pre>
+</div>
+
+ <p>
+Stay silent. <br />
+Stay private. <br /></p>
+
+ <p>
+ <code>[ Fear the Silence. Fear the Switch. ]</code> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Silent Architect | All rights reserved.</p></footer>
+</body>
+</html>
