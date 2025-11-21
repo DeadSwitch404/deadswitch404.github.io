@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>The Silent Architect's Whispers</title>
+  <link>https://silentarchitect.org</link>
+  <description>Latest Whispers From The Silent Architect.</description>
+
+  <item>
+    <title>Silent Drop: Wireguard Ansible Role From The Silent Architect</title>
+    <link>https://silentarchitect.org/2025/11/silent-drop-wireguard-role.html</link>
+    <description><![CDATA[It's out now: The Silent Architect's Wireguard role is available. DeadSwitch doesn't signal on noisy channels. Neither you shoud.]]></description>
+    <pubDate>Thu, 20 Nov 2025 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2025/11/silent-drop-wireguard-role.html</guid>
+  </item>
+
+  <item>
+    <title>The Quiet Death of Privacy</title>
+    <link>https://silentarchitect.org/2025/11/surveillance-the-new-norm.html</link>
+    <description><![CDATA[They sold you convenience. They bought your identity.]]></description>
+    <pubDate>Mon, 17 Nov 2025 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2025/11/surveillance-the-new-norm.html</guid>
+  </item>
+
+  <item>
+    <title>GPG Like A Ghost</title>
+    <link>https://silentarchitect.org/2025/11/gpg-like-a-ghost.html</link>
+    <description><![CDATA[In the shadows, keys are silent guardians. Master sleeps offline. Subkeys move unseen. Ghost-level OPSEC is control without exposure.]]></description>
+    <pubDate>Wed, 12 Nov 2025 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2025/11/gpg-like-a-ghost.html</guid>
+  </item>
+
+  <item>
+    <title>Silent Systems - The Local LLM</title>
+    <link>https://silentarchitect.org/2025/11/silent-system-local-llm.html</link>
+    <description><![CDATA[Control your data. Run your AI locally. Silent Systems - The Local LLM ensures your conversations stay private and secure.]]></description>
+    <pubDate>Fri, 07 Nov 2025 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2025/11/silent-system-local-llm.html</guid>
+  </item>
+
+  <item>
+    <title>The Silent Signature: Why Every Commit Matters</title>
+    <link>https://silentarchitect.org/2025/10/silent-signature-git.html</link>
+    <description><![CDATA[Signed commits turn every patch into a silent, unforgeable audit trail. Learn why the key matters.]]></description>
+    <pubDate>Tue, 28 Oct 2025 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2025/10/silent-signature-git.html</guid>
+  </item>
+
+  <item>
+    <title>Small Business Cybersecurity Starter Kit - Ghost Curated</title>
+    <link>https://silentarchitect.org/2025/10/article-small-business-cybersec-starter-kit.html</link>
+    <description><![CDATA[No budget? No security? Open-source is the answer.]]></description>
+    <pubDate>Mon, 27 Oct 2025 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2025/10/article-small-business-cybersec-starter-kit.html</guid>
+  </item>
+
+  <item>
+    <title>Ghost Logs - The Journalctl</title>
+    <link>https://silentarchitect.org/2025/10/article-ghost-logs-journalctl.html</link>
+    <description><![CDATA[Ghosts don't leave traces. They curate them. With journalctl.]]></description>
+    <pubDate>Sun, 26 Oct 2025 00:00:00 +0200</pubDate>
+    <guid>https://silentarchitect.org/2025/10/article-ghost-logs-journalctl.html</guid>
+  </item>
+
+  <item>
+    <title>Protecting The Wire - Semaphore Behind SSL Proxy</title>
+    <link>https://silentarchitect.org/2025/10/ssl-semaphore.html</link>
+    <description><![CDATA[Automation isn't safe by default. Lock it down. Semaphore behind SSL - for Operators only.]]></description>
+    <pubDate>Sat, 25 Oct 2025 00:00:00 +0200</pubDate>
+    <guid>https://silentarchitect.org/2025/10/ssl-semaphore.html</guid>
+  </item>
+
+  <item>
+    <title>Backups – The Silent Fortress</title>
+    <link>https://silentarchitect.org/2025/10/backups-the-silent-fortress.html</link>
+    <description><![CDATA[If a restore fails - the fortress collapses before it can be used.]]></description>
+    <pubDate>Tue, 21 Oct 2025 00:00:00 +0200</pubDate>
+    <guid>https://silentarchitect.org/2025/10/backups-the-silent-fortress.html</guid>
+  </item>
+
+  <item>
+    <title>Borg: The Memory That Never Forgets</title>
+    <link>https://silentarchitect.org/2025/10/borg-backup-intro.html</link>
+    <description><![CDATA[The machine forgets. The Ghost does not.]]></description>
+    <pubDate>Sat, 18 Oct 2025 00:00:00 +0200</pubDate>
+    <guid>https://silentarchitect.org/2025/10/borg-backup-intro.html</guid>
+  </item>
+</channel>
+</rss>
