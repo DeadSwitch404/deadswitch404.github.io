@@ -6,6 +6,14 @@
   <description>Latest Whispers From The Silent Architect.</description>
 
   <item>
+    <title>[New Release]: Whisper Engine v1.1.0</title>
+    <link>https://silentarchitect.org/2025/11/whisper-engine-1.1.0.html</link>
+    <description><![CDATA[Whisper Engine gained a new voice. It speaks in RSS.]]></description>
+    <pubDate>Fri, 21 Nov 2025 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2025/11/whisper-engine-1.1.0.html</guid>
+  </item>
+
+  <item>
     <title>Silent Drop: Wireguard Ansible Role From The Silent Architect</title>
     <link>https://silentarchitect.org/2025/11/silent-drop-wireguard-role.html</link>
     <description><![CDATA[It's out now: The Silent Architect's Wireguard role is available. DeadSwitch doesn't signal on noisy channels. Neither you shoud.]]></description>
@@ -75,14 +83,6 @@
     <description><![CDATA[If a restore fails - the fortress collapses before it can be used.]]></description>
     <pubDate>Tue, 21 Oct 2025 00:00:00 +0200</pubDate>
     <guid>https://silentarchitect.org/2025/10/backups-the-silent-fortress.html</guid>
-  </item>
-
-  <item>
-    <title>Borg: The Memory That Never Forgets</title>
-    <link>https://silentarchitect.org/2025/10/borg-backup-intro.html</link>
-    <description><![CDATA[The machine forgets. The Ghost does not.]]></description>
-    <pubDate>Sat, 18 Oct 2025 00:00:00 +0200</pubDate>
-    <guid>https://silentarchitect.org/2025/10/borg-backup-intro.html</guid>
   </item>
 </channel>
 </rss>
