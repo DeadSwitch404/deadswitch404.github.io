@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.1.0 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Management For Ghosts - Passbolt</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- Mastodon link -->
+  <link rel="me" href="https://mastodon.social/@silentarchitect">
+  <meta property="og:title" content="Password Management For Ghosts - Passbolt" />
+ <meta property="og:description" content="Vaults aren't apps. They're survival gear. Passbolt in Podman. No daemons. No noise. Just keys and control. #Passbolt #Podman #OPSEC #SelfHosted #Linux #Cybersecurity" />
+ <meta property="og:image" content="/static/img/default.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2025/05/article-passbolt.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Password Management For Ghosts - Passbolt</h2>
+ <div class="outline-text-2">
+</div>
+
+ <div class="outline-3">
+ <h3>Signal trace: why Passbolt?</h3>
+ <div class="outline-text-3">
+ <p>
+DeadSwitch investigates open source tools not for visibility, but for survival. <br />
+No sponsorships. No affiliate codes. No fake enthusiasm. <br /></p>
+
+ <p>
+He moves through the noise, testing what matters - what can be trusted, what can be hardened, what deserves a place in the ghost stack. <br /></p>
+
+ <p>
+This time, it's Passbolt. <br /></p>
+
+ <p>
+Not because it's trending. <br />
+Because it speaks encryption. Because it stores secrets in a way that respects control. <br />
+Because when the lights cut, you need to know your keys don't vanish with them. <br /></p>
+
+ <p>
+This isn't a review. It's a trace log. <br />
+Use it, bend it, improve it - if you're one of those who still listens to the signal. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Mission Brief</h3>
+ <div class="outline-text-3">
+ <p>
+This operation details the deployment of Passbolt CE using Podman containers on Debian 12. <br /></p>
+
+ <p>
+No Docker daemon. <br />
+No exposed defaults. <br />
+Just isolated container, controlled trust, and encryption under your command. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Requirements</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>Debian 12 (with hardened kernel preferred) <br /></li>
+ <li>Podman installed and functional (v4 or later) <br /></li>
+ <li>GPG and OpenSSL tools available <br /></li>
+ <li>Environment variables set securely or managed via  <code>.env</code> <br /></li>
+ <li>Terminal access with elevated privileges or configured rootless Podman <br /></li>
+ <li>Local DNS or  <code>/etc/hosts</code> configured for  <code>passbolt.local</code> <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 1: Create the Podman network</h3>
+ <div class="outline-text-3">
+ <p>
+Establish a dedicated network for compartmentalization. <br /></p>
+
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman network create n_passbolt
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 2: Deploy the database container</h3>
+ <div class="outline-text-3">
+ <p>
+Start the database container. <br />
+Inject secrets via environment variables. Avoid inline exposure. <br /></p>
+
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh"> <span style="color: #e5786d;">export</span>  <span style="color: #cae682;">MYSQL_ROOT_PASSWORD</span>= <span style="color: #95e454;">"yourRootPassword"</span>
+ <span style="color: #e5786d;">export</span>  <span style="color: #cae682;">MYSQL_PASSWORD</span>= <span style="color: #95e454;">"yourUserPassword"</span>
+
+podman volume create db_volume
+
+podman run -d --name db --network n_passbolt  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">MYSQL_ROOT_PASSWORD</span>=$ <span style="color: #cae682;">MYSQL_ROOT_PASSWORD</span>  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">MYSQL_DATABASE</span>=passbolt  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">MYSQL_USER</span>=passbolt  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">MYSQL_PASSWORD</span>=$ <span style="color: #cae682;">MYSQL_PASSWORD</span>  <span style="color: #95e454;">\</span>
+  -v db_volume:/var/lib/mysql  <span style="color: #95e454;">\</span>
+  docker.io/mysql:lts
+</pre>
+</div>
+
+ <p>
+Replace passwords with secure values. Rotate regularly. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 3: Deploy the passbolt container</h3>
+ <div class="outline-text-3">
+ <p>
+Create persistent volumes and launch the vault. <br /></p>
+
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman volume create gpg_volume
+podman volume create jwt_volume
+
+podman run -d --name passbolt  <span style="color: #95e454;">\</span>
+  --network n_passbolt  <span style="color: #95e454;">\</span>
+  -p 8000:80 -p 4430:443  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">DATASOURCES_DEFAULT_HOST</span>=db  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">DATASOURCES_DEFAULT_USERNAME</span>=passbolt  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">DATASOURCES_DEFAULT_PASSWORD</span>=$ <span style="color: #cae682;">MYSQL_PASSWORD</span>  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">DATASOURCES_DEFAULT_DATABASE</span>=passbolt  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">APP_FULL_BASE_URL</span>=https://passbolt.local:4430  <span style="color: #95e454;">\</span>
+  -v gpg_volume:/etc/passbolt/gpg  <span style="color: #95e454;">\</span>
+  -v jwt_volume:/etc/passbolt/jwt  <span style="color: #95e454;">\</span>
+  docker.io/passbolt/passbolt:4.4.2-1-ce
+</pre>
+</div>
+
+ <p>
+Ensure DNS resolves  <code>passbolt.local</code> to the correct IP. Use  <code>/etc/hosts</code> if needed. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 4: Inject the Admin user</h3>
+ <div class="outline-text-3">
+ <p>
+Once Passbolt is running, register the first admin user inside the container: <br /></p>
+
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman exec -it passbolt  <span style="color: #95e454;">\</span>
+  su -m -c  <span style="color: #95e454;">"/usr/share/php/passbolt/bin/cake passbolt register_user \
+  -u YOUR_EMAIL \
+  -f YOUR_NAME \
+  -l YOUR_LASTNAME \
+  -r admin"</span> -s /bin/sh www-data
+</pre>
+</div>
+
+ <p>
+The command must run as  <code>www-data</code> within the container to correctly register the user in Passbolt. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 5: First Contact</h3>
+ <div class="outline-text-3">
+ <p>
+Initiate secure access using a hardened browser: <br /></p>
+
+ <p>
+ <a href="https://passbolt.local:4430">https://passbolt.local:4430</a> <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Step 6: Security Cleanup</h3>
+ <div class="outline-text-3">
+ <p>
+Don't leave any credentials behind. <br /></p>
+
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh"> <span style="color: #e5786d;">unset</span> MYSQL_PASSWORD
+ <span style="color: #e5786d;">unset</span> MYSQL_ROOT_PASSWORD
+</pre>
+</div>
+
+ <p>
+Always use safely-stored  <code>.env</code> files in production. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Alternative Way: Create a Podman pod like a Ghost</h3>
+ <div class="outline-text-3">
+ <p>
+Create an empty pod: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman pod create -p 4430:443 p_passbolt
+</pre>
+</div>
+
+ <p>
+Assign the MySQL container to the new pod: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman run --rm -d --name passbolt_mysql --pod p_passbolt  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">MYSQL_ROOT_PASSWORD</span>=$ <span style="color: #cae682;">MYSQL_ROOT_PASSWORD</span>  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">MYSQL_DATABASE</span>=passbolt  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">MYSQL_USER</span>=passbolt  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">MYSQL_PASSWORD</span>=$ <span style="color: #cae682;">MYSQL_PASSWORD</span>  <span style="color: #95e454;">\</span>
+  -v db_volume:/var/lib/mysql  <span style="color: #95e454;">\</span>
+  docker.io/mysql:lts
+</pre>
+</div>
+
+ <p>
+Add the Passbolt to it: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman run --rm -d --name passbolt  <span style="color: #95e454;">\</span>
+  --pod p_passbolt  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">DATASOURCES_DEFAULT_HOST</span>=127.0.0.1  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">DATASOURCES_DEFAULT_USERNAME</span>=passbolt  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">DATASOURCES_DEFAULT_PASSWORD</span>=$ <span style="color: #cae682;">MYSQL_PASSWORD</span>  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">DATASOURCES_DEFAULT_DATABASE</span>=passbolt  <span style="color: #95e454;">\</span>
+  -e  <span style="color: #cae682;">APP_FULL_BASE_URL</span>=https://passbolt.local:4430  <span style="color: #95e454;">\</span>
+  -v gpg_volume:/etc/passbolt/gpg  <span style="color: #95e454;">\</span>
+  -v jwt_volume:/etc/passbolt/jwt  <span style="color: #95e454;">\</span>
+  docker.io/passbolt/passbolt:4.4.2-1-ce
+</pre>
+</div>
+
+ <p>
+Generate the pod configuration: <br /></p>
+ <div class="org-src-container" data-lang="sh">
+<pre class="src src-sh">podman kube generate p_passbolt -f passbolt-pod.yaml
+</pre>
+</div>
+
+ <p>
+You can create the pod with the  <code>podman kube play passbolt-pod.yaml</code> command. <br /></p>
+
+ <p>
+— <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Notes</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>Run as non-root Podman user if security context allows. <br /></li>
+ <li>Enforce HTTPS (Let's Encrypt or internal CA).  <a href="https://www.passbolt.com/docs/hosting/configure/https/ce/docker-manual/">Official Documentation</a> <br /></li>
+ <li>Place  <code>.env</code> file in an encrypted volume or LUKS-mounted drive. <br /></li>
+ <li>Use iptables or nftables to restrict inbound traffic to 4430 only. <br /></li>
+ <li>Perform GPG backups and store offline. <br /></li>
+ <li>Set up log monitoring and intrusion alerts for container activity. <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Ghost Whisper: Why this matters for small ops</h3>
+ <div class="outline-text-3">
+ <p>
+This stack runs lean and isolated. No daemon overhead. No exposed cloud surfaces. <br />
+Just you, your keys, and a vault cut from silence. <br /></p>
+
+ <p>
+When trust fails, small teams bleed first. <br />
+Passbolt speaks to them - not with bloatware, but with OpenPGP, audits, and clear code. <br /></p>
+
+ <p>
+It's not a toy. It's a vault. <br />
+Open source. Team-first. Built to be verified, not marketed. <br /></p>
+
+ <p>
+For SMBs who still care about sovereignty, <br />
+Passbolt offers a sharp edge - and no hidden trapdoor. <br /></p>
+
+ <p>
+— <br /></p>
+
+ <p>
+Write to DeadSwitch on Matrix:  <code>@deadswitch:matrix.org</code> <br /></p>
+
+ <p>
+ <b>DeadSwitch | The Cyber Ghost</b> <br /> <i>"In silence, we rise. In the switch, we fade."</i> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Silent Architect | All rights reserved. | <a h href="/rss.xml">RSS feed</a></p></footer>
+</body>
+</html>
