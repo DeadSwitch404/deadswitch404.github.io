@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.1.0 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUKS Is Not A Checkbox</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- Mastodon link -->
+  <link rel="me" href="https://mastodon.social/@silentarchitect">
+  <meta property="og:title" content="LUKS Is Not A Checkbox" />
+ <meta property="og:description" content="Encryption at rest is the last guarantee. When a system sleeps, only LUKS stands guard." />
+ <meta property="og:image" content="/static/img/ops-tactics.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2025/12/luks-not-a-checkbox.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>LUKS Is Not A Checkbox</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ops-tactics.jpg" alt="ops-tactics.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+LUKS is not a checkbox. It is the final boundary. <br />
+When the system sleeps, nothing else protects what is inside. <br />
+Access control ends. Permissions end. The running state ends. <br />
+Only encryption remains. <br /></p>
+
+ <p>
+A disk without LUKS is an exposed nerve. <br />
+A disk  <b>with</b> LUKS becomes a sealed chamber that answers only to you. <br /></p>
+
+ <p>
+This operation explains how to extend a Debian system with a new encrypted volume. <br /></p>
+
+ <p>
+Not automated. Not silent. It must ask for your passphrase at boot. <br />
+Intent over convenience. Control over comfort. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>Objective</h3>
+ <div class="outline-text-3">
+ <ol class="org-ol"> <li>Add a new disk to Debian. <br /></li>
+ <li>Prepare it with a clean partition table. <br /></li>
+ <li>Build an LVM stack. <br /></li>
+ <li>Create a LUKS-encrypted logical volume. <br /></li>
+ <li>Integrate it into the boot ritual via  <code>crypttab</code> and  <code>fstab</code>. <br /></li>
+ <li>The system must pause and wait for you. <br /></li>
+ <li>No unattended mounts. No silent assumptions. <br /></li>
+</ol></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Operation</h3>
+ <div class="outline-text-3">
+</div>
+ <div class="outline-4">
+ <h4>1. Detect the New Disk</h4>
+ <div class="outline-text-4">
+ <p>
+Confirm the disk identifier. <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">lsblk -o NAME,SIZE,TYPE,MODEL
+dmesg | tail
+</pre>
+</div>
+
+ <p>
+Assume the new device is  <code>/dev/sdb</code>. <br /></p>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>2. Create a Clean Partition Table</h4>
+ <div class="outline-text-4">
+ <p>
+Use  <code>fdisk</code> to create a single partition for LVM. <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo fdisk /dev/sdb
+ <span style="color: #99968b;"># </span> <span style="color: #99968b;">g               (create GPT table)
+</span> <span style="color: #99968b;"># </span> <span style="color: #99968b;">n               (new partition)
+</span> <span style="color: #99968b;"># </span> <span style="color: #99968b;">default values  (use whole disk)
+</span> <span style="color: #99968b;"># </span> <span style="color: #99968b;">t               (change type)
+</span> <span style="color: #99968b;"># </span> <span style="color: #99968b;">8e              (Linux LVM)
+</span> <span style="color: #99968b;"># </span> <span style="color: #99968b;">w               (write)</span>
+</pre>
+</div>
+
+ <p>
+Verify: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">lsblk /dev/sdb
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>3. Build the LVM Structure</h4>
+ <div class="outline-text-4">
+ <p>
+Initialize the physical volume: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo pvcreate /dev/sdb1
+</pre>
+</div>
+
+ <p>
+Extend or create a volume group: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo vgcreate vgdata /dev/sdb1
+ <span style="color: #99968b;"># </span> <span style="color: #99968b;">or: sudo vgextend vgdata /dev/sdb1</span>
+</pre>
+</div>
+
+ <p>
+Create a logical volume: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo lvcreate -n lvsecure -L 100G vgdata
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>4. Initialize LUKS on the Logical Volume</h4>
+ <div class="outline-text-4">
+ <p>
+Encrypt the LV: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo cryptsetup luksFormat /dev/vgdata/lvsecure
+</pre>
+</div>
+
+ <p>
+Open it: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo cryptsetup open /dev/vgdata/lvsecure securedata
+</pre>
+</div>
+
+ <p>
+A mapping appears at: <br /></p>
+
+ <pre class="example">
+/dev/mapper/securedata
+</pre>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>5. Create the Filesystem</h4>
+ <div class="outline-text-4">
+ <p>
+Format the encrypted block device: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo mkfs.ext4 /dev/mapper/securedata
+</pre>
+</div>
+
+ <p>
+Create a mount point: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo mkdir -p /secure/data
+</pre>
+</div>
+
+ <p>
+Mount it for testing: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo mount /dev/mapper/securedata /secure/data
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>6. Integrate Into Boot Ritual (crypttab)</h4>
+ <div class="outline-text-4">
+ <p>
+Get the LUKS UUID: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo cryptsetup luksUUID /dev/vgdata/lvsecure
+</pre>
+</div>
+
+ <p>
+Add entry to  <code>/etc/crypttab</code>: <br /></p>
+
+ <pre class="example">
+securedata UUID=<luks-uuid-here> none luks
+</pre>
+
+ <p>
+This forces the system to ask for the passphrase at boot. <br />
+This is intentional. <br /></p>
+
+ <p>
+Update initramfs so the system knows about the encrypted volume: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo update-initramfs -u
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>7. Define the Mount Contract (fstab)</h4>
+ <div class="outline-text-4">
+ <p>
+Obtain the filesystem UUID: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo blkid /dev/mapper/securedata
+</pre>
+</div>
+
+ <p>
+Add entry to  <code>/etc/fstab</code>: <br /></p>
+
+ <pre class="example">
+UUID=<fs-uuid-here>  /secure/data  ext4  defaults  0  2
+</pre>
+
+ <p>
+Verify configuration: <br /></p>
+
+ <div class="org-src-container" data-lang="bash">
+<pre class="src src-bash">sudo systemctl daemon-reload
+sudo mount -a
+</pre>
+</div>
+
+ <p>
+If nothing complains, the contract is valid. <br /></p>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>8. Reboot Verification</h4>
+ <div class="outline-text-4">
+ <p>
+Reboot and confirm: <br /></p>
+
+ <ol class="org-ol"> <li>The boot process pauses. <br /></li>
+ <li>The system requests the LUKS passphrase for  <code>securedata</code>. <br /></li>
+ <li>After entry, the filesystem mounts as defined. <br /></li>
+</ol> <p>
+If the system continues without prompting, something is broken. <br /></p>
+</div>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Failure Modes</h3>
+ <div class="outline-text-3">
+</div>
+ <div class="outline-4">
+ <h4>Wrong UUID in crypttab</h4>
+ <div class="outline-text-4">
+ <p>
+System boots but mapping never appears. <br /></p>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>Missing initramfs update</h4>
+ <div class="outline-text-4">
+ <p>
+System ignores crypttab entries. <br /></p>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>Incorrect fstab order or missing mountpoint</h4>
+ <div class="outline-text-4">
+ <p>
+Boot drops into emergency mode. <br /></p>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>LVM inside LUKS vs. LUKS inside LVM</h4>
+ <div class="outline-text-4">
+ <p>
+This article uses LUKS  <b>on</b> LVM. <br />
+Reversing the order changes boot behavior and recovery workflows. <br /></p>
+</div>
+</div>
+
+ <div class="outline-4">
+ <h4>Weak passphrase discipline</h4>
+ <div class="outline-text-4">
+ <p>
+LUKS is as strong as the phrase that guards it. <br /></p>
+</div>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Final Whisper</h3>
+ <div class="outline-text-3">
+ <p>
+Security at rest is not decoration. <br />
+It is the last guarantee when everything else fails. <br />
+Privileges dissolve. Sessions expire. Firewalls sleep. <br />
+Only the encrypted block remains unbroken. <br /></p>
+
+ <p>
+A machine that auto-mounts without asking you is not your machine. <br />
+A machine that pauses and waits for your intent  <b>is</b> your machine. <br /></p>
+
+ <blockquote>
+ <p>
+LUKS is not a checkbox. <br />
+It is the boundary between possession and loss. <br /></p>
+</blockquote>
+
+ <p>
+ <code>[ Fear the Silence. Fear the Switch ]</code> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Silent Architect | All rights reserved. | <a h href="/rss.xml">RSS feed</a></p></footer>
+</body>
+</html>

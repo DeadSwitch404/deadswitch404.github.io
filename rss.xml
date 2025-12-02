@@ -6,6 +6,14 @@
   <description>Latest Whispers From The Silent Architect.</description>
 
   <item>
+    <title>LUKS Is Not A Checkbox</title>
+    <link>https://silentarchitect.org/2025/12/luks-not-a-checkbox.html</link>
+    <description><![CDATA[Encryption at rest is the last guarantee. When a system sleeps, only LUKS stands guard.]]></description>
+    <pubDate>Tue, 02 Dec 2025 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2025/12/luks-not-a-checkbox.html</guid>
+  </item>
+
+  <item>
     <title>[New Release]: Whisper Engine v1.1.0</title>
     <link>https://silentarchitect.org/2025/11/whisper-engine-1.1.0.html</link>
     <description><![CDATA[Whisper Engine gained a new voice. It speaks in RSS.]]></description>
@@ -75,14 +83,6 @@
     <description><![CDATA[Automation isn't safe by default. Lock it down. Semaphore behind SSL - for Operators only.]]></description>
     <pubDate>Sat, 25 Oct 2025 00:00:00 +0200</pubDate>
     <guid>https://silentarchitect.org/2025/10/ssl-semaphore.html</guid>
-  </item>
-
-  <item>
-    <title>Backups – The Silent Fortress</title>
-    <link>https://silentarchitect.org/2025/10/backups-the-silent-fortress.html</link>
-    <description><![CDATA[If a restore fails - the fortress collapses before it can be used.]]></description>
-    <pubDate>Tue, 21 Oct 2025 00:00:00 +0200</pubDate>
-    <guid>https://silentarchitect.org/2025/10/backups-the-silent-fortress.html</guid>
   </item>
 </channel>
 </rss>
