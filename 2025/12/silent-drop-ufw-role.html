@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.1.0 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silent Drop: UFW Firewall Role From The Silent Architect</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- Mastodon link -->
+  <link rel="me" href="https://mastodon.social/@silentarchitect">
+  <meta property="og:title" content="Silent Drop: UFW Firewall Role From The Silent Architect" />
+ <meta property="og:description" content="The firewall layer of GhostWare just received a Silent Drop. Precision. Predictability. No noise." />
+ <meta property="og:image" content="/static/img/ghostware.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2025/12/silent-drop-ufw-role.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Silent Drop: UFW Firewall Role From The Silent Architect</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+If you read  <b>GhostWare</b>, you already know: <br /></p>
+ <ul class="org-ul"> <li>The surface is the battlefield. <br /></li>
+ <li>Noise is the enemy. <br /></li>
+</ul> <p>
+Firewalls should not be a puzzle. <br />
+They should be a  <b>decision</b>. <br /></p>
+
+ <blockquote>
+ <p>
+A firewall is not complexity. <br />
+A firewall is posture. <br /></p>
+</blockquote>
+
+ <p>
+This is where  <b>UFW</b> proves its value. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>UFW – The Minimalist Shield</h3>
+ <div class="outline-text-3">
+ <p>
+It does not pretend to be a next-generation anything. <br />
+It does not promise magic. <br /></p>
+
+ <p>
+It gives you: <br /></p>
+ <ul class="org-ul"> <li>Clean rule sets. <br /></li>
+ <li>Predictable defaults. <br /></li>
+ <li>A stable, battle-tested foundation. <br /></li>
+ <li>Behavior that's easy to audit. <br /></li>
+</ul> <p>
+Nothing more. <br />
+Nothing less. <br /></p>
+
+ <p>
+Small and medium systems don't need enterprise-grade bloat. <br />
+Most vendors sell fear packaged as complexity. <br /></p>
+
+ <blockquote>
+ <p>
+UFW fits GhostWare because it does one thing: it enforces. <br /></p>
+</blockquote>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Ansible – The Operational Hand Of DeadSwitch</h3>
+ <div class="outline-text-3">
+ <p>
+Ansible keeps the infrastructure honest. <br /></p>
+ <ul class="org-ul"> <li>It removes drift. <br /></li>
+ <li>It applies intent. <br /></li>
+</ul> <p>
+The  <b>GhostWare</b> prefers tools that behave the same way every time. <br />
+Ansible earned that trust. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>The UFW Role – A Silent Drop For Real Systems</h3>
+ <div class="outline-text-3">
+ <p>
+Firewalls change. <br />
+Rules accumulate. <br />
+Mistakes happen quietly. <br /></p>
+
+ <p>
+This role brings order: <br /></p>
+
+ <ul class="org-ul"> <li>Deny incoming by default. <br /></li>
+ <li>Allow outgoing by default. <br /></li>
+ <li>Define rules explicitly. <br /></li>
+ <li>Apply them idempotently. <br /></li>
+ <li>Deploy the same posture everywhere. <br /></li>
+</ul> <p>
+The role is  <b>open-source</b>. <br />
+Transparent. Inspectable. Adaptable. <br /></p>
+
+ <p>
+ <a href="https://github.com/DeadSwitch404/ds-ufw">DeadSwitch UFW Role on GitHub</a> <br /></p>
+
+ <p>
+Audit it. <br />
+Use it. <br />
+Extend it. <br />
+Break it if you can - and improve it. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Example – Declaring Intent With Precision</h3>
+ <div class="outline-text-3">
+ <div class="org-src-container" data-lang="yaml">
+<pre class="src src-yaml">-  <span style="color: #e5786d;">name</span>: <span style="color: #00ff00;"> Deploy UFW firewall</span>
+   <span style="color: #cd5c5c;">hosts</span>: all
+   <span style="color: #e5786d;">become</span>:  <span style="color: #e5786d;">true</span>
+   <span style="color: #cd5c5c;">roles</span>:
+    -  <span style="color: #cd5c5c;">role</span>: ds-ufw
+       <span style="color: #cd5c5c;">vars</span>:
+         <span style="color: #cae682;">ufw_default_incoming_policy</span>:  <span style="color: #95e454;">"deny"</span>
+         <span style="color: #cae682;">ufw_default_outgoing_policy</span>:  <span style="color: #95e454;">"allow"</span>
+         <span style="color: #cae682;">ufw_rules</span>:
+          - {  <span style="color: #cae682;">port</span>:  <span style="color: #95e454;">"22"</span>,  <span style="color: #cae682;">proto</span>:  <span style="color: #95e454;">"tcp"</span>,  <span style="color: #cae682;">rule</span>:  <span style="color: #95e454;">"allow"</span> }
+          - {  <span style="color: #cae682;">port</span>:  <span style="color: #95e454;">"80"</span>,  <span style="color: #cae682;">proto</span>:  <span style="color: #95e454;">"tcp"</span>,  <span style="color: #cae682;">rule</span>:  <span style="color: #95e454;">"allow"</span> }
+          - {  <span style="color: #cae682;">port</span>:  <span style="color: #95e454;">"443"</span>,  <span style="color: #cae682;">proto</span>:  <span style="color: #95e454;">"tcp"</span>,  <span style="color: #cae682;">rule</span>:  <span style="color: #95e454;">"allow"</span> }
+</pre>
+</div>
+
+ <p>
+No over-engineering. <br />
+No abstraction layers stacked without purpose. <br /></p>
+
+ <p>
+Just clarity. <br />
+Just intent enforced. <br /></p>
+
+ <p>
+Stay disciplined. <br />
+Stay sharp. <br /></p>
+
+ <p>
+ <code>[ Fear the Silence. Fear the Switch. ]</code> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025 DeadSwitch | The Silent Architect | All rights reserved. | <a h href="/rss.xml">RSS feed</a></p></footer>
+</body>
+</html>
