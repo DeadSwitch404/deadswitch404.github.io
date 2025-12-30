@@ -6,6 +6,14 @@
   <description>Latest Whispers From The Silent Architect.</description>
 
   <item>
+    <title>DeadSwitch Holiday Message</title>
+    <link>https://silentarchitect.org/2025/12/holidays.html</link>
+    <description><![CDATA[It's the end of the year. We've time to slow down. Only one message broadcasts.]]></description>
+    <pubDate>Tue, 30 Dec 2025 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2025/12/holidays.html</guid>
+  </item>
+
+  <item>
     <title>Silent Drop: UFW Firewall Role From The Silent Architect</title>
     <link>https://silentarchitect.org/2025/12/silent-drop-ufw-role.html</link>
     <description><![CDATA[The firewall layer of GhostWare just received a Silent Drop. Precision. Predictability. No noise.]]></description>
@@ -75,14 +83,6 @@
     <description><![CDATA[No budget? No security? Open-source is the answer.]]></description>
     <pubDate>Mon, 27 Oct 2025 00:00:00 +0100</pubDate>
     <guid>https://silentarchitect.org/2025/10/article-small-business-cybersec-starter-kit.html</guid>
-  </item>
-
-  <item>
-    <title>Ghost Logs - The Journalctl</title>
-    <link>https://silentarchitect.org/2025/10/article-ghost-logs-journalctl.html</link>
-    <description><![CDATA[Ghosts don't leave traces. They curate them. With journalctl.]]></description>
-    <pubDate>Sun, 26 Oct 2025 00:00:00 +0200</pubDate>
-    <guid>https://silentarchitect.org/2025/10/article-ghost-logs-journalctl.html</guid>
   </item>
 </channel>
 </rss>
