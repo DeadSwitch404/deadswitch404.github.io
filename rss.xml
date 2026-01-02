@@ -6,6 +6,14 @@
   <description>Latest Whispers From The Silent Architect.</description>
 
   <item>
+    <title>Reflections On 2025</title>
+    <link>https://silentarchitect.org/2026/01/last-year-reflection.html</link>
+    <description><![CDATA[You don't just "apt purge 2025" and start the new year. You carry the scars and improvements. Let's "apt install 2026".]]></description>
+    <pubDate>Fri, 02 Jan 2026 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2026/01/last-year-reflection.html</guid>
+  </item>
+
+  <item>
     <title>DeadSwitch Holiday Message</title>
     <link>https://silentarchitect.org/2025/12/holidays.html</link>
     <description><![CDATA[It's the end of the year. We've time to slow down. Only one message broadcasts.]]></description>
@@ -75,14 +83,6 @@
     <description><![CDATA[Signed commits turn every patch into a silent, unforgeable audit trail. Learn why the key matters.]]></description>
     <pubDate>Tue, 28 Oct 2025 00:00:00 +0100</pubDate>
     <guid>https://silentarchitect.org/2025/10/silent-signature-git.html</guid>
-  </item>
-
-  <item>
-    <title>Small Business Cybersecurity Starter Kit - Ghost Curated</title>
-    <link>https://silentarchitect.org/2025/10/article-small-business-cybersec-starter-kit.html</link>
-    <description><![CDATA[No budget? No security? Open-source is the answer.]]></description>
-    <pubDate>Mon, 27 Oct 2025 00:00:00 +0100</pubDate>
-    <guid>https://silentarchitect.org/2025/10/article-small-business-cybersec-starter-kit.html</guid>
   </item>
 </channel>
 </rss>
