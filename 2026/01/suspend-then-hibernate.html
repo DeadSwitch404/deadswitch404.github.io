@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.1.0 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suspend Then Hibernate - Keep Your Blade Sharp</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- Mastodon link -->
+  <link rel="me" href="https://mastodon.social/@silentarchitect">
+  <meta property="og:title" content="Suspend Then Hibernate - Keep Your Blade Sharp" />
+ <meta property="og:description" content="Your notebook is your weapon. Suspend fast. Hibernate before power runs out." />
+ <meta property="og:image" content="/static/img/ghostware.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2026/01/suspend-then-hibernate.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Suspend Then Hibernate</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+You work in the field. <br />
+The weapon is your notebook. <br /></p>
+
+ <p>
+The battery is draining. <br /></p>
+
+ <p>
+You move rooms. Then places. <br />
+The notebook is suspended. In the bag. <br />
+Time stretches. <br /></p>
+
+ <p>
+Open the notebook - the battery is near empty. <br /></p>
+</div>
+
+ <div class="outline-3">
+ <h3>The Drill</h3>
+ <div class="outline-text-3">
+ <p>
+ <b>Suspend</b> is fast. State lives in RAM. <br />
+RAM needs power. <br />
+The battery drains. <br /></p>
+
+ <p>
+ <b>Hibernate</b> preserves sessions. It stores them on disk. <br />
+It's slower - but it removes the pressure from the battery. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>What It Is</h3>
+ <div class="outline-text-3">
+ <p>
+The best of both worlds: <br /></p>
+
+ <ul class="org-ul"> <li>The system suspends. <br /></li>
+ <li>A timer is started. <br /></li>
+ <li>When the timer expires: <br /> <ul class="org-ul"> <li>The system wakes up. <br /></li>
+ <li>It hibernates to swap. <br /></li>
+</ul></li>
+ <li>On power-on: it resumes from swap. <br /></li>
+</ul></div>
+</div>
+
+ <div class="outline-3">
+ <h3>Enabling Hibernate - The Field Notes</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>The swap > RAM. <br /></li>
+ <li>The initramfs contains libs to read LVM and LUKS. <br /></li>
+</ul> <p>
+Find the swap UUID: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo blkid | grep swap
+</pre>
+</div>
+
+ <p>
+On encrypted systems, the resume target must resolve to the  <b>unlocked swap device</b> provided by initramfs. <br /></p>
+
+ <p>
+Add the UUID as resume option to GRUB in  <code>/etc/default/grub</code>: <br /></p>
+
+ <pre class="example">
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID=<swap-uuid>"
+</pre>
+
+ <p>
+Apply the change: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo update-grub
+</pre>
+</div>
+
+ <p>
+If the swap is on LUKS: <br /></p>
+
+ <pre class="example">
+echo RESUME=UUID=<swap-uuid> | sudo tee /etc/initramfs-tools/conf.d/resume
+sudo update-initramfs -u
+sudo reboot
+</pre>
+
+ <p>
+Test the hibernate and resume: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo systemctl hibernate
+</pre>
+</div>
+
+ <p>
+Suspend-then-hibernate is a wrapper. If hibernate is broken, the wrapper cannot save it. <br />
+The system must hibernate and resume correctly. <br />
+If it fails - repair this function first. <br /></p>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Enabling Suspend Then Hibernate</h3>
+ <div class="outline-text-3">
+ <p>
+Edit systemd sleep configuration in  <code>/etc/systemd/sleep.conf</code>: <br /></p>
+
+ <div class="org-src-container" data-lang="conf">
+<pre class="src src-conf">[ <span style="color: #92a65e; font-weight: bold;">Sleep</span>]
+ <span style="color: #cae682;">AllowSuspend</span>=yes
+ <span style="color: #cae682;">AllowHibernation</span>=yes
+ <span style="color: #cae682;">AllowSuspendThenHibernate</span>=yes
+ <span style="color: #cae682;">HibernateDelaySec</span>=30min
+</pre>
+</div>
+
+ <p>
+Manually test it: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo systemctl suspend-then-hibernate --no-block
+</pre>
+</div>
+
+ <p>
+ <code>--no-block</code> returns control to the shell immediately; it does not bypass suspend or hibernate inhibitors. <br /></p>
+
+ <p>
+The system suspends. <br />
+After 30 minutes it wakes up and hibernates. <br /></p>
+
+ <p>
+If it fails, debug: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">journalctl -u systemd-suspend-then-hibernate
+journalctl -b | grep -i hibernate
+</pre>
+</div>
+</div>
+</div>
+
+ <div class="outline-3">
+ <h3>Final Whisper</h3>
+ <div class="outline-text-3">
+ <p>
+This setup is: <br /></p>
+ <ul class="org-ul"> <li>systemd-native <br /></li>
+ <li>Stable across updates <br /></li>
+ <li>Suitable for encrypted systems <br /></li>
+ <li>Tested on Intel ThinkPad platforms <br /></li>
+</ul> <p>
+No scripts. No hacks. No legacy ACPI glue. <br /></p>
+
+ <p>
+ <code>[ Fear the Silence. Fear the Switch. ]</code> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025-2026 DeadSwitch | The Silent Architect | All rights reserved. | <a h href="/rss.xml">RSS feed</a></p></footer>
+</body>
+</html>
