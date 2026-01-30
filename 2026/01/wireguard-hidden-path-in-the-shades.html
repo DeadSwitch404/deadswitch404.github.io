@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.1.0 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WireGuard - Hidden Path In The Shades</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- Mastodon link -->
+  <link rel="me" href="https://mastodon.social/@silentarchitect">
+  <meta property="og:title" content="WireGuard - Hidden Path In The Shades" />
+ <meta property="og:description" content="VPN isn't for watching streams. It's the secret path for your private connections." />
+ <meta property="og:image" content="/static/img/ghostware.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2026/01/wireguard-hidden-path-in-the-shades.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>WireGuard - Hidden Path In The Shades</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+Virtual Private Networks aren't for watching streams. <br /></p>
+
+ <p>
+VPNs secure connections. They encrypt your data flow. <br /></p>
+
+ <p>
+Once they connected networks. <br />
+Today they protect information and  <b>privacy</b>. <br /></p>
+
+ <p>
+A VPN isn't optional anymore. <br />
+It's your shield against the prying eyes. <br /></p>
+
+ <p>
+Without it your ISP can observe too much: <br /></p>
+
+ <ul class="org-ul"> <li> <i>browsing habits</i> <br /></li>
+ <li> <i>downloads</i> <br /></li>
+ <li> <i>protocols</i> <br /></li>
+</ul> <p>
+With a consumer VPN you shift your trust to your provider. <br /></p>
+
+ <p>
+Or you host your own VPN service - putting the trust in yourself and your hosting. <br /></p>
+</div>
+ <div class="outline-3">
+ <h3>Guard Your Wires - Protect The Flow</h3>
+ <div class="outline-text-3">
+ <p>
+WireGuard is a modern VPN protocol. <br />
+It's simple, fast and secure. <br />
+It's part of the Linux kernel. <br /></p>
+</div>
+ <div class="outline-4">
+ <h4>The Server</h4>
+ <div class="outline-text-4">
+ <p>
+Install the  <code>wireguard</code> package: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo apt install wireguard
+</pre>
+</div>
+
+ <p>
+Generate the server keys: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">wg genkey > server_private.key
+wg pubkey < server_private.key > server_public.key
+sudo mv *.key /etc/wireguard/
+</pre>
+</div>
+
+ <p>
+Protect the keys with hardened permissions: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo chmod 400 /etc/wireguard/{server_private.key,server_public.key}
+sudo chown root:root /etc/wireguard/{server_private.key,server_public.key}
+</pre>
+</div>
+
+ <p>
+In the following examples: <br /></p>
+ <ul class="org-ul"> <li> <i>Replace the IP address with your IP.</i> <br /></li>
+ <li> <i>Replace the interface with your LAN interface.</i> <br /></li>
+</ul> <p>
+Enable the local IP forwarding: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell"> <span style="color: #e5786d;">echo</span>  <span style="color: #95e454;">"net.ipv4.ip_forward=1"</span> | sudo tee /etc/sysctl.d/wireguard.conf
+sudo sysctl --system
+</pre>
+</div>
+
+ <p>
+In the  <code>/etc/ufw/sysctl.conf</code>: <br /></p>
+
+ <div class="org-src-container" data-lang="conf">
+<pre class="src src-conf"> <span style="color: #cae682;">net.ipv4.ip_forward</span>=1
+</pre>
+</div>
+
+ <p>
+In the  <code>/etc/ufw/before.rules</code> before the  <code>*filter</code> line: <br /></p>
+
+ <div class="org-src-container" data-lang="conf">
+<pre class="src src-conf">*nat
+:POSTROUTING ACCEPT [0:0]
+-A POSTROUTING -s 10.20.20.0/24 -o enp1s0 -j MASQUERADE
+COMMIT
+</pre>
+</div>
+
+ <p>
+Allow the routing in UFW: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo ufw route allow <span style="color: #8ac6f2; font-weight: bold;"> in</span> on wg0 out on enp1s0
+sudo ufw allow 51820/udp
+</pre>
+</div>
+
+ <p>
+Reload the UFW configuration: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo ufw disable
+sudo ufw enable
+</pre>
+</div>
+
+ <p>
+WireGuard server configuration: <br /></p>
+
+ <p>
+Minimal server configuration  <code>/etc/wireguard/wg0.conf</code>. <br /></p>
+
+ <div class="org-src-container" data-lang="conf">
+<pre class="src src-conf"> <span style="color: #99968b;"># </span> <span style="color: #99968b;">Server configuration
+</span>[ <span style="color: #92a65e; font-weight: bold;">Interface</span>]
+ <span style="color: #cae682;">PrivateKey</span> = <server_private_key>
+ <span style="color: #cae682;">Address</span> = 10.20.20.1/24
+ <span style="color: #cae682;">ListenPort</span> = 51820
+ <span style="color: #cae682;">SaveConfig</span> = false
+
+ <span style="color: #99968b;"># </span> <span style="color: #99968b;">Client's config
+</span>[ <span style="color: #92a65e; font-weight: bold;">Peer</span>]
+ <span style="color: #cae682;">PublicKey</span> = e2V40zdPiX43lqOamcoEI8J10uKaXWBeKwf+spWDWgc=
+ <span style="color: #cae682;">AllowedIPs</span> = 10.20.20.2/32
+</pre>
+</div>
+
+ <p>
+Harden the file permissions: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo chmod 600 /etc/wireguard/wg0.conf
+</pre>
+</div>
+
+ <p>
+Start and enable the service: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo systemctl enable wg-quick@wg0
+sudo systemctl start wg-quick@wg0
+</pre>
+</div>
+
+ <p>
+Verify the service: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo systemctl status wg-quick@wg0.service
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-4">
+ <h4>The Clients</h4>
+ <div class="outline-text-4">
+ <p>
+Install the  <code>wireguard</code> package. <br /></p>
+
+ <p>
+Generate the key pair as on the server. <br />
+Harden their permissions. <br /></p>
+
+ <p>
+Install the resolvconf package (optional on some systems): <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo apt install resolvconf
+</pre>
+</div>
+
+ <p>
+WireGuard client configuration. <br /></p>
+
+ <p>
+Minimal client config in  <code>/etc/wireguard/wg-ds.conf</code>: <br /></p>
+
+ <div class="org-src-container" data-lang="conf">
+<pre class="src src-conf"> <span style="color: #99968b;"># </span> <span style="color: #99968b;">Client's configuration
+</span>[ <span style="color: #92a65e; font-weight: bold;">Interface</span>]
+ <span style="color: #cae682;">PrivateKey</span> = <client_private_key>
+ <span style="color: #cae682;">Address</span> = 10.20.20.2/32
+ <span style="color: #cae682;">SaveConfig</span> = true
+
+ <span style="color: #99968b;"># </span> <span style="color: #99968b;">Server's configuration
+</span>[ <span style="color: #92a65e; font-weight: bold;">Peer</span>]
+ <span style="color: #cae682;">PublicKey</span> = tInj/aAAZIkv8RWzAyXq5ngbO9OUPz+Fkbog7LkgQzQ=
+ <span style="color: #cae682;">Endpoint</span> = <server_ip>:51820
+ <span style="color: #cae682;">AllowedIPs</span> = 10.20.20.0/24, 192.168.100.0/24
+ <span style="color: #cae682;">PersistentKeepalive</span> = 25
+</pre>
+</div>
+
+ <p>
+ <code>PersistentKeepalive</code> is crucial for services behind NAT. <br /></p>
+
+ <p>
+Don't forget the hardening: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo chmod 600 /etc/wireguard/wg-ds.conf
+</pre>
+</div>
+
+ <p>
+Bring up the connection: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo wg-quick up wg-ds
+</pre>
+</div>
+
+ <p>
+Verify it: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo wg show
+</pre>
+</div>
+
+ <p>
+Break down the connection if you don't need it: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo wg-quick down wg-ds
+</pre>
+</div>
+</div>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Final Whisper</h3>
+ <div class="outline-text-3">
+ <p>
+This configuration protects your communication  <b>between</b> the client and the server. <br /></p>
+
+ <p>
+What leaves the server is observable. <br />
+The trace leads back to it. <br /></p>
+
+ <p>
+A VPN is  <b>not</b> anonymity. It's more  <b>privacy</b>. <br /></p>
+
+ <p>
+ <code>[ Fear the Silence. Fear the Switch. ]</code> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025-2026 DeadSwitch | The Silent Architect | All rights reserved. | <a h href="/rss.xml">RSS feed</a></p></footer>
+</body>
+</html>

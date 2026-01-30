@@ -6,6 +6,14 @@
   <description>Latest Whispers From The Silent Architect.</description>
 
   <item>
+    <title>WireGuard - Hidden Path In The Shades</title>
+    <link>https://silentarchitect.org/2026/01/wireguard-hidden-path-in-the-shades.html</link>
+    <description><![CDATA[VPN isn't for watching streams. It's the secret path for your private connections.]]></description>
+    <pubDate>Fri, 30 Jan 2026 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2026/01/wireguard-hidden-path-in-the-shades.html</guid>
+  </item>
+
+  <item>
     <title>Suspend Then Hibernate - Keep Your Blade Sharp</title>
     <link>https://silentarchitect.org/2026/01/suspend-then-hibernate.html</link>
     <description><![CDATA[Your notebook is your weapon. Suspend fast. Hibernate before power runs out.]]></description>
@@ -75,14 +83,6 @@
     <description><![CDATA[In the shadows, keys are silent guardians. Master sleeps offline. Subkeys move unseen. Ghost-level OPSEC is control without exposure.]]></description>
     <pubDate>Wed, 12 Nov 2025 00:00:00 +0100</pubDate>
     <guid>https://silentarchitect.org/2025/11/gpg-like-a-ghost.html</guid>
-  </item>
-
-  <item>
-    <title>Silent Systems - The Local LLM</title>
-    <link>https://silentarchitect.org/2025/11/silent-system-local-llm.html</link>
-    <description><![CDATA[Control your data. Run your AI locally. Silent Systems - The Local LLM ensures your conversations stay private and secure.]]></description>
-    <pubDate>Fri, 07 Nov 2025 00:00:00 +0100</pubDate>
-    <guid>https://silentarchitect.org/2025/11/silent-system-local-llm.html</guid>
   </item>
 </channel>
 </rss>
