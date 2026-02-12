@@ -6,6 +6,14 @@
   <description>Latest Whispers From The Silent Architect.</description>
 
   <item>
+    <title>DevSecOps - Resilience Isn't Optional Anymore</title>
+    <link>https://silentarchitect.org/2026/02/devsecops-resilience.html</link>
+    <description><![CDATA[Low budget and weak hardware aren't an excuse for compromised security.]]></description>
+    <pubDate>Thu, 12 Feb 2026 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2026/02/devsecops-resilience.html</guid>
+  </item>
+
+  <item>
     <title>WireGuard - Hidden Path In The Shades</title>
     <link>https://silentarchitect.org/2026/01/wireguard-hidden-path-in-the-shades.html</link>
     <description><![CDATA[VPN isn't for watching streams. It's the secret path for your private connections.]]></description>
@@ -75,14 +83,6 @@
     <description><![CDATA[They sold you convenience. They bought your identity.]]></description>
     <pubDate>Mon, 17 Nov 2025 00:00:00 +0100</pubDate>
     <guid>https://silentarchitect.org/2025/11/surveillance-the-new-norm.html</guid>
-  </item>
-
-  <item>
-    <title>GPG Like A Ghost</title>
-    <link>https://silentarchitect.org/2025/11/gpg-like-a-ghost.html</link>
-    <description><![CDATA[In the shadows, keys are silent guardians. Master sleeps offline. Subkeys move unseen. Ghost-level OPSEC is control without exposure.]]></description>
-    <pubDate>Wed, 12 Nov 2025 00:00:00 +0100</pubDate>
-    <guid>https://silentarchitect.org/2025/11/gpg-like-a-ghost.html</guid>
   </item>
 </channel>
 </rss>
