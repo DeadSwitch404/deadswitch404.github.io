@@ -6,6 +6,14 @@
   <description>Latest Whispers From The Silent Architect.</description>
 
   <item>
+    <title>When Local-Only And Self-Hosted Matters</title>
+    <link>https://silentarchitect.org/2026/02/when-local-only-matters.html</link>
+    <description><![CDATA[When data exposure is unacceptable - local-only and self-hosted are the solution. It's not paranoia. It's a threat-modeling mindset.]]></description>
+    <pubDate>Mon, 23 Feb 2026 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2026/02/when-local-only-matters.html</guid>
+  </item>
+
+  <item>
     <title>DevSecOps - Resilience Isn't Optional Anymore</title>
     <link>https://silentarchitect.org/2026/02/devsecops-resilience.html</link>
     <description><![CDATA[Low budget and weak hardware aren't an excuse for compromised security.]]></description>
@@ -75,14 +83,6 @@
     <description><![CDATA[It's out now: The Silent Architect's Wireguard role is available. DeadSwitch doesn't signal on noisy channels. Neither you shoud.]]></description>
     <pubDate>Thu, 20 Nov 2025 00:00:00 +0100</pubDate>
     <guid>https://silentarchitect.org/2025/11/silent-drop-wireguard-role.html</guid>
-  </item>
-
-  <item>
-    <title>The Quiet Death of Privacy</title>
-    <link>https://silentarchitect.org/2025/11/surveillance-the-new-norm.html</link>
-    <description><![CDATA[They sold you convenience. They bought your identity.]]></description>
-    <pubDate>Mon, 17 Nov 2025 00:00:00 +0100</pubDate>
-    <guid>https://silentarchitect.org/2025/11/surveillance-the-new-norm.html</guid>
   </item>
 </channel>
 </rss>
