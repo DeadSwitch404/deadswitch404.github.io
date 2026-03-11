@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.1.0 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Architect's KVM Field Manual</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- Mastodon link -->
+  <link rel="me" href="https://mastodon.social/@silentarchitect">
+  <meta property="og:title" content="The Architect's KVM Field Manual" />
+ <meta property="og:description" content="Headless. Fast. Surgical. KVM is a battle-tested tool in the Architect's armory." />
+ <meta property="og:image" content="/static/img/ghostware.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2026/03/architects-kvm-manual.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>The Architect's KVM Field Manual</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+Enterprise hypervisors carry risks. <br /></p>
+
+ <ul class="org-ul"> <li>License volatility <br /></li>
+ <li>Operational overhead <br /></li>
+ <li>Telemetry <br /></li>
+</ul> <p>
+There is a quieter alternative. <br /></p>
+
+ <p>
+ <b>KVM</b> lives inside the Linux kernel. <br />
+It operates as a kernel module. <br /></p>
+
+ <p>
+Open-source, with auditable code. <br /></p>
+
+ <ul class="org-ul"> <li>Security is  <b>directly</b> influenced by the Architect. <br /></li>
+ <li>The  <code>libvirt</code> API exposes the hypervisor to automation and configuration management systems. <br /></li>
+ <li>KVM runs Linux, Windows and BSD virtual machines. <br /></li>
+ <li>It ships with an ecosystem of mature tools. <br /></li>
+</ul> <blockquote>
+ <p>
+KVM is not a downgrade. It shifts responsibility to the Architect. <br /></p>
+</blockquote>
+</div>
+ <div class="outline-3">
+ <h3>Install On Debian Linux</h3>
+ <div class="outline-text-3">
+ <p>
+KVM runs on nearly all major Linux distributions. <br />
+Preparation and installation are similar across them. <br /> <i>Visit the documentation of your distribution for the differences.</i> <br /></p>
+</div>
+ <div class="outline-4">
+ <h4>Pre-Checks</h4>
+ <div class="outline-text-4">
+ <ul class="org-ul"> <li>In the BIOS/EFI verify that virtualization is supported  <b>and enabled</b>. <br /></li>
+ <li>Verify that the CPU supports virtualization. <br /></li>
+</ul> <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">lscpu | grep -i virtualization
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-4">
+ <h4>Installation</h4>
+ <div class="outline-text-4">
+ <p>
+The required tooling can be installed directly from the Debian repository. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo apt install -y qemu-kvm qemu-utils libvirt-daemon-system  <span style="color: #95e454;">\</span>
+     libvirt-clients virtinst bridge-utils
+</pre>
+</div>
+
+ <p>
+To manage KVM as a  <b>non-root</b> user, add the account to the  <code>libvirt</code> group. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo usermod -aG libvirt $ <span style="color: #cae682;">USER</span>
+</pre>
+</div>
+
+ <p>
+Configure the default libvirt connection URI. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell"> <span style="color: #e5786d;">echo</span>  <span style="color: #95e454;">"export LIBVIRT_DEFAULT_URI='qemu:///system'"</span> >> ~/.bashrc
+ <span style="color: #e5786d;">source</span> ~/.bashrc
+</pre>
+</div>
+
+ <p>
+Log out and log in again for the group change to take effect. <br /></p>
+</div>
+</div>
+ <div class="outline-4">
+ <h4>Post-Checks</h4>
+ <div class="outline-text-4">
+ <p>
+After installation  <code>libvirtd</code> is enabled and running: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">systemctl status libvirtd
+</pre>
+</div>
+
+ <p>
+Verify the installed tools: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">qemu-system-x86_64 --version
+virsh --version
+lsmod | grep kvm
+</pre>
+</div>
+</div>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Default Network (NAT)</h3>
+ <div class="outline-text-3">
+ <p>
+The default network allows virtual machines to access the internet behind NAT. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo virsh net-list --all
+sudo virsh net-start default
+sudo virsh net-autostart default
+</pre>
+</div>
+
+ <p>
+NAT is ideal for isolated virtual machines. <br /></p>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Bridge Network</h3>
+ <div class="outline-text-3">
+ <p>
+NAT isolates virtual machines. <br /></p>
+
+ <p>
+Bridge networking exposes them to the local network. <br /></p>
+
+ <ul class="org-ul"> <li>VMs connect directly to the LAN. <br /></li>
+ <li>They receive normal network visibility. <br /></li>
+ <li>LAN resources become reachable. <br /></li>
+</ul> <p>
+This example assumes  <code>ifupdown</code> is in use. <br /></p>
+
+ <p>
+Create the bridge interface: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo brctl addbr br0
+</pre>
+</div>
+
+ <p>
+For persistent configuration add it to  <code>/etc/network/interfaces</code>: <br /></p>
+
+ <div class="org-src-container" data-lang="conf">
+<pre class="src src-conf">auto lo
+iface lo inet loopback
+
+auto <your physical NIC interface>
+iface <your physical NIC interface> inet manual
+
+auto br0
+iface br0 inet static
+    address <your IP>
+    netmask <your netmask>
+    gateway <your gateway>
+    bridge_ports <your physical NIC interface>
+    bridge_stp off
+    bridge_fd 0
+    bridge_maxwait 0
+</pre>
+</div>
+
+ <p>
+Be careful when modifying remote servers — you can lock yourself out. <br /></p>
+
+ <p>
+After modifying  <code>/etc/network/interfaces</code> restart networking or reboot the host. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo systemctl restart networking
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Storage Pools</h3>
+ <div class="outline-text-3">
+ <p>
+The default KVM storage pool resides in  <code>/var/lib/libvirt/images</code>. <br />
+It is recommended to mount this directory on a  <b>dedicated</b> filesystem. <br /></p>
+
+ <p>
+This prevents virtual disks from exhausting the host filesystem and simplifies backups. <br /></p>
+
+ <p>
+Storage pools are managed with  <code>virsh</code>. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh pool-list --all
+virsh pool-info default
+</pre>
+</div>
+
+ <p>
+If the default pool is inactive: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh pool-start default
+virsh pool-autostart default
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Virtual Image Formats</h3>
+ <div class="outline-text-3">
+ <p>
+KVM supports multiple virtual disk formats. <br /></p>
+
+ <p>
+Most Architects use either  <code>raw</code> or  <code>qcow2</code>. <br /></p>
+
+ <p>
+Many production environments combine  <code>raw</code> disks with LVM snapshots for maximum performance and external snapshot control. <br /></p>
+</div>
+ <div class="outline-4">
+ <h4>Raw</h4>
+ <div class="outline-text-4">
+ <ul class="org-ul"> <li> <code>raw</code> is a fast and reliable disk format. <br /></li>
+ <li>It is a simple disk container with no metadata or snapshot features. <br /></li>
+ <li>For snapshots LVM or external tooling is recommended. <br /></li>
+ <li>Raw images are typically fully allocated and do not provide thin-provisioning features. <br /></li>
+</ul></div>
+</div>
+ <div class="outline-4">
+ <h4>Qcow2</h4>
+ <div class="outline-text-4">
+ <ul class="org-ul"> <li> <code>qcow2</code> introduces a small performance overhead due to metadata management. <br /></li>
+ <li> <code>qcow2</code> supports internal and external snapshotting. <br /></li>
+ <li>Images are thin-provisioned. <br /></li>
+</ul> <p>
+For heavy I/O virtual machines  <code>raw</code> is recommended (e.g. database servers). <br /></p>
+
+ <p>
+For general server workloads  <code>qcow2</code> is usually adequate. <br /></p>
+</div>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Install Virtual Machines</h3>
+ <div class="outline-text-3">
+ <p>
+ <code>virt-install</code> installs virtual machines from the command line. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virt-install  <span style="color: #95e454;">\</span>
+  --name debian-image  <span style="color: #95e454;">\</span>
+  --memory 4096  <span style="color: #95e454;">\</span>
+  --vcpus 4  <span style="color: #95e454;">\</span>
+  --disk  <span style="color: #cae682;">size</span>=20, <span style="color: #cae682;">path</span>=/var/lib/libvirt/images/debian-image.qcow2, <span style="color: #cae682;">format</span>=qcow2  <span style="color: #95e454;">\</span>
+  --cdrom /var/lib/libvirt/images/debian-13.3.0-amd64-netinst.iso  <span style="color: #95e454;">\</span>
+  --os-variant debian13  <span style="color: #95e454;">\</span>
+  --network  <span style="color: #cae682;">bridge</span>=br0  <span style="color: #95e454;">\</span>
+  --graphics spice
+</pre>
+</div>
+
+ <p>
+The installation ISO must be downloaded in advance: <br /></p>
+
+ <p>
+ <code>/var/lib/libvirt/images/debian-13.3.0-amd64-netinst.iso</code> <br /></p>
+
+ <p>
+Alternatively the VM can be installed directly from the internet: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">--location <url>
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Clone Virtual Machines</h3>
+ <div class="outline-text-3">
+ <p>
+ <code>virt-clone</code> creates copies of existing virtual machines. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virt-clone  <span style="color: #95e454;">\</span>
+    --original debian-image  <span style="color: #95e454;">\</span>
+    --name debian-clone  <span style="color: #95e454;">\</span>
+    --file /var/lib/libvirt/images/debian-clone.qcow2
+</pre>
+</div>
+
+ <p>
+The original VM should be powered off before cloning. <br /></p>
+
+ <p>
+ <code>virt-clone</code> automatically generates new MAC addresses for the cloned VM. <br /></p>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Basic Virtual Machine Operations</h3>
+ <div class="outline-text-3">
+ <p>
+ <code>virsh</code> performs basic virtual machine operations. <br /></p>
+</div>
+ <div class="outline-4">
+ <h4>Start</h4>
+ <div class="outline-text-4">
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh start debian-clone
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-4">
+ <h4>Shutdown</h4>
+ <div class="outline-text-4">
+ <p>
+If the guest OS supports ACPI or runs  <code>qemu-ga</code>, the shutdown is graceful. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh shutdown debian-clone
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-4">
+ <h4>Destroy</h4>
+ <div class="outline-text-4">
+ <p>
+Destroy forces an immediate power off. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh destroy debian-clone
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-4">
+ <h4>List</h4>
+ <div class="outline-text-4">
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh list
+virsh list --all
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-4">
+ <h4>Autostart</h4>
+ <div class="outline-text-4">
+ <p>
+Enable autostart to start the VM during host boot. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh autostart debian-clone
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-4">
+ <h4>Undefine</h4>
+ <div class="outline-text-4">
+ <p>
+Undefining a virtual machine removes its definition from the host. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh undefine debian-clone [--remove-all-storage]
+</pre>
+</div>
+
+ <p>
+Without  <code>--remove-all-storage</code> the disk images remain on the filesystem. <br /></p>
+</div>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Resize Virtual Machines</h3>
+ <div class="outline-text-3">
+ <p>
+One disk size rarely fits all services. <br />
+Cloned virtual machines often require disk resizing. <br /></p>
+
+ <p>
+ <code>qemu-img</code> can resize disk images that do not contain snapshots. <br /></p>
+
+ <p>
+ <b>Shrinking disk images is not supported by qemu-img and is generally unsafe.</b> <br /></p>
+
+ <p>
+To increase the size by 10G: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo qemu-img resize /var/lib/libvirt/images/debian-image.qcow2 +10G
+</pre>
+</div>
+
+ <p>
+To set a new disk size: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo qemu-img resize /var/lib/libvirt/images/debian-image.qcow2 60G
+</pre>
+</div>
+
+ <p>
+ <b>Running</b> virtual machines can be resized with  <code>virsh</code> if the guest OS supports it: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo virsh blockresize debian-image /var/lib/libvirt/images/debian-image.qcow2 60G
+</pre>
+</div>
+
+ <p>
+After resizing the disk, expand the  <b>partitions</b> and the  <b>filesystem</b> inside the guest OS. <br /></p>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Virtual Machine Snapshots</h3>
+ <div class="outline-text-3">
+ <p>
+Virtual machines with  <code>qcow2</code> storage support internal and external snapshots. <br /></p>
+
+ <ul class="org-ul"> <li>Internal snapshots are stored inside the  <code>qcow2</code> image. <br /></li>
+ <li>External snapshots create an additional  <code>qcow2</code> file and a backing chain. <br /></li>
+</ul> <p>
+Internal snapshots are convenient but rarely used in production environments. <br /></p>
+
+ <p>
+Create an external disk snapshot: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh snapshot-create-as debian-clone clean-state  <span style="color: #95e454;">\</span>
+      --description  <span style="color: #95e454;">"Clean state snapshot"</span> --disk-only
+</pre>
+</div>
+
+ <p>
+Create an internal snapshot: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh snapshot-create-as debian-clone clean-state  <span style="color: #95e454;">\</span>
+      --description  <span style="color: #95e454;">"Clean state snapshot"</span> --atomic
+</pre>
+</div>
+
+ <p>
+List snapshots: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh snapshot-list debian-clone
+</pre>
+</div>
+
+ <p>
+Snapshot information: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh snapshot-info debian-clone clean-state
+</pre>
+</div>
+
+ <p>
+Revert to snapshot: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh snapshot-revert debian-clone clean-state
+</pre>
+</div>
+
+ <p>
+Delete snapshot: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh snapshot-delete debian-clone clean-state
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Backup Strategy</h3>
+ <div class="outline-text-3">
+ <p>
+ <b>Snapshots aren't backups.</b> <br /></p>
+
+ <ul class="org-ul"> <li>Internal  <code>qcow2</code> snapshots increase image complexity. <br /></li>
+ <li>External snapshots depend on a file chain. <br /></li>
+ <li>A corrupted base image breaks all dependent snapshots. <br /></li>
+ <li>Snapshots typically reside on the same storage pool. <br /></li>
+</ul> <p>
+They are recovery points. <br />
+They are not disaster recovery. <br /></p>
+</div>
+ <div class="outline-4">
+ <h4>What Must Be Backed Up</h4>
+ <div class="outline-text-4">
+ <p>
+A KVM virtual machine consists of: <br /></p>
+
+ <ul class="org-ul"> <li>The disk image (e.g.  <code>/var/lib/libvirt/images/debian-image.qcow2</code>) <br /></li>
+ <li>The VM definition (libvirt XML configuration) <br /></li>
+</ul> <p>
+Export the VM definition: <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh dumpxml debian-image > debian-image.xml
+</pre>
+</div>
+
+ <p>
+Store it with your backups. <br /></p>
+</div>
+</div>
+ <div class="outline-4">
+ <h4>Cold Backup (Recommended For Simplicity)</h4>
+ <div class="outline-text-4">
+ <p>
+The simplest and safest method: <br /></p>
+
+ <ol class="org-ol"> <li>Shut down the virtual machine. <br /></li>
+ <li>Copy the disk image. <br /></li>
+ <li>Backup the XML definition. <br /></li>
+</ol> <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh shutdown debian-image
+rsync -avh /var/lib/libvirt/images/debian-image.qcow2 /backup/location/
+</pre>
+</div>
+
+ <p>
+Simple. Predictable. Restorable. <br /></p>
+</div>
+</div>
+ <div class="outline-4">
+ <h4>Hot Backup (Advanced)</h4>
+ <div class="outline-text-4">
+ <p>
+For running production systems: <br /></p>
+
+ <ul class="org-ul"> <li>Use storage-level snapshots (LVM, ZFS, Ceph, SAN). <br /></li>
+ <li>Or create an external snapshot, back up the base image, then merge. <br /></li>
+</ul> <p>
+Hot backups require planning and testing. <br /></p>
+</div>
+</div>
+ <div class="outline-4">
+ <h4>Restore Procedure</h4>
+ <div class="outline-text-4">
+ <p>
+A backup is valid only if it can be restored. <br /></p>
+
+ <p>
+Ensure the disk image is restored to its original location. <br /></p>
+
+ <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">virsh define debian-image.xml
+virsh start debian-image
+</pre>
+</div>
+
+ <p>
+Test restore procedures regularly. <br /></p>
+</div>
+</div>
+ <div class="outline-4">
+ <h4>Operator Rule</h4>
+ <div class="outline-text-4">
+ <ul class="org-ul"> <li>Never rely on  <code>qcow2</code> internal snapshots as backups. <br /></li>
+ <li>Never keep backups on the same filesystem as the storage pool. <br /></li>
+ <li>Always test restore workflows. <br /></li>
+</ul> <p>
+If you cannot restore it, you do not have a backup. <br /></p>
+</div>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Final Whisper</h3>
+ <div class="outline-text-3">
+ <p>
+KVM does not try to impress. <br /></p>
+
+ <p>
+There are no glossy dashboards. <br />
+No marketing layers. <br />
+No hidden orchestration engines. <br /></p>
+
+ <p>
+Just a hypervisor inside the Linux kernel. <br /></p>
+
+ <p>
+The Architect receives something more valuable: <br /></p>
+
+ <p>
+ <b>control.</b> <br /></p>
+
+ <ul class="org-ul"> <li>The storage is visible. <br /></li>
+ <li>The networking is transparent. <br /></li>
+ <li>The machines obey simple commands. <br /></li>
+</ul> <p>
+Nothing is abstracted beyond understanding. <br /></p>
+
+ <p>
+This is the real advantage. <br /></p>
+
+ <p>
+When something breaks, you can  <b>see it</b>. <br />
+When something must be rebuilt, you  <b>know how</b>. <br /></p>
+
+ <p>
+KVM rewards operators who understand their systems. <br /></p>
+
+ <p>
+Not those who click buttons. <br /></p>
+
+ <p>
+Keep the architecture simple. <br />
+Keep the machines observable. <br />
+Keep the recovery procedures tested. <br /></p>
+
+ <p>
+The quiet tools endure. <br /></p>
+
+ <p>
+And when the infrastructure must be rebuilt from the ashes, <br />
+the Architect will still know where every machine lives. <br /></p>
+
+ <p>
+ <code>[ Fear the Silence. Fear the Switch. ]</code> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025-2026 DeadSwitch | The Silent Architect | All rights reserved. | <a h href="/rss.xml">RSS feed</a></p></footer>
+</body>
+</html>
