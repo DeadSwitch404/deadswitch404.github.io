@@ -6,6 +6,14 @@
   <description>Latest Whispers From The Silent Architect.</description>
 
   <item>
+    <title>Inside The Cage - You Don't See The Cage</title>
+    <link>https://silentarchitect.org/2026/03/in-the-cage-dont-see-the-cage.html</link>
+    <description><![CDATA[The cage that holds you isn't closed. Just find the lever.]]></description>
+    <pubDate>Tue, 24 Mar 2026 00:00:00 +0100</pubDate>
+    <guid>https://silentarchitect.org/2026/03/in-the-cage-dont-see-the-cage.html</guid>
+  </item>
+
+  <item>
     <title>The Architect's KVM Field Manual</title>
     <link>https://silentarchitect.org/2026/03/architects-kvm-manual.html</link>
     <description><![CDATA[Headless. Fast. Surgical. KVM is a battle-tested tool in the Architect's armory.]]></description>
@@ -75,14 +83,6 @@
     <description><![CDATA[Encryption at rest is the last guarantee. When a system sleeps, only LUKS stands guard.]]></description>
     <pubDate>Tue, 02 Dec 2025 00:00:00 +0100</pubDate>
     <guid>https://silentarchitect.org/2025/12/luks-not-a-checkbox.html</guid>
-  </item>
-
-  <item>
-    <title>[New Release]: Whisper Engine v1.1.0</title>
-    <link>https://silentarchitect.org/2025/11/whisper-engine-1.1.0.html</link>
-    <description><![CDATA[Whisper Engine gained a new voice. It speaks in RSS.]]></description>
-    <pubDate>Fri, 21 Nov 2025 00:00:00 +0100</pubDate>
-    <guid>https://silentarchitect.org/2025/11/whisper-engine-1.1.0.html</guid>
   </item>
 </channel>
 </rss>
