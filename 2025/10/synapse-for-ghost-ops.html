@@ -18,7 +18,8 @@
   <nav>
      <a href="/index.html">Home</a> |
      <a href="/categories.html">Categories</a> |
-     <a href="/static/about.html">About</a>
+     <a href="/static/about.html">About</a> |
+     <a href="/static/irc.html">IRC</a>
    </nav>
   <main><div class="article-content"><div class="outline-2">
  <h2>Synapse Self-Hosted Server For The Ghosts</h2>
@@ -63,7 +64,6 @@ TURN is required for voice and video when NAT traversal fails. <br /> <b>coturn<
 Use shared-secret authentication instead of static credentials and bind it to your Synapse instance. <br />
 This keeps media encrypted end-to-end while routing through TURN. <br /></p>
 </div>
-
  <div class="outline-3">
  <h3>Hardening</h3>
  <div class="outline-text-3">
@@ -76,7 +76,6 @@ This keeps media encrypted end-to-end while routing through TURN. <br /></p>
 Encrypt backups with  <b>GPG</b>, rotate daily, and keep at least one copy offline for disaster recovery. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>PostgreSQL Backend</h3>
  <div class="outline-text-3">
@@ -88,7 +87,6 @@ Use  <code>pg_dump</code> with  <b>GPG</b> for secure, portable snapshots. <br /
 Regularly  <code>VACUUM</code> and  <code>ANALYZE</code> to maintain performance. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Federation Off</h3>
  <div class="outline-text-3">
@@ -109,7 +107,6 @@ The server will then accept only local users and rooms. <br />
 No external lookups or pings leave your network. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Element Call Beta</h3>
  <div class="outline-text-3">
@@ -121,7 +118,6 @@ Room-level conference calls use  <b>WebRTC</b> through Element Call. <br /></p>
 Beta status means occasional instability - test in a staging room before production. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Final Whisper</h3>
  <div class="outline-text-3">

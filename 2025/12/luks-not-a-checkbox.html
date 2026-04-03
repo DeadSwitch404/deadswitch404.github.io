@@ -18,7 +18,8 @@
   <nav>
      <a href="/index.html">Home</a> |
      <a href="/categories.html">Categories</a> |
-     <a href="/static/about.html">About</a>
+     <a href="/static/about.html">About</a> |
+     <a href="/static/irc.html">IRC</a>
    </nav>
   <main><div class="article-content"><div class="outline-2">
  <h2>LUKS Is Not A Checkbox</h2>
@@ -45,7 +46,6 @@ This operation explains how to extend a Debian system with a new encrypted volum
 Not automated. Not silent. It must ask for your passphrase at boot. <br />
 Intent over convenience. Control over comfort. <br /></p>
 </div>
-
  <div class="outline-3">
  <h3>Objective</h3>
  <div class="outline-text-3">
@@ -58,7 +58,6 @@ Intent over convenience. Control over comfort. <br /></p>
  <li>No unattended mounts. No silent assumptions. <br /></li>
 </ol></div>
 </div>
-
  <div class="outline-3">
  <h3>Operation</h3>
  <div class="outline-text-3">
@@ -79,7 +78,6 @@ dmesg | tail
 Assume the new device is  <code>/dev/sdb</code>. <br /></p>
 </div>
 </div>
-
  <div class="outline-4">
  <h4>2. Create a Clean Partition Table</h4>
  <div class="outline-text-4">
@@ -106,7 +104,6 @@ Verify: <br /></p>
 </div>
 </div>
 </div>
-
  <div class="outline-4">
  <h4>3. Build the LVM Structure</h4>
  <div class="outline-text-4">
@@ -136,7 +133,6 @@ Create a logical volume: <br /></p>
 </div>
 </div>
 </div>
-
  <div class="outline-4">
  <h4>4. Initialize LUKS on the Logical Volume</h4>
  <div class="outline-text-4">
@@ -159,12 +155,12 @@ Open it: <br /></p>
  <p>
 A mapping appears at: <br /></p>
 
- <pre class="example">
-/dev/mapper/securedata
+ <div class="org-src-container" data-lang="nil">
+<pre class="src src-nil">/dev/mapper/securedata
 </pre>
 </div>
 </div>
-
+</div>
  <div class="outline-4">
  <h4>5. Create the Filesystem</h4>
  <div class="outline-text-4">
@@ -193,7 +189,6 @@ Mount it for testing: <br /></p>
 </div>
 </div>
 </div>
-
  <div class="outline-4">
  <h4>6. Integrate Into Boot Ritual (crypttab)</h4>
  <div class="outline-text-4">
@@ -208,9 +203,10 @@ Get the LUKS UUID: <br /></p>
  <p>
 Add entry to  <code>/etc/crypttab</code>: <br /></p>
 
- <pre class="example">
-securedata UUID=<luks-uuid-here> none luks
+ <div class="org-src-container" data-lang="nil">
+<pre class="src src-nil">securedata UUID=<luks-uuid-here> none luks
 </pre>
+</div>
 
  <p>
 This forces the system to ask for the passphrase at boot. <br />
@@ -225,7 +221,6 @@ Update initramfs so the system knows about the encrypted volume: <br /></p>
 </div>
 </div>
 </div>
-
  <div class="outline-4">
  <h4>7. Define the Mount Contract (fstab)</h4>
  <div class="outline-text-4">
@@ -240,9 +235,10 @@ Obtain the filesystem UUID: <br /></p>
  <p>
 Add entry to  <code>/etc/fstab</code>: <br /></p>
 
- <pre class="example">
-UUID=<fs-uuid-here>  /secure/data  ext4  defaults  0  2
+ <div class="org-src-container" data-lang="nil">
+<pre class="src src-nil">UUID=<fs-uuid-here>  /secure/data  ext4  defaults  0  2
 </pre>
+</div>
 
  <p>
 Verify configuration: <br /></p>
@@ -257,7 +253,6 @@ sudo mount -a
 If nothing complains, the contract is valid. <br /></p>
 </div>
 </div>
-
  <div class="outline-4">
  <h4>8. Reboot Verification</h4>
  <div class="outline-text-4">
@@ -272,7 +267,6 @@ If the system continues without prompting, something is broken. <br /></p>
 </div>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Failure Modes</h3>
  <div class="outline-text-3">
@@ -284,7 +278,6 @@ If the system continues without prompting, something is broken. <br /></p>
 System boots but mapping never appears. <br /></p>
 </div>
 </div>
-
  <div class="outline-4">
  <h4>Missing initramfs update</h4>
  <div class="outline-text-4">
@@ -292,7 +285,6 @@ System boots but mapping never appears. <br /></p>
 System ignores crypttab entries. <br /></p>
 </div>
 </div>
-
  <div class="outline-4">
  <h4>Incorrect fstab order or missing mountpoint</h4>
  <div class="outline-text-4">
@@ -300,7 +292,6 @@ System ignores crypttab entries. <br /></p>
 Boot drops into emergency mode. <br /></p>
 </div>
 </div>
-
  <div class="outline-4">
  <h4>LVM inside LUKS vs. LUKS inside LVM</h4>
  <div class="outline-text-4">
@@ -309,7 +300,6 @@ This article uses LUKS  <b>on</b> LVM. <br />
 Reversing the order changes boot behavior and recovery workflows. <br /></p>
 </div>
 </div>
-
  <div class="outline-4">
  <h4>Weak passphrase discipline</h4>
  <div class="outline-text-4">
@@ -318,7 +308,6 @@ LUKS is as strong as the phrase that guards it. <br /></p>
 </div>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Final Whisper</h3>
  <div class="outline-text-3">

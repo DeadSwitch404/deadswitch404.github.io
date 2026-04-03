@@ -18,7 +18,8 @@
   <nav>
      <a href="/index.html">Home</a> |
      <a href="/categories.html">Categories</a> |
-     <a href="/static/about.html">About</a>
+     <a href="/static/about.html">About</a> |
+     <a href="/static/irc.html">IRC</a>
    </nav>
   <main><div class="article-content"><div class="outline-2">
  <h2>Protecting The Wire - Semaphore Behind SSL Proxy</h2>
@@ -28,7 +29,6 @@
  <p> <img src="/static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" /> <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Mission Brief</h3>
  <div class="outline-text-3">
@@ -47,7 +47,6 @@ You use: <br /></p>
  <li>An  <code>NginX</code> proxy container with SSL <br /></li>
 </ul></div>
 </div>
-
  <div class="outline-3">
  <h3>Requirements</h3>
  <div class="outline-text-3">
@@ -60,7 +59,6 @@ You use: <br /></p>
  <li>Terminal access <br /></li>
 </ul></div>
 </div>
-
  <div class="outline-3">
  <h3>Step 1: Create The Pod For The Configuration</h3>
  <div class="outline-text-3">
@@ -75,7 +73,6 @@ The pod exposes only an HTTPS port for the NginX proxy: <br /></p>
 Non-root containers use ports above 1000. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 2: Activate The MySQL Container</h3>
  <div class="outline-text-3">
@@ -98,7 +95,6 @@ Run the database container assigned to the pod: <br /></p>
  <li>No exposure. <br /></li>
 </ul></div>
 </div>
-
  <div class="outline-3">
  <h3>Step 3: Initiate The Semaphore Container</h3>
  <div class="outline-text-3">
@@ -130,7 +126,6 @@ Assign and run Semaphore in the pod: <br /></p>
  <li>The DB host is  <code>127.0.0.1</code> in the pod. <br /></li>
 </ul></div>
 </div>
-
  <div class="outline-3">
  <h3>Step 4: The Mask To The World - NginX Reverse Proxy</h3>
  <div class="outline-text-3">
@@ -174,7 +169,6 @@ server {
 In a Podman pod the nework is separated. Containers "see" each other. <br /></p>
 </div>
 </div>
-
  <div class="outline-4">
  <h4>X509 Certificates</h4>
  <div class="outline-text-4">
@@ -192,7 +186,6 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -node
 </div>
 </div>
 </div>
-
  <div class="outline-4">
  <h4>Proxy Container</h4>
  <div class="outline-text-4">
@@ -211,7 +204,6 @@ Assign and run the reverse proxy in the pod: <br /></p>
 </div>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 5: Verify The Setup</h3>
  <div class="outline-text-3">
@@ -227,7 +219,6 @@ Assign and run the reverse proxy in the pod: <br /></p>
 Does it work? Seal it. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 6: Generating The Pod Configuration File</h3>
  <div class="outline-text-3">
@@ -244,7 +235,6 @@ Create a Kubernetes-compatible  <b>pod</b> configuration. <br /></p>
 You may have to edit the file a bit. Remove the noise. Keep the data. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 7: Security Considerations - Hardening</h3>
  <div class="outline-text-3">
@@ -253,7 +243,6 @@ You may have to edit the file a bit. Remove the noise. Keep the data. <br /></p>
  <li>Never trust. Verify. Monitor. Check. <br /></li>
 </ol></div>
 </div>
-
  <div class="outline-3">
  <h3>Ghost Thoughts</h3>
  <div class="outline-text-3">

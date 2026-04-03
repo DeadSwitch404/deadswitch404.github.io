@@ -18,7 +18,8 @@
   <nav>
      <a href="/index.html">Home</a> |
      <a href="/categories.html">Categories</a> |
-     <a href="/static/about.html">About</a>
+     <a href="/static/about.html">About</a> |
+     <a href="/static/irc.html">IRC</a>
    </nav>
   <main><div class="article-content"><div class="outline-2">
  <h2>Ghost Hands - Automating The Stronghold With Ansible And Podman</h2>
@@ -37,7 +38,6 @@ Now we automate. <br /></p>
 One playbook to conjure the setup, one command to repeat the ritual. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Requirements</h3>
  <div class="outline-text-3">
@@ -50,7 +50,6 @@ One playbook to conjure the setup, one command to repeat the ritual. <br /></p>
 </ul></li>
 </ul></div>
 </div>
-
  <div class="outline-3">
  <h3>Playbook Strategy</h3>
  <div class="outline-text-3">
@@ -60,7 +59,6 @@ One playbook to conjure the setup, one command to repeat the ritual. <br /></p>
  <li>Deploy NginX container with volumes mounted <br /></li>
 </ul></div>
 </div>
-
  <div class="outline-3">
  <h3>Secret Externalization</h3>
  <div class="outline-text-3">
@@ -68,7 +66,6 @@ One playbook to conjure the setup, one command to repeat the ritual. <br /></p>
 Store credentials in  <code>group_vars/containers.yml</code> and encrypt with Ansible Vault. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 1: Create The Pod</h3>
  <div class="outline-text-3">
@@ -83,7 +80,6 @@ Store credentials in  <code>group_vars/containers.yml</code> and encrypt with An
 </div>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 2: Activate the MySQL Container</h3>
  <div class="outline-text-3">
@@ -107,7 +103,6 @@ Store credentials in  <code>group_vars/containers.yml</code> and encrypt with An
 </div>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 3: Initiate the Semaphore container</h3>
  <div class="outline-text-3">
@@ -139,7 +134,6 @@ Store credentials in  <code>group_vars/containers.yml</code> and encrypt with An
 </div>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 4: The NginX Reverse Proxy</h3>
  <div class="outline-text-3">
@@ -160,7 +154,6 @@ Store credentials in  <code>group_vars/containers.yml</code> and encrypt with An
 </div>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 5: Verify</h3>
  <div class="outline-text-3">
@@ -170,7 +163,6 @@ Verify the configuration. <br />
 Monitor the logs with  <code>podman pod logs p_semaphore</code>. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Final Signal</h3>
  <div class="outline-text-3">

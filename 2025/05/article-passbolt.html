@@ -18,13 +18,13 @@
   <nav>
      <a href="/index.html">Home</a> |
      <a href="/categories.html">Categories</a> |
-     <a href="/static/about.html">About</a>
+     <a href="/static/about.html">About</a> |
+     <a href="/static/irc.html">IRC</a>
    </nav>
   <main><div class="article-content"><div class="outline-2">
  <h2>Password Management For Ghosts - Passbolt</h2>
  <div class="outline-text-2">
 </div>
-
  <div class="outline-3">
  <h3>Signal trace: why Passbolt?</h3>
  <div class="outline-text-3">
@@ -48,7 +48,6 @@ This isn't a review. It's a trace log. <br />
 Use it, bend it, improve it - if you're one of those who still listens to the signal. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Mission Brief</h3>
  <div class="outline-text-3">
@@ -61,7 +60,6 @@ No exposed defaults. <br />
 Just isolated container, controlled trust, and encryption under your command. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Requirements</h3>
  <div class="outline-text-3">
@@ -73,7 +71,6 @@ Just isolated container, controlled trust, and encryption under your command. <b
  <li>Local DNS or  <code>/etc/hosts</code> configured for  <code>passbolt.local</code> <br /></li>
 </ul></div>
 </div>
-
  <div class="outline-3">
  <h3>Step 1: Create the Podman network</h3>
  <div class="outline-text-3">
@@ -86,7 +83,6 @@ Establish a dedicated network for compartmentalization. <br /></p>
 </div>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 2: Deploy the database container</h3>
  <div class="outline-text-3">
@@ -114,7 +110,6 @@ podman run -d --name db --network n_passbolt  <span style="color: #95e454;">\</s
 Replace passwords with secure values. Rotate regularly. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 3: Deploy the passbolt container</h3>
  <div class="outline-text-3">
@@ -143,7 +138,6 @@ podman run -d --name passbolt  <span style="color: #95e454;">\</span>
 Ensure DNS resolves  <code>passbolt.local</code> to the correct IP. Use  <code>/etc/hosts</code> if needed. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 4: Inject the Admin user</h3>
  <div class="outline-text-3">
@@ -164,7 +158,6 @@ Once Passbolt is running, register the first admin user inside the container: <b
 The command must run as  <code>www-data</code> within the container to correctly register the user in Passbolt. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 5: First Contact</h3>
  <div class="outline-text-3">
@@ -175,7 +168,6 @@ Initiate secure access using a hardened browser: <br /></p>
  <a href="https://passbolt.local:4430">https://passbolt.local:4430</a> <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Step 6: Security Cleanup</h3>
  <div class="outline-text-3">
@@ -192,7 +184,6 @@ Don't leave any credentials behind. <br /></p>
 Always use safely-stored  <code>.env</code> files in production. <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Alternative Way: Create a Podman pod like a Ghost</h3>
  <div class="outline-text-3">
@@ -246,7 +237,6 @@ You can create the pod with the  <code>podman kube play passbolt-pod.yaml</code>
 — <br /></p>
 </div>
 </div>
-
  <div class="outline-3">
  <h3>Notes</h3>
  <div class="outline-text-3">
@@ -258,7 +248,6 @@ You can create the pod with the  <code>podman kube play passbolt-pod.yaml</code>
  <li>Set up log monitoring and intrusion alerts for container activity. <br /></li>
 </ul></div>
 </div>
-
  <div class="outline-3">
  <h3>Ghost Whisper: Why this matters for small ops</h3>
  <div class="outline-text-3">
