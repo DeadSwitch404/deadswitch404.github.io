@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.1.1 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Use WeeChat The Architect Way</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- Mastodon link -->
+  <link rel="me" href="https://mastodon.social/@silentarchitect">
+  <meta property="og:title" content="Use WeeChat The Architect Way" />
+ <meta property="og:description" content="Use WeeChat and tmux as your personal BNC. Secure your IRC usage in 2026." />
+ <meta property="og:image" content="/static/img/ops-tactics.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2026/04/weechat-the-architect-way.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a> |
+     <a href="/static/irc.html">IRC</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Use WeeChat The Architect Way</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ops-tactics.jpg" alt="ops-tactics.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+You used IRSSI with screen. Then tmux. <br />
+Later WeeChat. <br /></p>
+
+ <p>
+The IRC networks aren't so loud anymore. <br />
+But the conversations are valuable. Concentrated. <br /></p>
+
+ <p>
+Connect to them in a secure, lightweight way. <br /></p>
+</div>
+ <div class="outline-3">
+ <h3>The Architecture</h3>
+ <div class="outline-text-3">
+ <pre class="example">
+WeeChat client
+  on your PC
+      |
+      |
+WeeChat relay
+on your server --- permanent connection
+      |
+      |
+  IRC server
+</pre>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Set Up Your WeeChat</h3>
+ <div class="outline-text-3">
+ <p>
+ <b>On your server</b> set up WeeChat as you'd do it for daily chat. <br />
+Open it in a tmux session. <br /> <code>secure</code> is WeeChat's tool to encrypt passwords. <br /></p>
+
+ <ol class="org-ol"> <li> <p>
+Set up the master password: <br /></p>
+ <pre class="example">
+/secure passphrase your-passphrase
+</pre></li>
+ <li> <p>
+Add your SASL password. <br /></p>
+ <pre class="example">
+/secure add my_password my-secret-password
+</pre></li>
+ <li> <p>
+You can use it later as: <br /></p>
+ <pre class="example">
+${sec.data.my_password}
+</pre>
+ <p>
+No exposure. <br /></p></li>
+</ol> <p>
+Add your IRC network to WeeChat. <br /></p>
+
+ <ol class="org-ol"> <li> <p>
+Configure the server access: <br /></p>
+ <pre class="example">
+/server add libera irc.libera.chat/6697 -tls
+</pre>
+ <p>
+Configure your additional preferences like  <i>nick</i>,  <i>realname</i> and  <i>username</i>. <br /></p></li>
+ <li> <p>
+Configure the SASL authentication: <br /></p>
+ <pre class="example">
+/set irc.server.libera.sasl_password "${sec.data.my_password}"
+/set irc.server.libera.sasl_username irc_nick
+</pre></li>
+ <li> <p>
+You can connect to the IRC server: <br /></p>
+ <pre class="example">
+/connect libera
+</pre></li>
+</ol></div>
+</div>
+ <div class="outline-3">
+ <h3>Set Up Your Relay</h3>
+ <div class="outline-text-3">
+ <p>
+ <b>Still on the server</b> (while you're already connected to the network) set up the relay function. <br /></p>
+
+ <ol class="org-ol"> <li> <p>
+Add a strong relay password to the secure folder: <br /></p>
+ <pre class="example">
+/secure add relay_pw strong-pw
+</pre></li>
+ <li> <p>
+Configure your relay password: <br /></p>
+ <pre class="example">
+/set relay.network.password "${sec.data.relay_pw}"
+</pre>
+ <p>
+You will use this password to connect to the relay. <br /></p></li>
+ <li> <p>
+Obtain or generate a certificate and configure it for the relay: <br /></p>
+ <pre class="example">
+/set relay.network.tls_cert_key "${weechat_config_dir}/ssl/relay.pem"
+</pre></li>
+ <li> <p>
+Configure and start the relay: <br /></p>
+ <pre class="example">
+/relay add tls.irc 9001
+</pre></li>
+</ol> <p>
+A  <b>TLS encrypted relay</b> will listen on 9001/tcp. <br />
+Open it on the firewall. <br /></p>
+
+ <p>
+The server configuration is done. <br /></p>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Set Up Your Client</h3>
+ <div class="outline-text-3">
+ <p>
+On the WeeChat client the configuration is similar. <br /></p>
+
+ <ol class="org-ol"> <li> <p>
+Add the relay connection password to the secure folder: <br /></p>
+ <pre class="example">
+/secure add relay_pw same-pw-as-on-server
+</pre></li>
+ <li> <p>
+Configure the relay connection as it would be an IRC server: <br /></p>
+ <pre class="example">
+/server add relay_server your.relay.domain.tld/9001 -tls
+</pre></li>
+ <li> <p>
+Configure the connection password: <br /></p>
+ <pre class="example">
+/set irc.server.relay_server.password "libera:${sec.data.relay_pw}"
+</pre></li>
+</ol> <p>
+I used "libera" as the server alias on the relay. <br />
+For the password it is important to add it to the password in the <br /></p>
+ <pre class="example">
+server-alias:relay-password
+</pre>
+ <p>
+format to be able to connect. <br /></p>
+
+ <p>
+As a last step you can connect to your WeeChat relay: <br /></p>
+ <pre class="example">
+/connect relay_server
+</pre>
+
+ <ul class="org-ul"> <li>The connection will be established via port 9001/tcp to the WeeChat relay. <br /></li>
+ <li>The message history is visible. <br /></li>
+ <li>No SASL or NickServ password travels in plain text. <br /></li>
+</ul></div>
+</div>
+ <div class="outline-3">
+ <h3>Final Whisper</h3>
+ <div class="outline-text-3">
+ <p>
+The IRC networks are mostly silent in 2026. <br />
+Conversations are rare, but they're useful. <br />
+Valuable. <br /></p>
+
+ <p>
+WeeChat in tmux with the relay are a lightweight combination. <br />
+No BNC exposure. <br /></p>
+
+ <p>
+The DeadSwitch collective runs its own IRC network:  <b>The Silent Architect Network</b>. <br /></p>
+
+ <blockquote>
+ <p>
+irc.silentarchitect.org:6697 <br /></p>
+</blockquote>
+
+ <p>
+ <b>DeadSwitch | The Silent Architect</b> <br /> <code>[ Fear the Silence. Fear the Switch. ]</code> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025-2026 DeadSwitch | The Silent Architect | All rights reserved. | <a href="/rss.xml">RSS feed</a></p></footer>
+</body>
+</html>
