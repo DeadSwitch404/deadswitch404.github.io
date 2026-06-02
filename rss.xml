@@ -6,6 +6,14 @@
   <description>Latest Whispers From The Silent Architect.</description>
 
   <item>
+    <title>Use Tor The Architect Way</title>
+    <link>https://silentarchitect.org/2026/06/tor-the-architect-way.html</link>
+    <description><![CDATA[The Onion Network is not a hidden cloak, yet it helps to protect the privacy and identity of both the client and the server if used right.]]></description>
+    <pubDate>Tue, 02 Jun 2026 00:00:00 +0200</pubDate>
+    <guid>https://silentarchitect.org/2026/06/tor-the-architect-way.html</guid>
+  </item>
+
+  <item>
     <title>Use WeeChat The Architect Way</title>
     <link>https://silentarchitect.org/2026/04/weechat-the-architect-way.html</link>
     <description><![CDATA[Use WeeChat and tmux as your personal BNC. Secure your IRC usage in 2026.]]></description>
@@ -75,14 +83,6 @@
     <description><![CDATA[It's the end of the year. We've time to slow down. Only one message broadcasts.]]></description>
     <pubDate>Tue, 30 Dec 2025 00:00:00 +0100</pubDate>
     <guid>https://silentarchitect.org/2025/12/holidays.html</guid>
-  </item>
-
-  <item>
-    <title>Silent Drop: UFW Firewall Role From The Silent Architect</title>
-    <link>https://silentarchitect.org/2025/12/silent-drop-ufw-role.html</link>
-    <description><![CDATA[The firewall layer of GhostWare just received a Silent Drop. Precision. Predictability. No noise.]]></description>
-    <pubDate>Fri, 05 Dec 2025 00:00:00 +0100</pubDate>
-    <guid>https://silentarchitect.org/2025/12/silent-drop-ufw-role.html</guid>
   </item>
 </channel>
 </rss>

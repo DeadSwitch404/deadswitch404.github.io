@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Generated with Whisper Engine v1.1.2 -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Use Tor The Architect Way</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <!-- Mastodon link -->
+  <link rel="me" href="https://mastodon.social/@silentarchitect">
+  <meta property="og:title" content="Use Tor The Architect Way" />
+ <meta property="og:description" content="The Onion Network is not a hidden cloak, yet it helps to protect the privacy and identity of both the client and the server if used right." />
+ <meta property="og:image" content="/static/img/ghostware.jpg" />
+ <meta property="og:url" content="https://silentarchitect.org/2026/06/tor-the-architect-way.html" />
+</head>
+<body>
+  <nav>
+     <a href="/index.html">Home</a> |
+     <a href="/categories.html">Categories</a> |
+     <a href="/static/about.html">About</a>
+   </nav>
+  <main><div class="article-content"><div class="outline-2">
+ <h2>Use Tor The Architect Way</h2>
+ <div class="outline-text-2">
+
+ <div class="figure">
+ <p> <img src="/static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" /> <br /></p>
+</div>
+
+ <p>
+Most people think of Tor as a dark place. <br />
+Black markets. Shady services. Anonymity. <br />
+Tor's advantage became a disadvantage too. <br /></p>
+
+ <p>
+They don't understand that it's not just a tool for anonymity. <br />
+It's for better privacy - for the user, and for the server. <br /></p>
+
+ <p>
+Architects use the system as a protection - ethically. <br /></p>
+
+ <ul class="org-ul"> <li>Reduce tracking. <br /></li>
+ <li>Resist fingerprinting. <br /></li>
+ <li>Enhance privacy. <br /></li>
+</ul></div>
+ <div class="outline-3">
+ <h3>The Onion Network Architecture</h3>
+ <div class="outline-text-3">
+ <p>
+Tor's architecture limits metadata leaks. <br />
+The network introduces some lag as a tradeoff. <br />
+Onion services are accessible via  <code>.onion</code> addresses. <br />
+These addresses appear random because they are derived from cryptographic keys. <br /></p>
+
+ <div class="org-src-container" data-lang="text">
+<pre class="src src-text">{[Client] -> [Tor daemon]} -> [The Onion Network] <- {[Tor daemon] <- [Server]}
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Install The Tor Daemon</h3>
+ <div class="outline-text-3">
+ <ul class="org-ul"> <li>On Debian you can install  <code>tor</code> with  <code>apt</code>. <br /></li>
+</ul> <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">sudo apt install tor
+</pre>
+</div>
+
+ <p>
+The configuration file is placed in  <code>/etc/tor</code>. <br /></p>
+
+ <ul class="org-ul"> <li>On FreeBSD the  <code>pkg</code> tool can install  <code>tor</code>. <br /></li>
+</ul> <div class="org-src-container" data-lang="shell">
+<pre class="src src-shell">pkg install tor
+</pre>
+</div>
+
+ <p>
+The configuration lives in  <code>/usr/local/etc/tor</code>. <br /></p>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Configure A Hidden Service</h3>
+ <div class="outline-text-3">
+ <p>
+Edit the  <code>torrc</code> file in the config directory with your preferred editor. <br /></p>
+
+ <p>
+Example configuration on Debian: <br /></p>
+
+ <div class="org-src-container" data-lang="conf">
+<pre class="src src-conf">HiddenServiceDir /var/lib/tor/hidden_service/
+HiddenServicePort 80  127.0.0.1:80
+HiddenServicePort 443 127.0.0.1:443
+</pre>
+</div>
+
+ <p>
+Example configuration on FreeBSD: <br /></p>
+
+ <div class="org-src-container" data-lang="conf">
+<pre class="src src-conf">HiddenServiceDir /var/db/tor/hidden_service/
+HiddenServicePort 80  127.0.0.1:80
+HiddenServicePort 443 127.0.0.1:443
+</pre>
+</div>
+
+ <p>
+Restart the  <code>tor</code> service. <br />
+Debian:  <code>sudo systemctl restart tor</code> <br />
+FreeBSD:  <code>service tor restart</code> <br /></p>
+
+ <p>
+The most important generated files are: <br /></p>
+
+ <ol class="org-ol"> <li> <code>hostname</code> - it contains your unique  <code>.onion</code> address <br /></li>
+ <li> <code>hs_ed25519_public_key</code> - service public key <br /></li>
+ <li> <code>hs_ed25519_secret_key</code> - service private key (keep it secret, it's the site's identity) <br /></li>
+</ol> <p>
+You can host  <b>multiple services</b> on Tor on one  <code>.onion</code> address. <br /></p>
+
+ <div class="org-src-container" data-lang="conf">
+<pre class="src src-conf">HiddenServiceDir /var/db/tor/hidden_service/  <span style="color: #99968b;"># </span> <span style="color: #99968b;">hidden service dir
+</span>HiddenServicePort 80   127.0.0.1:80           <span style="color: #99968b;"># </span> <span style="color: #99968b;">http
+</span>HiddenServicePort 5222 127.0.0.1:5222         <span style="color: #99968b;"># </span> <span style="color: #99968b;">xmpp
+</span>HiddenServicePort 6667 127.0.0.1:6667         <span style="color: #99968b;"># </span> <span style="color: #99968b;">irc</span>
+</pre>
+</div>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>The Danger Zone - Exit Nodes</h3>
+ <div class="outline-text-3">
+ <p>
+Exit nodes are used when you leave The Onion Network and enter the surface web from it. <br />
+These exit nodes are operated by volunteers and organizations. <br />
+Tor selects exit nodes automatically based on network consensus and relay capacity. <br /></p>
+
+ <p>
+The danger is not the exit node itself. <br />
+The danger is the  <b>metadata</b> around it. <br /></p>
+
+ <p>
+A hostile operator can  <b>observe</b> destinations. <br />
+A hostile observer can  <b>collect</b> timing information. <br />
+A powerful adversary may attempt traffic  <b>correlation</b>. <br /></p>
+
+ <p>
+Tor makes this difficult. <br />
+It does not make it impossible. <br /></p>
+
+ <p>
+Tor-only services (.onion) eliminate the need for exit nodes. <br /></p>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Hidden Services</h3>
+ <div class="outline-text-3">
+ <p>
+Most of the infrastructure services can be hosted as a Tor hidden service. <br /></p>
+
+ <ul class="org-ul"> <li>Websites <br /></li>
+ <li>Databases <br /></li>
+ <li>Most email services <br /></li>
+ <li>Instant Messaging <br /></li>
+ <li>SSH <br /></li>
+</ul> <p>
+Tor introduces some lag because of the routing. <br />
+Most text-based services won't notice it. <br /></p>
+
+ <p>
+Tor protects the server's IP, reduces the likelihood to find its location. <br />
+It protects the client's IP and mitigates metadata leakage. <br /></p>
+
+ <p>
+The Onion Network's encryption makes it harder to investigate the data. <br />
+Time-based and other correlations still reveal important information. <br /></p>
+</div>
+</div>
+ <div class="outline-3">
+ <h3>Final Whisper</h3>
+ <div class="outline-text-3">
+ <p>
+Tor doesn't provide invisibility. <br />
+It helps to protect the client and server IP location. <br /></p>
+
+ <p>
+Tor doesn't protect against: <br /></p>
+ <ul class="org-ul"> <li>correlation attacks <br /></li>
+ <li>malicious clients <br /></li>
+ <li>malicious links <br /></li>
+</ul> <p>
+With proper, ethical usage The Onion Network is another layer of security in the Architect toolset. <br /></p>
+
+ <p>
+If you have questions or comments, join our Silent Architect IRC network: <br /></p>
+
+ <div class="org-src-container" data-lang="text">
+<pre class="src src-text">Server : irc.silentarchitect.org
+Port   : 6697
+TLS    : mandatory
+SASL   : supported
+</pre>
+</div>
+
+ <p>
+ <code>[ Fear the Silence. Fear the Switch. ]</code> <br /></p>
+</div>
+</div>
+</div></div></main>
+  <footer><p>© 2025-2026 DeadSwitch | The Silent Architect | All rights reserved. | <a href="/rss.xml">RSS feed</a></p></footer>
+</body>
+</html>
