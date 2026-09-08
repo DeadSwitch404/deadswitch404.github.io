@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-09-08 Tue 09:30 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ansible Automation For Ghosts - Semaphore UI</title>
+<meta name="generator" content="Org Mode" />
+<style>code{background:#111;color:#0f0;padding:2px}</style>
+</head>
+<body>
+<div id="preamble" class="status">
+<nav>
+<a href="/index.html">Home</a> |
+<a href="/static/pages/about.html">About</a> |
+<a href="/static/pages/irc.html">IRC</a> |
+<a href="/articles/archive.html">Archive</a>
+</nav>
+</div>
+<div id="content" class="content">
+<h1 class="title">Ansible Automation For Ghosts - Semaphore UI</h1>
+<div id="outline-container-orga94ba8d" class="outline-2">
+<h2 id="orga94ba8d">Ansible Automation For Ghosts - Semaphore UI</h2>
+<div class="outline-text-2" id="text-orga94ba8d">
+</div>
+<div id="outline-container-org0dc4459" class="outline-3">
+<h3 id="org0dc4459">Mission of the Ghost</h3>
+<div class="outline-text-3" id="text-org0dc4459">
+<p>
+Ansible is a sharp blade.<br />
+</p>
+
+<ul class="org-ul">
+<li>open source<br /></li>
+<li>command line<br /></li>
+<li>fast and efficient<br /></li>
+<li>Ghost approved<br /></li>
+</ul>
+
+<p>
+For operators craving API-driven command, Semaphore rises from Ansible's silent core.<br />
+</p>
+
+<ul class="org-ul">
+<li>open source<br /></li>
+<li>fast, Go language based<br /></li>
+<li>UI<br /></li>
+<li>API<br /></li>
+</ul>
+
+<p>
+DeadSwitch maps it.<br />
+</p>
+</div>
+</div>
+<div id="outline-container-orgaf1bfca" class="outline-3">
+<h3 id="orgaf1bfca">Requirements</h3>
+<div class="outline-text-3" id="text-orgaf1bfca">
+<ul class="org-ul">
+<li>Debian 12 (with hardened kernel preferred)<br /></li>
+<li>Podman installed and functional (v4 or later)<br /></li>
+<li>Environment variables set securely or managed via <code>.env</code><br /></li>
+<li>Terminal access with elevated privileges or configured rootless Podman<br /></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org66345c7" class="outline-3">
+<h3 id="org66345c7">Step 1: Create the podman volume</h3>
+<div class="outline-text-3" id="text-org66345c7">
+<p>
+Persistent volume for the MySQL data:<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">podman volume create semaphore_mysql
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga25efc0" class="outline-3">
+<h3 id="orga25efc0">Step 2: Deploy containers with Podman Compose</h3>
+<div class="outline-text-3" id="text-orga25efc0">
+<p>
+With Podman Compose you can whisper to Podman and deploy the MySQL and Semaphore containers together.<br />
+</p>
+
+<p>
+In production you <b>must</b> use environment files:<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="font-weight: bold; font-style: italic;">env_file</span>:
+  - .env
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="font-weight: bold; font-style: italic;">version</span>: <span style="font-style: italic;">"3.9"</span>
+
+<span style="font-weight: bold; font-style: italic;">services</span>:
+  <span style="font-weight: bold; font-style: italic;">mysql</span>:
+    <span style="font-weight: bold; font-style: italic;">image</span>: docker.io/mysql:lts
+    <span style="font-weight: bold; font-style: italic;">hostname</span>: mysql
+    <span style="font-weight: bold; font-style: italic;">volumes</span>:
+      - semaphore_mysql:/var/lib/mysql
+    <span style="font-weight: bold; font-style: italic;">environment</span>:
+      <span style="font-weight: bold; font-style: italic;">MYSQL_RANDOM_ROOT_PASSWORD</span>: <span style="font-style: italic;">'yes'</span>
+      <span style="font-weight: bold; font-style: italic;">MYSQL_DATABASE</span>: semaphore
+      <span style="font-weight: bold; font-style: italic;">MYSQL_USER</span>: semaphore
+      <span style="font-weight: bold; font-style: italic;">MYSQL_PASSWORD</span>: semaphore
+
+  <span style="font-weight: bold; font-style: italic;">semaphore</span>:
+    <span style="font-weight: bold; font-style: italic;">image</span>: docker.io/semaphoreui/semaphore:latest
+    <span style="font-weight: bold; font-style: italic;">ports</span>:
+      - 3000:3000
+    <span style="font-weight: bold; font-style: italic;">environment</span>:
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_DB_USER</span>: semaphore
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_DB_PASS</span>: semaphore
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_DB_HOST</span>: mysql
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_DB_PORT</span>: 3306
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_DB_DIALECT</span>: mysql
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_DB</span>: semaphore
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_PLAYBOOK_PATH</span>: /tmp/semaphore/
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_ADMIN_PASSWORD</span>: changeme
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_ADMIN_NAME</span>: admin
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_ADMIN_EMAIL</span>: admin@localhost
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_ADMIN</span>: admin
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_ACCESS_KEY_ENCRYPTION</span>: gs72mPntFATGJs9qK0pQ0rKtfidlexiMjYCH9gWKhTU=
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_LDAP_ACTIVATED</span>: <span style="font-style: italic;">'no'</span>
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_LDAP_HOST</span>: dc01.local.example.com
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_LDAP_PORT</span>: <span style="font-style: italic;">'636'</span>
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_LDAP_NEEDTLS</span>: <span style="font-style: italic;">'yes'</span>
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_LDAP_DN_BIND</span>: <span style="font-style: italic;">'uid=bind_user,cn=users,cn=accounts,dc=local,dc=shiftsystems,dc=net'</span>
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_LDAP_PASSWORD</span>: <span style="font-style: italic;">'ldap_bind_account_password'</span>
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_LDAP_DN_SEARCH</span>: <span style="font-style: italic;">'dc=local,dc=example,dc=com'</span>
+      <span style="font-weight: bold; font-style: italic;">SEMAPHORE_LDAP_SEARCH_FILTER</span>: <span style="font-style: italic;">"(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"</span>
+      <span style="font-weight: bold; font-style: italic;">TZ</span>: UTC
+    <span style="font-weight: bold; font-style: italic;">depends_on</span>:
+      - mysql
+
+<span style="font-weight: bold; font-style: italic;">volumes</span>:
+  <span style="font-weight: bold; font-style: italic;">semaphore_mysql</span>:
+</pre>
+</div>
+
+<p>
+Note: Podman Compose supports the same syntax as Docker Compose but is a separate tool. Install with:<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">pip install podman-compose
+</pre>
+</div>
+
+<p>
+Deploy using:<br />
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">podman-compose -f podman-compose.yaml up
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org893fe2d" class="outline-3">
+<h3 id="org893fe2d">Step 3: First contact</h3>
+<div class="outline-text-3" id="text-org893fe2d">
+<p>
+Initiate secure access using a hardened browser:<br />
+</p>
+
+<p>
+<a href="http://localhost:3000/">http://localhost:3000/</a><br />
+</p>
+
+<p>
+Credentials: whatever you defined in the environment above.<br />
+</p>
+</div>
+</div>
+<div id="outline-container-orgf66a4e9" class="outline-3">
+<h3 id="orgf66a4e9">Step 4: Harden</h3>
+<div class="outline-text-3" id="text-orgf66a4e9">
+<p>
+This is only the echo.<br />
+</p>
+
+<ul class="org-ul">
+<li>Wrap behind a reverse proxy (Caddy, Traefik, or Nginx).<br /></li>
+<li>Enforce HTTPS (Let's Encrypt or internal CA).<br /></li>
+<li>Rotate admin password. Strip LDAP if unused.<br /></li>
+<li>Lock containers to loopback if accessed only locally.<br /></li>
+<li>Use systemd units generated from Podman.<br /></li>
+</ul>
+
+<p>
+Your playbook is now mapped.<br />
+</p>
+
+<p>
+&#x2014;<br />
+</p>
+
+<p>
+Write to DeadSwitch on Matrix: <code>@deadswitch:matrix.org</code><br />
+Maybe he whispers back&#x2026;<br />
+</p>
+
+<p>
+<b>DeadSwitch | The Cyber Ghost</b><br />
+<i>"In silence, we rise. In the switch, we fade."</i><br />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<footer>
+<p>© 2025-2026 DeadSwitch | The Silent Architect | All rights reserved.</p>
+</footer>
+</div>
+</body>
+</html>
