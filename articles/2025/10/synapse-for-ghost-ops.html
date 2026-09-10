@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-08 Tue 09:30 -->
+<!-- 2026-09-10 Thu 06:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Synapse Self-Hosted Server For The Ghosts</title>
@@ -23,19 +23,21 @@
 <body>
 <div id="preamble" class="status">
 <nav>
-<a href="/index.html">Home</a> |
-<a href="/static/pages/about.html">About</a> |
-<a href="/static/pages/irc.html">IRC</a> |
+::
+<a href="/index.html">Home</a> ::
+<a href="/static/pages/about.html">About</a> ::
+<a href="/static/pages/irc.html">IRC</a> ::
 <a href="/articles/archive.html">Archive</a>
+::
 </nav>
 </div>
 <div id="content" class="content">
 <h1 class="title">Synapse Self-Hosted Server For The Ghosts</h1>
-<div id="outline-container-org4d2ce1d" class="outline-2">
-<h2 id="org4d2ce1d">Synapse Self-Hosted Server For The Ghosts</h2>
-<div class="outline-text-2" id="text-org4d2ce1d">
+<div id="outline-container-org4beb66b" class="outline-2">
+<h2 id="org4beb66b">Synapse Self-Hosted Server For The Ghosts</h2>
+<div class="outline-text-2" id="text-org4beb66b">
 
-<div id="org2f55160" class="figure">
+<div id="org7b82c03" class="figure">
 <p><img src="file:///static/img/ops-tactics.jpg" alt="ops-tactics.jpg" class="post-image" /><br />
 </p>
 </div>
@@ -88,9 +90,9 @@ Use shared-secret authentication instead of static credentials and bind it to yo
 This keeps media encrypted end-to-end while routing through TURN.<br />
 </p>
 </div>
-<div id="outline-container-org150339a" class="outline-3">
-<h3 id="org150339a">Hardening</h3>
-<div class="outline-text-3" id="text-org150339a">
+<div id="outline-container-orgeb0bb37" class="outline-3">
+<h3 id="orgeb0bb37">Hardening</h3>
+<div class="outline-text-3" id="text-orgeb0bb37">
 <ul class="org-ul">
 <li>Disable unused Synapse modules<br /></li>
 <li>Enforce TLS for all clients<br /></li>
@@ -104,9 +106,9 @@ Encrypt backups with <b>GPG</b>, rotate daily, and keep at least one copy offlin
 </p>
 </div>
 </div>
-<div id="outline-container-org123b3a0" class="outline-3">
-<h3 id="org123b3a0">PostgreSQL Backend</h3>
-<div class="outline-text-3" id="text-org123b3a0">
+<div id="outline-container-org6bd15ff" class="outline-3">
+<h3 id="org6bd15ff">PostgreSQL Backend</h3>
+<div class="outline-text-3" id="text-org6bd15ff">
 <p>
 Synapse defaults to <b>SQLite</b>, but <b>PostgreSQL</b> is recommended for production.<br />
 ACID guarantees keep data consistent under load.<br />
@@ -116,9 +118,9 @@ Regularly <code>VACUUM</code> and <code>ANALYZE</code> to maintain performance.<
 </p>
 </div>
 </div>
-<div id="outline-container-orgde116d2" class="outline-3">
-<h3 id="orgde116d2">Federation Off</h3>
-<div class="outline-text-3" id="text-orgde116d2">
+<div id="outline-container-org9971543" class="outline-3">
+<h3 id="org9971543">Federation Off</h3>
+<div class="outline-text-3" id="text-org9971543">
 <p>
 Disable federation to eliminate metadata leaks.<br />
 </p>
@@ -139,9 +141,9 @@ No external lookups or pings leave your network.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orge9330a6" class="outline-3">
-<h3 id="orge9330a6">Element Call Beta</h3>
-<div class="outline-text-3" id="text-orge9330a6">
+<div id="outline-container-org05d7322" class="outline-3">
+<h3 id="org05d7322">Element Call Beta</h3>
+<div class="outline-text-3" id="text-org05d7322">
 <p>
 Room-level conference calls use <b>WebRTC</b> through Element Call.<br />
 </p>
@@ -152,9 +154,9 @@ Beta status means occasional instability - test in a staging room before product
 </p>
 </div>
 </div>
-<div id="outline-container-org9a415ef" class="outline-3">
-<h3 id="org9a415ef">Final Whisper</h3>
-<div class="outline-text-3" id="text-org9a415ef">
+<div id="outline-container-org3ee046b" class="outline-3">
+<h3 id="org3ee046b">Final Whisper</h3>
+<div class="outline-text-3" id="text-org3ee046b">
 <p>
 Every ghost deserves silence that only they can hear.<br />
 Privacy is not a luxury; it is a right.<br />

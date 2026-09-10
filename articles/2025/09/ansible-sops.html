@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-08 Tue 09:30 -->
+<!-- 2026-09-10 Thu 06:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ansible With SOPS - Secret Handling On Ghost Level</title>
@@ -23,19 +23,21 @@
 <body>
 <div id="preamble" class="status">
 <nav>
-<a href="/index.html">Home</a> |
-<a href="/static/pages/about.html">About</a> |
-<a href="/static/pages/irc.html">IRC</a> |
+::
+<a href="/index.html">Home</a> ::
+<a href="/static/pages/about.html">About</a> ::
+<a href="/static/pages/irc.html">IRC</a> ::
 <a href="/articles/archive.html">Archive</a>
+::
 </nav>
 </div>
 <div id="content" class="content">
 <h1 class="title">Ansible With SOPS - Secret Handling On Ghost Level</h1>
-<div id="outline-container-orgafc55ec" class="outline-2">
-<h2 id="orgafc55ec">Ansible With SOPS - Secret Handling On Ghost Level</h2>
-<div class="outline-text-2" id="text-orgafc55ec">
+<div id="outline-container-org214e186" class="outline-2">
+<h2 id="org214e186">Ansible With SOPS - Secret Handling On Ghost Level</h2>
+<div class="outline-text-2" id="text-org214e186">
 
-<div id="orga14a615" class="figure">
+<div id="org1e76d7c" class="figure">
 <p><img src="file:///static/img/ops-tactics.jpg" alt="Ansible With SOPS" class="post-image" /><br />
 </p>
 </div>
@@ -58,9 +60,9 @@ Ansible Vault safeguards your data.<br />
 SOPS restores the signal.<br />
 </p>
 </div>
-<div id="outline-container-org5c101b7" class="outline-3">
-<h3 id="org5c101b7">Get Your New Blade</h3>
-<div class="outline-text-3" id="text-org5c101b7">
+<div id="outline-container-org6d3cda5" class="outline-3">
+<h3 id="org6d3cda5">Get Your New Blade</h3>
+<div class="outline-text-3" id="text-org6d3cda5">
 <p>
 Download the SOPS Linux binary from <a href="https://github.com/getsops/sops/releases">Github</a>.<br />
 Verify the binary with <code>SHA256</code> checksum.<br />
@@ -72,9 +74,9 @@ Create or import your GPG keys.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orge76fffc" class="outline-3">
-<h3 id="orge76fffc">Sharpen The Blade</h3>
-<div class="outline-text-3" id="text-orge76fffc">
+<div id="outline-container-org10feb02" class="outline-3">
+<h3 id="org10feb02">Sharpen The Blade</h3>
+<div class="outline-text-3" id="text-org10feb02">
 <p>
 Configure SOPS to use the SOPS GPG fingerprint.<br />
 </p>
@@ -107,9 +109,9 @@ Test it.<br />
 </div>
 </div>
 </div>
-<div id="outline-container-orgeba162f" class="outline-3">
-<h3 id="orgeba162f">The Silent Ansible Upgrade</h3>
-<div class="outline-text-3" id="text-orgeba162f">
+<div id="outline-container-orge9c4e6d" class="outline-3">
+<h3 id="orge9c4e6d">The Silent Ansible Upgrade</h3>
+<div class="outline-text-3" id="text-orge9c4e6d">
 <p>
 Install the Ansible SOPS collection if missing:<br />
 </p>
@@ -152,9 +154,9 @@ Configure the SOPS creation rules in the <code>.sops.yaml</code> file:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org9feca96" class="outline-3">
-<h3 id="org9feca96">The Ghosts In Action</h3>
-<div class="outline-text-3" id="text-org9feca96">
+<div id="outline-container-org255a05f" class="outline-3">
+<h3 id="org255a05f">The Ghosts In Action</h3>
+<div class="outline-text-3" id="text-org255a05f">
 <p>
 Create a SOPS encrypted file in <code>host_vars</code> or <code>group_vars</code>.<br />
 </p>
@@ -198,16 +200,16 @@ The system bends to you, Ghost Operator.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org7e90d5d" class="outline-3">
-<h3 id="org7e90d5d">Sharpening For The Team</h3>
-<div class="outline-text-3" id="text-org7e90d5d">
+<div id="outline-container-org0d2c4c4" class="outline-3">
+<h3 id="org0d2c4c4">Sharpening For The Team</h3>
+<div class="outline-text-3" id="text-org0d2c4c4">
 <p>
 Operators rotate. Keys must too.<br />
 </p>
 </div>
-<div id="outline-container-orgee5786a" class="outline-4">
-<h4 id="orgee5786a">Add a new teammate</h4>
-<div class="outline-text-4" id="text-orgee5786a">
+<div id="outline-container-org65e2717" class="outline-4">
+<h4 id="org65e2717">Add a new teammate</h4>
+<div class="outline-text-4" id="text-org65e2717">
 <p>
 Import their public GPG key:<br />
 </p>
@@ -241,9 +243,9 @@ Re-encrypt the files so SOPS includes both keys:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org034e57e" class="outline-4">
-<h4 id="org034e57e">Remove a teammate</h4>
-<div class="outline-text-4" id="text-org034e57e">
+<div id="outline-container-orgbf5c835" class="outline-4">
+<h4 id="orgbf5c835">Remove a teammate</h4>
+<div class="outline-text-4" id="text-orgbf5c835">
 <p>
 Delete their fingerprint from <code>.sops.yaml</code>.<br />
 </p>
@@ -263,9 +265,9 @@ Only the fingerprints listed will keep future access.<br />
 </div>
 </div>
 </div>
-<div id="outline-container-orgf41c572" class="outline-3">
-<h3 id="orgf41c572">Final Whisper</h3>
-<div class="outline-text-3" id="text-orgf41c572">
+<div id="outline-container-org81f6cce" class="outline-3">
+<h3 id="org81f6cce">Final Whisper</h3>
+<div class="outline-text-3" id="text-org81f6cce">
 <blockquote>
 <p>
 Silence keeps the secrets. SOPS keeps them safe.<br />

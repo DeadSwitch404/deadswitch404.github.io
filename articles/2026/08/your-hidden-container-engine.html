@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-08 Tue 09:30 -->
+<!-- 2026-09-10 Thu 06:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Your Hidden Container Engine - Systemd</title>
@@ -23,17 +23,19 @@
 <body>
 <div id="preamble" class="status">
 <nav>
-<a href="/index.html">Home</a> |
-<a href="/static/pages/about.html">About</a> |
-<a href="/static/pages/irc.html">IRC</a> |
+::
+<a href="/index.html">Home</a> ::
+<a href="/static/pages/about.html">About</a> ::
+<a href="/static/pages/irc.html">IRC</a> ::
 <a href="/articles/archive.html">Archive</a>
+::
 </nav>
 </div>
 <div id="content" class="content">
 <h1 class="title">Your Hidden Container Engine - Systemd</h1>
-<div id="outline-container-orgacc9a46" class="outline-2">
-<h2 id="orgacc9a46">Your Hidden Container Engine - Systemd</h2>
-<div class="outline-text-2" id="text-orgacc9a46">
+<div id="outline-container-orga9d01fd" class="outline-2">
+<h2 id="orga9d01fd">Your Hidden Container Engine - Systemd</h2>
+<div class="outline-text-2" id="text-orga9d01fd">
 <img src="/static/img/ops-tactics.jpg" alt="ops-tactics.jpg" class="post-image" />
 
 <p>
@@ -77,9 +79,9 @@ Its features are:<br />
 Ready to use. You just don't know about it.<br />
 </p>
 </div>
-<div id="outline-container-orge714dc8" class="outline-3">
-<h3 id="orge714dc8">systemd-nspawn</h3>
-<div class="outline-text-3" id="text-orge714dc8">
+<div id="outline-container-orga35e705" class="outline-3">
+<h3 id="orga35e705">systemd-nspawn</h3>
+<div class="outline-text-3" id="text-orga35e705">
 <p>
 <code>systemd-nspawn</code> is part of the <code>systemd</code> ecosystem.<br />
 </p>
@@ -120,9 +122,9 @@ Create a configuration directory for the future containers:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org4cb5387" class="outline-3">
-<h3 id="org4cb5387">Architecture</h3>
-<div class="outline-text-3" id="text-org4cb5387">
+<div id="outline-container-orgbfdacf0" class="outline-3">
+<h3 id="orgbfdacf0">Architecture</h3>
+<div class="outline-text-3" id="text-orgbfdacf0">
 <p>
 Stop for a moment.<br />
 Let's see what architecture will be created here.<br />
@@ -150,9 +152,9 @@ On the containers:<br />
 </ul>
 </div>
 </div>
-<div id="outline-container-org0b55766" class="outline-3">
-<h3 id="org0b55766">Bootstrap A Container</h3>
-<div class="outline-text-3" id="text-org0b55766">
+<div id="outline-container-org7ab2e1f" class="outline-3">
+<h3 id="org7ab2e1f">Bootstrap A Container</h3>
+<div class="outline-text-3" id="text-org7ab2e1f">
 <p>
 You want to create a Debian 13 container.<br />
 </p>
@@ -173,9 +175,9 @@ sudo debootstrap --include=systemd,dbus trixie /var/lib/machines/debian-containe
 </ol>
 </div>
 </div>
-<div id="outline-container-org420eb62" class="outline-3">
-<h3 id="org420eb62">Network Configuration</h3>
-<div class="outline-text-3" id="text-org420eb62">
+<div id="outline-container-org9af1afb" class="outline-3">
+<h3 id="org9af1afb">Network Configuration</h3>
+<div class="outline-text-3" id="text-org9af1afb">
 <p>
 Remember: a bridge interface is configured on the host.<br />
 </p>
@@ -243,9 +245,9 @@ The container's own systemd manages the services inside it.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org8dd07f5" class="outline-3">
-<h3 id="org8dd07f5">Container Lifecycle Management</h3>
-<div class="outline-text-3" id="text-org8dd07f5">
+<div id="outline-container-org56d2e4d" class="outline-3">
+<h3 id="org56d2e4d">Container Lifecycle Management</h3>
+<div class="outline-text-3" id="text-org56d2e4d">
 <p>
 Start:<br />
 </p>
@@ -319,9 +321,9 @@ Remove the container image:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-orgccd5906" class="outline-3">
-<h3 id="orgccd5906">Templates</h3>
-<div class="outline-text-3" id="text-orgccd5906">
+<div id="outline-container-orgbf45d94" class="outline-3">
+<h3 id="orgbf45d94">Templates</h3>
+<div class="outline-text-3" id="text-orgbf45d94">
 <p>
 For fast deployment, some architects prefer to use machine templates.<br />
 It's a read-only machine that you clone with <code>machinectl</code>.<br />
@@ -383,9 +385,9 @@ Now you can clone it for new containers:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-orga4c5dae" class="outline-3">
-<h3 id="orga4c5dae">Final Whisper</h3>
-<div class="outline-text-3" id="text-orga4c5dae">
+<div id="outline-container-org6d901ce" class="outline-3">
+<h3 id="org6d901ce">Final Whisper</h3>
+<div class="outline-text-3" id="text-org6d901ce">
 <p>
 <code>systemd-nspawn</code> doesn't compete with other similar technologies.<br />
 It sits there.<br />
@@ -400,7 +402,7 @@ It has its place in the architecture.<br />
 For example:<br />
 </p>
 
-<pre class="example" id="orgc339445">
+<pre class="example" id="org2cdd65c">
             [host]
               |
   |-----------|-------------|

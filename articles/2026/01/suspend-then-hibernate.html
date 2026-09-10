@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-08 Tue 09:30 -->
+<!-- 2026-09-10 Thu 06:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Suspend Then Hibernate - Keep Your Blade Sharp</title>
@@ -23,19 +23,21 @@
 <body>
 <div id="preamble" class="status">
 <nav>
-<a href="/index.html">Home</a> |
-<a href="/static/pages/about.html">About</a> |
-<a href="/static/pages/irc.html">IRC</a> |
+::
+<a href="/index.html">Home</a> ::
+<a href="/static/pages/about.html">About</a> ::
+<a href="/static/pages/irc.html">IRC</a> ::
 <a href="/articles/archive.html">Archive</a>
+::
 </nav>
 </div>
 <div id="content" class="content">
 <h1 class="title">Suspend Then Hibernate - Keep Your Blade Sharp</h1>
-<div id="outline-container-org9c7f45a" class="outline-2">
-<h2 id="org9c7f45a">Suspend Then Hibernate</h2>
-<div class="outline-text-2" id="text-org9c7f45a">
+<div id="outline-container-org5239cde" class="outline-2">
+<h2 id="org5239cde">Suspend Then Hibernate</h2>
+<div class="outline-text-2" id="text-org5239cde">
 
-<div id="orgcc66790" class="figure">
+<div id="orga5463d7" class="figure">
 <p><img src="file:///static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" /><br />
 </p>
 </div>
@@ -59,9 +61,9 @@ Time stretches.<br />
 Open the notebook - the battery is near empty.<br />
 </p>
 </div>
-<div id="outline-container-orge849595" class="outline-3">
-<h3 id="orge849595">The Drill</h3>
-<div class="outline-text-3" id="text-orge849595">
+<div id="outline-container-org09e89c2" class="outline-3">
+<h3 id="org09e89c2">The Drill</h3>
+<div class="outline-text-3" id="text-org09e89c2">
 <p>
 <b>Suspend</b> is fast. State lives in RAM.<br />
 RAM needs power.<br />
@@ -74,9 +76,9 @@ It's slower - but it removes the pressure from the battery.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org9987f8f" class="outline-3">
-<h3 id="org9987f8f">What It Is</h3>
-<div class="outline-text-3" id="text-org9987f8f">
+<div id="outline-container-orgddb102a" class="outline-3">
+<h3 id="orgddb102a">What It Is</h3>
+<div class="outline-text-3" id="text-orgddb102a">
 <p>
 The best of both worlds:<br />
 </p>
@@ -93,9 +95,9 @@ The best of both worlds:<br />
 </ul>
 </div>
 </div>
-<div id="outline-container-org2e51b5b" class="outline-3">
-<h3 id="org2e51b5b">Enabling Hibernate - The Field Notes</h3>
-<div class="outline-text-3" id="text-org2e51b5b">
+<div id="outline-container-org25b75bd" class="outline-3">
+<h3 id="org25b75bd">Enabling Hibernate - The Field Notes</h3>
+<div class="outline-text-3" id="text-org25b75bd">
 <ul class="org-ul">
 <li>The swap &gt; RAM.<br /></li>
 <li>The initramfs contains libs to read LVM and LUKS.<br /></li>
@@ -118,7 +120,7 @@ On encrypted systems, the resume target must resolve to the <b>unlocked swap dev
 Add the UUID as resume option to GRUB in <code>/etc/default/grub</code>:<br />
 </p>
 
-<pre class="example" id="orgd5c37a5">
+<pre class="example" id="org72eefa4">
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID=&lt;swap-uuid&gt;"
 </pre>
 
@@ -135,7 +137,7 @@ Apply the change:<br />
 If the swap is on LUKS:<br />
 </p>
 
-<pre class="example" id="org7a0cc0b">
+<pre class="example" id="orgd7a77a4">
 echo RESUME=UUID=&lt;swap-uuid&gt; | sudo tee /etc/initramfs-tools/conf.d/resume
 sudo update-initramfs -u
 sudo reboot
@@ -157,9 +159,9 @@ If it fails - repair this function first.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org7dd9ebc" class="outline-3">
-<h3 id="org7dd9ebc">Enabling Suspend Then Hibernate</h3>
-<div class="outline-text-3" id="text-org7dd9ebc">
+<div id="outline-container-org7d78800" class="outline-3">
+<h3 id="org7d78800">Enabling Suspend Then Hibernate</h3>
+<div class="outline-text-3" id="text-org7d78800">
 <p>
 Edit systemd sleep configuration in <code>/etc/systemd/sleep.conf</code>:<br />
 </p>
@@ -202,9 +204,9 @@ journalctl -b | grep -i hibernate
 </div>
 </div>
 </div>
-<div id="outline-container-orgf8869a2" class="outline-3">
-<h3 id="orgf8869a2">Final Whisper</h3>
-<div class="outline-text-3" id="text-orgf8869a2">
+<div id="outline-container-orga582ab0" class="outline-3">
+<h3 id="orga582ab0">Final Whisper</h3>
+<div class="outline-text-3" id="text-orga582ab0">
 <p>
 This setup is:<br />
 </p>

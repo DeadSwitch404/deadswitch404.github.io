@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-08 Tue 09:30 -->
+<!-- 2026-09-10 Thu 06:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Use Tor The Architect Way</title>
@@ -23,17 +23,19 @@
 <body>
 <div id="preamble" class="status">
 <nav>
-<a href="/index.html">Home</a> |
-<a href="/static/pages/about.html">About</a> |
-<a href="/static/pages/irc.html">IRC</a> |
+::
+<a href="/index.html">Home</a> ::
+<a href="/static/pages/about.html">About</a> ::
+<a href="/static/pages/irc.html">IRC</a> ::
 <a href="/articles/archive.html">Archive</a>
+::
 </nav>
 </div>
 <div id="content" class="content">
 <h1 class="title">Use Tor The Architect Way</h1>
-<div id="outline-container-org25cd1a8" class="outline-2">
-<h2 id="org25cd1a8">Use Tor The Architect Way</h2>
-<div class="outline-text-2" id="text-org25cd1a8">
+<div id="outline-container-org4ae8a2d" class="outline-2">
+<h2 id="org4ae8a2d">Use Tor The Architect Way</h2>
+<div class="outline-text-2" id="text-org4ae8a2d">
 <img src="/static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" />
 
 <p>
@@ -57,9 +59,9 @@ Architects use the system as a protection - ethically.<br />
 <li>Enhance privacy.<br /></li>
 </ul>
 </div>
-<div id="outline-container-org0f6f15a" class="outline-3">
-<h3 id="org0f6f15a">The Onion Network Architecture</h3>
-<div class="outline-text-3" id="text-org0f6f15a">
+<div id="outline-container-org91d1d0d" class="outline-3">
+<h3 id="org91d1d0d">The Onion Network Architecture</h3>
+<div class="outline-text-3" id="text-org91d1d0d">
 <p>
 Tor's architecture limits metadata leaks.<br />
 The network introduces some lag as a tradeoff.<br />
@@ -73,9 +75,9 @@ These addresses appear random because they are derived from cryptographic keys.<
 </div>
 </div>
 </div>
-<div id="outline-container-org329c3fb" class="outline-3">
-<h3 id="org329c3fb">Install The Tor Daemon</h3>
-<div class="outline-text-3" id="text-org329c3fb">
+<div id="outline-container-org9f503b6" class="outline-3">
+<h3 id="org9f503b6">Install The Tor Daemon</h3>
+<div class="outline-text-3" id="text-org9f503b6">
 <ul class="org-ul">
 <li>On Debian you can install <code>tor</code> with <code>apt</code>.<br /></li>
 </ul>
@@ -103,9 +105,9 @@ The configuration lives in <code>/usr/local/etc/tor</code>.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orgb22aa43" class="outline-3">
-<h3 id="orgb22aa43">Configure A Hidden Service</h3>
-<div class="outline-text-3" id="text-orgb22aa43">
+<div id="outline-container-orgb66d2d3" class="outline-3">
+<h3 id="orgb66d2d3">Configure A Hidden Service</h3>
+<div class="outline-text-3" id="text-orgb66d2d3">
 <p>
 Edit the <code>torrc</code> file in the config directory with your preferred editor.<br />
 </p>
@@ -161,9 +163,9 @@ You can host <b>multiple services</b> on Tor on one <code>.onion</code> address.
 </div>
 </div>
 </div>
-<div id="outline-container-org50a1ea8" class="outline-3">
-<h3 id="org50a1ea8">The Danger Zone - Exit Nodes</h3>
-<div class="outline-text-3" id="text-org50a1ea8">
+<div id="outline-container-orga6926d7" class="outline-3">
+<h3 id="orga6926d7">The Danger Zone - Exit Nodes</h3>
+<div class="outline-text-3" id="text-orga6926d7">
 <p>
 Exit nodes are used when you leave The Onion Network and enter the surface web from it.<br />
 These exit nodes are operated by volunteers and organizations.<br />
@@ -191,9 +193,9 @@ Tor-only services (.onion) eliminate the need for exit nodes.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org2fb9764" class="outline-3">
-<h3 id="org2fb9764">Hidden Services</h3>
-<div class="outline-text-3" id="text-org2fb9764">
+<div id="outline-container-org9f110d3" class="outline-3">
+<h3 id="org9f110d3">Hidden Services</h3>
+<div class="outline-text-3" id="text-org9f110d3">
 <p>
 Most of the infrastructure services can be hosted as a Tor hidden service.<br />
 </p>
@@ -222,9 +224,9 @@ Time-based and other correlations still reveal important information.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orgd02a0b5" class="outline-3">
-<h3 id="orgd02a0b5">Final Whisper</h3>
-<div class="outline-text-3" id="text-orgd02a0b5">
+<div id="outline-container-org9269480" class="outline-3">
+<h3 id="org9269480">Final Whisper</h3>
+<div class="outline-text-3" id="text-org9269480">
 <p>
 Tor doesn't provide invisibility.<br />
 It helps to protect the client and server IP location.<br />
