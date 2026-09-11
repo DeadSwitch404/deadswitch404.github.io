@@ -247,6 +247,21 @@ blockquote p {
     background-color: #222222;
 }
 
+.article-highlight {
+    list-style-type: square;
+    margin-bottom: 15px;
+    padding: 10px 20px 10px 20px;
+    border-right: 4px solid var(--border);
+    border-top: 1px solid var(--border);
+    border-radius: 5px;
+    background-color: #101413;
+    transition: background-color 0.9s ease;
+}
+
+.article-highlight:hover {
+    background-color: #1c2220;
+}
+
 .article-list::marker {
     color: var(--accent);
 }

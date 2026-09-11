@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-10 Thu 06:26 -->
+<!-- 2026-09-11 Fri 12:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LUKS Is Not A Checkbox</title>
@@ -33,11 +33,11 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">LUKS Is Not A Checkbox</h1>
-<div id="outline-container-org88451a6" class="outline-2">
-<h2 id="org88451a6">LUKS Is Not A Checkbox</h2>
-<div class="outline-text-2" id="text-org88451a6">
+<div id="outline-container-org5839e0e" class="outline-2">
+<h2 id="org5839e0e">LUKS Is Not A Checkbox</h2>
+<div class="outline-text-2" id="text-org5839e0e">
 
-<div id="orgad33aa2" class="figure">
+<div id="org67c40be" class="figure">
 <p><img src="file:///static/img/ops-tactics.jpg" alt="ops-tactics.jpg" class="post-image" /><br />
 </p>
 </div>
@@ -63,9 +63,9 @@ Not automated. Not silent. It must ask for your passphrase at boot.<br />
 Intent over convenience. Control over comfort.<br />
 </p>
 </div>
-<div id="outline-container-org90be48e" class="outline-3">
-<h3 id="org90be48e">Objective</h3>
-<div class="outline-text-3" id="text-org90be48e">
+<div id="outline-container-org75d1e61" class="outline-3">
+<h3 id="org75d1e61">Objective</h3>
+<div class="outline-text-3" id="text-org75d1e61">
 <ol class="org-ol">
 <li>Add a new disk to Debian.<br /></li>
 <li>Prepare it with a clean partition table.<br /></li>
@@ -77,13 +77,13 @@ Intent over convenience. Control over comfort.<br />
 </ol>
 </div>
 </div>
-<div id="outline-container-orgbfe999c" class="outline-3">
-<h3 id="orgbfe999c">Operation</h3>
-<div class="outline-text-3" id="text-orgbfe999c">
+<div id="outline-container-orgdafd4d4" class="outline-3">
+<h3 id="orgdafd4d4">Operation</h3>
+<div class="outline-text-3" id="text-orgdafd4d4">
 </div>
-<div id="outline-container-org7ff50bd" class="outline-4">
-<h4 id="org7ff50bd">1. Detect the New Disk</h4>
-<div class="outline-text-4" id="text-org7ff50bd">
+<div id="outline-container-org431ffb2" class="outline-4">
+<h4 id="org431ffb2">1. Detect the New Disk</h4>
+<div class="outline-text-4" id="text-org431ffb2">
 <p>
 Confirm the disk identifier.<br />
 </p>
@@ -99,9 +99,9 @@ Assume the new device is <code>/dev/sdb</code>.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orgd17d3ee" class="outline-4">
-<h4 id="orgd17d3ee">2. Create a Clean Partition Table</h4>
-<div class="outline-text-4" id="text-orgd17d3ee">
+<div id="outline-container-org0831ad1" class="outline-4">
+<h4 id="org0831ad1">2. Create a Clean Partition Table</h4>
+<div class="outline-text-4" id="text-org0831ad1">
 <p>
 Use <code>fdisk</code> to create a single partition for LVM.<br />
 </p>
@@ -127,9 +127,9 @@ Verify:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org6b8e57e" class="outline-4">
-<h4 id="org6b8e57e">3. Build the LVM Structure</h4>
-<div class="outline-text-4" id="text-org6b8e57e">
+<div id="outline-container-orgaa2809a" class="outline-4">
+<h4 id="orgaa2809a">3. Build the LVM Structure</h4>
+<div class="outline-text-4" id="text-orgaa2809a">
 <p>
 Initialize the physical volume:<br />
 </p>
@@ -159,9 +159,9 @@ Create a logical volume:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org1e071bc" class="outline-4">
-<h4 id="org1e071bc">4. Initialize LUKS on the Logical Volume</h4>
-<div class="outline-text-4" id="text-org1e071bc">
+<div id="outline-container-orgf96baa2" class="outline-4">
+<h4 id="orgf96baa2">4. Initialize LUKS on the Logical Volume</h4>
+<div class="outline-text-4" id="text-orgf96baa2">
 <p>
 Encrypt the LV:<br />
 </p>
@@ -190,9 +190,9 @@ A mapping appears at:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org09cc134" class="outline-4">
-<h4 id="org09cc134">5. Create the Filesystem</h4>
-<div class="outline-text-4" id="text-org09cc134">
+<div id="outline-container-org3c196dd" class="outline-4">
+<h4 id="org3c196dd">5. Create the Filesystem</h4>
+<div class="outline-text-4" id="text-org3c196dd">
 <p>
 Format the encrypted block device:<br />
 </p>
@@ -221,9 +221,9 @@ Mount it for testing:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org8da3be6" class="outline-4">
-<h4 id="org8da3be6">6. Integrate Into Boot Ritual (crypttab)</h4>
-<div class="outline-text-4" id="text-org8da3be6">
+<div id="outline-container-orgebd3c4d" class="outline-4">
+<h4 id="orgebd3c4d">6. Integrate Into Boot Ritual (crypttab)</h4>
+<div class="outline-text-4" id="text-orgebd3c4d">
 <p>
 Get the LUKS UUID:<br />
 </p>
@@ -257,9 +257,9 @@ Update initramfs so the system knows about the encrypted volume:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org6d65e24" class="outline-4">
-<h4 id="org6d65e24">7. Define the Mount Contract (fstab)</h4>
-<div class="outline-text-4" id="text-org6d65e24">
+<div id="outline-container-orgf4fd724" class="outline-4">
+<h4 id="orgf4fd724">7. Define the Mount Contract (fstab)</h4>
+<div class="outline-text-4" id="text-orgf4fd724">
 <p>
 Obtain the filesystem UUID:<br />
 </p>
@@ -293,9 +293,9 @@ If nothing complains, the contract is valid.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org8d39aee" class="outline-4">
-<h4 id="org8d39aee">8. Reboot Verification</h4>
-<div class="outline-text-4" id="text-org8d39aee">
+<div id="outline-container-org9a46748" class="outline-4">
+<h4 id="org9a46748">8. Reboot Verification</h4>
+<div class="outline-text-4" id="text-org9a46748">
 <p>
 Reboot and confirm:<br />
 </p>
@@ -312,55 +312,55 @@ If the system continues without prompting, something is broken.<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org05b8367" class="outline-3">
-<h3 id="org05b8367">Failure Modes</h3>
-<div class="outline-text-3" id="text-org05b8367">
+<div id="outline-container-orgf7b2b89" class="outline-3">
+<h3 id="orgf7b2b89">Failure Modes</h3>
+<div class="outline-text-3" id="text-orgf7b2b89">
 </div>
-<div id="outline-container-orgd49ff52" class="outline-4">
-<h4 id="orgd49ff52">Wrong UUID in crypttab</h4>
-<div class="outline-text-4" id="text-orgd49ff52">
+<div id="outline-container-org696a500" class="outline-4">
+<h4 id="org696a500">Wrong UUID in crypttab</h4>
+<div class="outline-text-4" id="text-org696a500">
 <p>
 System boots but mapping never appears.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org582b491" class="outline-4">
-<h4 id="org582b491">Missing initramfs update</h4>
-<div class="outline-text-4" id="text-org582b491">
+<div id="outline-container-org23430e6" class="outline-4">
+<h4 id="org23430e6">Missing initramfs update</h4>
+<div class="outline-text-4" id="text-org23430e6">
 <p>
 System ignores crypttab entries.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orgb2539e1" class="outline-4">
-<h4 id="orgb2539e1">Incorrect fstab order or missing mountpoint</h4>
-<div class="outline-text-4" id="text-orgb2539e1">
+<div id="outline-container-org1b894d6" class="outline-4">
+<h4 id="org1b894d6">Incorrect fstab order or missing mountpoint</h4>
+<div class="outline-text-4" id="text-org1b894d6">
 <p>
 Boot drops into emergency mode.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org1e9fe9e" class="outline-4">
-<h4 id="org1e9fe9e">LVM inside LUKS vs. LUKS inside LVM</h4>
-<div class="outline-text-4" id="text-org1e9fe9e">
+<div id="outline-container-org93fc310" class="outline-4">
+<h4 id="org93fc310">LVM inside LUKS vs. LUKS inside LVM</h4>
+<div class="outline-text-4" id="text-org93fc310">
 <p>
 This article uses LUKS <b>on</b> LVM.<br />
 Reversing the order changes boot behavior and recovery workflows.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orgd1d83b8" class="outline-4">
-<h4 id="orgd1d83b8">Weak passphrase discipline</h4>
-<div class="outline-text-4" id="text-orgd1d83b8">
+<div id="outline-container-orgce5ccd2" class="outline-4">
+<h4 id="orgce5ccd2">Weak passphrase discipline</h4>
+<div class="outline-text-4" id="text-orgce5ccd2">
 <p>
 LUKS is as strong as the phrase that guards it.<br />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org716dc10" class="outline-3">
-<h3 id="org716dc10">Final Whisper</h3>
-<div class="outline-text-3" id="text-org716dc10">
+<div id="outline-container-org36af01f" class="outline-3">
+<h3 id="org36af01f">Final Whisper</h3>
+<div class="outline-text-3" id="text-org36af01f">
 <p>
 Security at rest is not decoration.<br />
 It is the last guarantee when everything else fails.<br />

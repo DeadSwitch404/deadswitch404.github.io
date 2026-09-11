@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-10 Thu 06:26 -->
+<!-- 2026-09-11 Fri 12:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Protecting The Wire - Semaphore Behind SSL Proxy</title>
@@ -33,18 +33,18 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Protecting The Wire - Semaphore Behind SSL Proxy</h1>
-<div id="outline-container-org261156b" class="outline-2">
-<h2 id="org261156b">Protecting The Wire - Semaphore Behind SSL Proxy</h2>
-<div class="outline-text-2" id="text-org261156b">
+<div id="outline-container-org16aea3d" class="outline-2">
+<h2 id="org16aea3d">Protecting The Wire - Semaphore Behind SSL Proxy</h2>
+<div class="outline-text-2" id="text-org16aea3d">
 
-<div id="org1b31f49" class="figure">
+<div id="org07c7d0e" class="figure">
 <p><img src="file:///static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" /><br />
 </p>
 </div>
 </div>
-<div id="outline-container-org1f19bd5" class="outline-3">
-<h3 id="org1f19bd5">Mission Brief</h3>
-<div class="outline-text-3" id="text-org1f19bd5">
+<div id="outline-container-orgcac34e5" class="outline-3">
+<h3 id="orgcac34e5">Mission Brief</h3>
+<div class="outline-text-3" id="text-orgcac34e5">
 <p>
 Plain text communication is loud. It's bleeding data.<br />
 Prying eyes can see every bit in the wire.<br />
@@ -65,9 +65,9 @@ You use:<br />
 </ul>
 </div>
 </div>
-<div id="outline-container-org052c15d" class="outline-3">
-<h3 id="org052c15d">Requirements</h3>
-<div class="outline-text-3" id="text-org052c15d">
+<div id="outline-container-org2a3601a" class="outline-3">
+<h3 id="org2a3601a">Requirements</h3>
+<div class="outline-text-3" id="text-org2a3601a">
 <ul class="org-ul">
 <li>Debian 12 (with hardened kernel preferred)<br /></li>
 <li>Podman installed and functional (v4 or later)<br /></li>
@@ -79,9 +79,9 @@ You use:<br />
 </ul>
 </div>
 </div>
-<div id="outline-container-org6529efc" class="outline-3">
-<h3 id="org6529efc">Step 1: Create The Pod For The Configuration</h3>
-<div class="outline-text-3" id="text-org6529efc">
+<div id="outline-container-org990f160" class="outline-3">
+<h3 id="org990f160">Step 1: Create The Pod For The Configuration</h3>
+<div class="outline-text-3" id="text-org990f160">
 <p>
 The pod exposes only an HTTPS port for the NginX proxy:<br />
 </p>
@@ -95,9 +95,9 @@ Non-root containers use ports above 1000.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org3f875fa" class="outline-3">
-<h3 id="org3f875fa">Step 2: Activate The MySQL Container</h3>
-<div class="outline-text-3" id="text-org3f875fa">
+<div id="outline-container-org38f946a" class="outline-3">
+<h3 id="org38f946a">Step 2: Activate The MySQL Container</h3>
+<div class="outline-text-3" id="text-org38f946a">
 <p>
 Run the database container assigned to the pod:<br />
 </p>
@@ -120,9 +120,9 @@ Run the database container assigned to the pod:<br />
 </ul>
 </div>
 </div>
-<div id="outline-container-org3fa5f54" class="outline-3">
-<h3 id="org3fa5f54">Step 3: Initiate The Semaphore Container</h3>
-<div class="outline-text-3" id="text-org3fa5f54">
+<div id="outline-container-orgd9486dc" class="outline-3">
+<h3 id="orgd9486dc">Step 3: Initiate The Semaphore Container</h3>
+<div class="outline-text-3" id="text-orgd9486dc">
 <p>
 Assign and run Semaphore in the pod:<br />
 </p>
@@ -154,13 +154,13 @@ Assign and run Semaphore in the pod:<br />
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfd8b0cf" class="outline-3">
-<h3 id="orgfd8b0cf">Step 4: The Mask To The World - NginX Reverse Proxy</h3>
-<div class="outline-text-3" id="text-orgfd8b0cf">
+<div id="outline-container-org3a042d3" class="outline-3">
+<h3 id="org3a042d3">Step 4: The Mask To The World - NginX Reverse Proxy</h3>
+<div class="outline-text-3" id="text-org3a042d3">
 </div>
-<div id="outline-container-org86da21b" class="outline-4">
-<h4 id="org86da21b">NginX Configuration</h4>
-<div class="outline-text-4" id="text-org86da21b">
+<div id="outline-container-org01f2d1d" class="outline-4">
+<h4 id="org01f2d1d">NginX Configuration</h4>
+<div class="outline-text-4" id="text-org01f2d1d">
 <p>
 You set up the only exposure here. No mistakes.<br />
 </p>
@@ -174,7 +174,7 @@ Clients connect over <b>SSL</b> on port <code>4430</code> - they are forwarded t
 NginX from <code>443</code> forwards the connection to Semaphore's port <code>3000</code> (Default UI port). <i>It's sealed. Never exposed.</i><br />
 </p>
 
-<pre class="example" id="org47a0fa7">
+<pre class="example" id="org3cc3e7f">
 server {
     listen 443 ssl;
     server_name semaphore.local;
@@ -201,9 +201,9 @@ In a Podman pod the nework is separated. Containers "see" each other.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org422b545" class="outline-4">
-<h4 id="org422b545">X509 Certificates</h4>
-<div class="outline-text-4" id="text-org422b545">
+<div id="outline-container-org3470178" class="outline-4">
+<h4 id="org3470178">X509 Certificates</h4>
+<div class="outline-text-4" id="text-org3470178">
 <p>
 <b>Always</b> use valid certificates in production systems. They are your chain of trust.<br />
 </p>
@@ -221,9 +221,9 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -node
 </div>
 </div>
 </div>
-<div id="outline-container-org15cac57" class="outline-4">
-<h4 id="org15cac57">Proxy Container</h4>
-<div class="outline-text-4" id="text-org15cac57">
+<div id="outline-container-org717e7b6" class="outline-4">
+<h4 id="org717e7b6">Proxy Container</h4>
+<div class="outline-text-4" id="text-org717e7b6">
 <p>
 Assign and run the reverse proxy in the pod:<br />
 </p>
@@ -240,9 +240,9 @@ Assign and run the reverse proxy in the pod:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org57a90a6" class="outline-3">
-<h3 id="org57a90a6">Step 5: Verify The Setup</h3>
-<div class="outline-text-3" id="text-org57a90a6">
+<div id="outline-container-org1875c03" class="outline-3">
+<h3 id="org1875c03">Step 5: Verify The Setup</h3>
+<div class="outline-text-3" id="text-org1875c03">
 <p>
 <i>Log in.</i><br />
 <i>Check the logs.</i><br />
@@ -259,9 +259,9 @@ Does it work? Seal it.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org496fa2e" class="outline-3">
-<h3 id="org496fa2e">Step 6: Generating The Pod Configuration File</h3>
-<div class="outline-text-3" id="text-org496fa2e">
+<div id="outline-container-org37f280d" class="outline-3">
+<h3 id="org37f280d">Step 6: Generating The Pod Configuration File</h3>
+<div class="outline-text-3" id="text-org37f280d">
 <p>
 You built a system. Don't rebuild it by hand.<br />
 Create a Kubernetes-compatible <b>pod</b> configuration.<br />
@@ -277,9 +277,9 @@ You may have to edit the file a bit. Remove the noise. Keep the data.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org3efbcff" class="outline-3">
-<h3 id="org3efbcff">Step 7: Security Considerations - Hardening</h3>
-<div class="outline-text-3" id="text-org3efbcff">
+<div id="outline-container-orgc93f1bd" class="outline-3">
+<h3 id="orgc93f1bd">Step 7: Security Considerations - Hardening</h3>
+<div class="outline-text-3" id="text-orgc93f1bd">
 <ol class="org-ol">
 <li>Offload secrets to <code>.env</code> files or a secrets manager - never bake them into scripts.<br /></li>
 <li>Don't use self-signed certificates. Use valid <i>Let's Encrypt</i> or other ones.<br /></li>
@@ -287,9 +287,9 @@ You may have to edit the file a bit. Remove the noise. Keep the data.<br />
 </ol>
 </div>
 </div>
-<div id="outline-container-orgc479375" class="outline-3">
-<h3 id="orgc479375">Ghost Thoughts</h3>
-<div class="outline-text-3" id="text-orgc479375">
+<div id="outline-container-orgc2ae286" class="outline-3">
+<h3 id="orgc2ae286">Ghost Thoughts</h3>
+<div class="outline-text-3" id="text-orgc2ae286">
 <p>
 Networks and systems are full of evil ghosts with prying eyes.<br />
 Unencrypted flows scream louder than logs. Silence them.<br />

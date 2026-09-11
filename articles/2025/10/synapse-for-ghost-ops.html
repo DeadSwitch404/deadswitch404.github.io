@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-10 Thu 06:26 -->
+<!-- 2026-09-11 Fri 12:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Synapse Self-Hosted Server For The Ghosts</title>
@@ -33,11 +33,11 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Synapse Self-Hosted Server For The Ghosts</h1>
-<div id="outline-container-org4beb66b" class="outline-2">
-<h2 id="org4beb66b">Synapse Self-Hosted Server For The Ghosts</h2>
-<div class="outline-text-2" id="text-org4beb66b">
+<div id="outline-container-org4d717e0" class="outline-2">
+<h2 id="org4d717e0">Synapse Self-Hosted Server For The Ghosts</h2>
+<div class="outline-text-2" id="text-org4d717e0">
 
-<div id="org7b82c03" class="figure">
+<div id="org5833c92" class="figure">
 <p><img src="file:///static/img/ops-tactics.jpg" alt="ops-tactics.jpg" class="post-image" /><br />
 </p>
 </div>
@@ -90,9 +90,9 @@ Use shared-secret authentication instead of static credentials and bind it to yo
 This keeps media encrypted end-to-end while routing through TURN.<br />
 </p>
 </div>
-<div id="outline-container-orgeb0bb37" class="outline-3">
-<h3 id="orgeb0bb37">Hardening</h3>
-<div class="outline-text-3" id="text-orgeb0bb37">
+<div id="outline-container-org1505a55" class="outline-3">
+<h3 id="org1505a55">Hardening</h3>
+<div class="outline-text-3" id="text-org1505a55">
 <ul class="org-ul">
 <li>Disable unused Synapse modules<br /></li>
 <li>Enforce TLS for all clients<br /></li>
@@ -106,9 +106,9 @@ Encrypt backups with <b>GPG</b>, rotate daily, and keep at least one copy offlin
 </p>
 </div>
 </div>
-<div id="outline-container-org6bd15ff" class="outline-3">
-<h3 id="org6bd15ff">PostgreSQL Backend</h3>
-<div class="outline-text-3" id="text-org6bd15ff">
+<div id="outline-container-orge14d8cd" class="outline-3">
+<h3 id="orge14d8cd">PostgreSQL Backend</h3>
+<div class="outline-text-3" id="text-orge14d8cd">
 <p>
 Synapse defaults to <b>SQLite</b>, but <b>PostgreSQL</b> is recommended for production.<br />
 ACID guarantees keep data consistent under load.<br />
@@ -118,9 +118,9 @@ Regularly <code>VACUUM</code> and <code>ANALYZE</code> to maintain performance.<
 </p>
 </div>
 </div>
-<div id="outline-container-org9971543" class="outline-3">
-<h3 id="org9971543">Federation Off</h3>
-<div class="outline-text-3" id="text-org9971543">
+<div id="outline-container-orgb8eb8e4" class="outline-3">
+<h3 id="orgb8eb8e4">Federation Off</h3>
+<div class="outline-text-3" id="text-orgb8eb8e4">
 <p>
 Disable federation to eliminate metadata leaks.<br />
 </p>
@@ -141,9 +141,9 @@ No external lookups or pings leave your network.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org05d7322" class="outline-3">
-<h3 id="org05d7322">Element Call Beta</h3>
-<div class="outline-text-3" id="text-org05d7322">
+<div id="outline-container-org29f61d5" class="outline-3">
+<h3 id="org29f61d5">Element Call Beta</h3>
+<div class="outline-text-3" id="text-org29f61d5">
 <p>
 Room-level conference calls use <b>WebRTC</b> through Element Call.<br />
 </p>
@@ -154,9 +154,9 @@ Beta status means occasional instability - test in a staging room before product
 </p>
 </div>
 </div>
-<div id="outline-container-org3ee046b" class="outline-3">
-<h3 id="org3ee046b">Final Whisper</h3>
-<div class="outline-text-3" id="text-org3ee046b">
+<div id="outline-container-org8bf4c16" class="outline-3">
+<h3 id="org8bf4c16">Final Whisper</h3>
+<div class="outline-text-3" id="text-org8bf4c16">
 <p>
 Every ghost deserves silence that only they can hear.<br />
 Privacy is not a luxury; it is a right.<br />

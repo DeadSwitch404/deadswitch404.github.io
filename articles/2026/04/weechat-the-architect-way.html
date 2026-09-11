@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-10 Thu 06:26 -->
+<!-- 2026-09-11 Fri 12:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Use WeeChat The Architect Way</title>
@@ -33,9 +33,9 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Use WeeChat The Architect Way</h1>
-<div id="outline-container-org12d5e8e" class="outline-2">
-<h2 id="org12d5e8e">Use WeeChat The Architect Way</h2>
-<div class="outline-text-2" id="text-org12d5e8e">
+<div id="outline-container-orgd2a92b5" class="outline-2">
+<h2 id="orgd2a92b5">Use WeeChat The Architect Way</h2>
+<div class="outline-text-2" id="text-orgd2a92b5">
 <img src="/static/img/ghostware.jpg" alt="ops-tactics.jpg" class="post-image">
 <p>
 You used IRSSI with screen. Then tmux.<br />
@@ -51,10 +51,10 @@ But the conversations are valuable. Concentrated.<br />
 Connect to them in a secure, lightweight way.<br />
 </p>
 </div>
-<div id="outline-container-orgd9ad74f" class="outline-3">
-<h3 id="orgd9ad74f">The Architecture</h3>
-<div class="outline-text-3" id="text-orgd9ad74f">
-<pre class="example" id="org78ac338">
+<div id="outline-container-org056f1d5" class="outline-3">
+<h3 id="org056f1d5">The Architecture</h3>
+<div class="outline-text-3" id="text-org056f1d5">
+<pre class="example" id="orgf51784e">
 WeeChat client
   on your PC
       |
@@ -67,9 +67,9 @@ on your server --- permanent connection
 </pre>
 </div>
 </div>
-<div id="outline-container-orgdd02359" class="outline-3">
-<h3 id="orgdd02359">Set Up Your WeeChat</h3>
-<div class="outline-text-3" id="text-orgdd02359">
+<div id="outline-container-org7566771" class="outline-3">
+<h3 id="org7566771">Set Up Your WeeChat</h3>
+<div class="outline-text-3" id="text-org7566771">
 <p>
 <b>On your server</b> set up WeeChat as you'd do it for daily chat.<br />
 Open it in a tmux session.<br />
@@ -80,19 +80,19 @@ Open it in a tmux session.<br />
 <li><p>
 Set up the master password:<br />
 </p>
-<pre class="example" id="org21e3bf3">
+<pre class="example" id="org8b7b349">
 /secure passphrase your-passphrase
 </pre></li>
 <li><p>
 Add your SASL password.<br />
 </p>
-<pre class="example" id="org4e51ca3">
+<pre class="example" id="org9a8a385">
 /secure add my_password my-secret-password
 </pre></li>
 <li><p>
 You can use it later as:<br />
 </p>
-<pre class="example" id="org894e1da">
+<pre class="example" id="orgc9db5a5">
 ${sec.data.my_password}
 </pre>
 <p>
@@ -108,7 +108,7 @@ Add your IRC network to WeeChat.<br />
 <li><p>
 Configure the server access:<br />
 </p>
-<pre class="example" id="orge7f2f17">
+<pre class="example" id="org19031af">
 /server add libera irc.libera.chat/6697 -tls
 </pre>
 <p>
@@ -117,22 +117,22 @@ Configure your additional preferences like <i>nick</i>, <i>realname</i> and <i>u
 <li><p>
 Configure the SASL authentication:<br />
 </p>
-<pre class="example" id="orgf0a8d7e">
+<pre class="example" id="orgd42229c">
 /set irc.server.libera.sasl_password "${sec.data.my_password}"
 /set irc.server.libera.sasl_username irc_nick
 </pre></li>
 <li><p>
 You can connect to the IRC server:<br />
 </p>
-<pre class="example" id="org42cb571">
+<pre class="example" id="org5ef37f5">
 /connect libera
 </pre></li>
 </ol>
 </div>
 </div>
-<div id="outline-container-orgace7ca3" class="outline-3">
-<h3 id="orgace7ca3">Set Up Your Relay</h3>
-<div class="outline-text-3" id="text-orgace7ca3">
+<div id="outline-container-org21fa411" class="outline-3">
+<h3 id="org21fa411">Set Up Your Relay</h3>
+<div class="outline-text-3" id="text-org21fa411">
 <p>
 <b>Still on the server</b> (while you're already connected to the network) set up the relay function.<br />
 </p>
@@ -141,13 +141,13 @@ You can connect to the IRC server:<br />
 <li><p>
 Add a strong relay password to the secure folder:<br />
 </p>
-<pre class="example" id="org977e35f">
+<pre class="example" id="org5f84ff3">
 /secure add relay_pw strong-pw
 </pre></li>
 <li><p>
 Configure your relay password:<br />
 </p>
-<pre class="example" id="orgee92828">
+<pre class="example" id="orgf29e9e1">
 /set relay.network.password "${sec.data.relay_pw}"
 </pre>
 <p>
@@ -156,13 +156,13 @@ You will use this password to connect to the relay.<br />
 <li><p>
 Obtain or generate a certificate and configure it for the relay:<br />
 </p>
-<pre class="example" id="org0bd5d37">
+<pre class="example" id="orge8f6a28">
 /set relay.network.tls_cert_key "${weechat_config_dir}/ssl/relay.pem"
 </pre></li>
 <li><p>
 Configure and start the relay:<br />
 </p>
-<pre class="example" id="org3b95a57">
+<pre class="example" id="orgd61d859">
 /relay add tls.irc 9001
 </pre></li>
 </ol>
@@ -177,9 +177,9 @@ The server configuration is done.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orgffcc6cf" class="outline-3">
-<h3 id="orgffcc6cf">Set Up Your Client</h3>
-<div class="outline-text-3" id="text-orgffcc6cf">
+<div id="outline-container-org3fad165" class="outline-3">
+<h3 id="org3fad165">Set Up Your Client</h3>
+<div class="outline-text-3" id="text-org3fad165">
 <p>
 On the WeeChat client the configuration is similar.<br />
 </p>
@@ -188,19 +188,19 @@ On the WeeChat client the configuration is similar.<br />
 <li><p>
 Add the relay connection password to the secure folder:<br />
 </p>
-<pre class="example" id="orgd412ea2">
+<pre class="example" id="orgb527d11">
 /secure add relay_pw same-pw-as-on-server
 </pre></li>
 <li><p>
 Configure the relay connection as it would be an IRC server:<br />
 </p>
-<pre class="example" id="org7e49fa2">
+<pre class="example" id="orge80fb9b">
 /server add relay_server your.relay.domain.tld/9001 -tls
 </pre></li>
 <li><p>
 Configure the connection password:<br />
 </p>
-<pre class="example" id="org8c3439b">
+<pre class="example" id="org02cc4f4">
 /set irc.server.relay_server.password "libera:${sec.data.relay_pw}"
 </pre></li>
 </ol>
@@ -209,7 +209,7 @@ Configure the connection password:<br />
 I used "libera" as the server alias on the relay.<br />
 For the password it is important to add it to the password in the<br />
 </p>
-<pre class="example" id="org79961b7">
+<pre class="example" id="orgf73f258">
 server-alias:relay-password
 </pre>
 <p>
@@ -219,7 +219,7 @@ format to be able to connect.<br />
 <p>
 As a last step you can connect to your WeeChat relay:<br />
 </p>
-<pre class="example" id="org9a2419f">
+<pre class="example" id="orgf23a7aa">
 /connect relay_server
 </pre>
 
@@ -230,9 +230,9 @@ As a last step you can connect to your WeeChat relay:<br />
 </ul>
 </div>
 </div>
-<div id="outline-container-org1b91576" class="outline-3">
-<h3 id="org1b91576">Final Whisper</h3>
-<div class="outline-text-3" id="text-org1b91576">
+<div id="outline-container-org7323f1f" class="outline-3">
+<h3 id="org7323f1f">Final Whisper</h3>
+<div class="outline-text-3" id="text-org7323f1f">
 <p>
 The IRC networks are mostly silent in 2026.<br />
 Conversations are rare, but they're useful.<br />
