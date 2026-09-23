@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-22 Tue 19:02 -->
+<!-- 2026-09-23 Wed 13:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ghost Hands - Automating The Stronghold With Ansible And Podman</title>
@@ -33,13 +33,13 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Ghost Hands - Automating The Stronghold With Ansible And Podman</h1>
-<div id="outline-container-orgd9f8ec0" class="outline-2">
-<h2 id="orgd9f8ec0">Ghost Hands - Automating The Stronghold With Ansible And Podman</h2>
-<div class="outline-text-2" id="text-orgd9f8ec0">
+<div id="outline-container-org0311c93" class="outline-2">
+<h2 id="org0311c93">Ghost Hands - Automating The Stronghold With Ansible And Podman</h2>
+<div class="outline-text-2" id="text-org0311c93">
 </div>
-<div id="outline-container-orge046049" class="outline-3">
-<h3 id="orge046049">Mission Update</h3>
-<div class="outline-text-3" id="text-orge046049">
+<div id="outline-container-orgc737cc1" class="outline-3">
+<h3 id="orgc737cc1">Mission Update</h3>
+<div class="outline-text-3" id="text-orgc737cc1">
 <p>
 Now we automate.<br />
 </p>
@@ -55,9 +55,9 @@ One playbook to conjure the setup, one command to repeat the ritual.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org4a7a528" class="outline-3">
-<h3 id="org4a7a528">Requirements</h3>
-<div class="outline-text-3" id="text-org4a7a528">
+<div id="outline-container-org8522873" class="outline-3">
+<h3 id="org8522873">Requirements</h3>
+<div class="outline-text-3" id="text-org8522873">
 <ul class="org-ul">
 <li>Ansible (core + <code>community.containers</code>)<br /></li>
 <li>Podman configured for rootless ops<br /></li>
@@ -71,9 +71,9 @@ One playbook to conjure the setup, one command to repeat the ritual.<br />
 </ul>
 </div>
 </div>
-<div id="outline-container-org3e3c3c6" class="outline-3">
-<h3 id="org3e3c3c6">Playbook Strategy</h3>
-<div class="outline-text-3" id="text-org3e3c3c6">
+<div id="outline-container-org8ddf849" class="outline-3">
+<h3 id="org8ddf849">Playbook Strategy</h3>
+<div class="outline-text-3" id="text-org8ddf849">
 <ul class="org-ul">
 <li>Create Podman pod<br /></li>
 <li>Deploy MySQL container<br /></li>
@@ -82,17 +82,17 @@ One playbook to conjure the setup, one command to repeat the ritual.<br />
 </ul>
 </div>
 </div>
-<div id="outline-container-orgaeb6d02" class="outline-3">
-<h3 id="orgaeb6d02">Secret Externalization</h3>
-<div class="outline-text-3" id="text-orgaeb6d02">
+<div id="outline-container-org3bec1eb" class="outline-3">
+<h3 id="org3bec1eb">Secret Externalization</h3>
+<div class="outline-text-3" id="text-org3bec1eb">
 <p>
 Store credentials in <code>group_vars/containers.yml</code> and encrypt with Ansible Vault.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orgdb03beb" class="outline-3">
-<h3 id="orgdb03beb">Step 1: Create The Pod</h3>
-<div class="outline-text-3" id="text-orgdb03beb">
+<div id="outline-container-orgd45bd99" class="outline-3">
+<h3 id="orgd45bd99">Step 1: Create The Pod</h3>
+<div class="outline-text-3" id="text-orgd45bd99">
 <div class="org-src-container">
 <pre class="src src-yaml">- <span style="font-weight: bold; font-style: italic;">name</span>: Create the pod
   <span style="font-weight: bold; font-style: italic;">containers.podman.podman_pod</span>:
@@ -104,9 +104,9 @@ Store credentials in <code>group_vars/containers.yml</code> and encrypt with Ans
 </div>
 </div>
 </div>
-<div id="outline-container-org7fff9c8" class="outline-3">
-<h3 id="org7fff9c8">Step 2: Activate the MySQL Container</h3>
-<div class="outline-text-3" id="text-org7fff9c8">
+<div id="outline-container-orga4583f9" class="outline-3">
+<h3 id="orga4583f9">Step 2: Activate the MySQL Container</h3>
+<div class="outline-text-3" id="text-orga4583f9">
 <div class="org-src-container">
 <pre class="src src-yaml">- <span style="font-weight: bold; font-style: italic;">name</span>: Create the MySQL container
   <span style="font-weight: bold; font-style: italic;">containers.podman.podman_container</span>:
@@ -127,9 +127,9 @@ Store credentials in <code>group_vars/containers.yml</code> and encrypt with Ans
 </div>
 </div>
 </div>
-<div id="outline-container-org353f909" class="outline-3">
-<h3 id="org353f909">Step 3: Initiate the Semaphore container</h3>
-<div class="outline-text-3" id="text-org353f909">
+<div id="outline-container-orgc57eed6" class="outline-3">
+<h3 id="orgc57eed6">Step 3: Initiate the Semaphore container</h3>
+<div class="outline-text-3" id="text-orgc57eed6">
 <div class="org-src-container">
 <pre class="src src-yaml">- <span style="font-weight: bold; font-style: italic;">name</span>: Create the Semaphore container
   <span style="font-weight: bold; font-style: italic;">containers.podman.podman_container</span>:
@@ -158,9 +158,9 @@ Store credentials in <code>group_vars/containers.yml</code> and encrypt with Ans
 </div>
 </div>
 </div>
-<div id="outline-container-org982f50d" class="outline-3">
-<h3 id="org982f50d">Step 4: The NginX Reverse Proxy</h3>
-<div class="outline-text-3" id="text-org982f50d">
+<div id="outline-container-org16021b9" class="outline-3">
+<h3 id="org16021b9">Step 4: The NginX Reverse Proxy</h3>
+<div class="outline-text-3" id="text-org16021b9">
 <div class="org-src-container">
 <pre class="src src-yaml">- <span style="font-weight: bold; font-style: italic;">name</span>: Create the NginX container
   <span style="font-weight: bold; font-style: italic;">containers.podman.podman_container</span>:
@@ -178,9 +178,9 @@ Store credentials in <code>group_vars/containers.yml</code> and encrypt with Ans
 </div>
 </div>
 </div>
-<div id="outline-container-org220d4f8" class="outline-3">
-<h3 id="org220d4f8">Step 5: Verify</h3>
-<div class="outline-text-3" id="text-org220d4f8">
+<div id="outline-container-org42f5337" class="outline-3">
+<h3 id="org42f5337">Step 5: Verify</h3>
+<div class="outline-text-3" id="text-org42f5337">
 <p>
 Log in.<br />
 Verify the configuration.<br />
@@ -188,9 +188,9 @@ Monitor the logs with <code>podman pod logs p_semaphore</code>.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org655f339" class="outline-3">
-<h3 id="org655f339">Final Signal</h3>
-<div class="outline-text-3" id="text-org655f339">
+<div id="outline-container-org8cfc1a0" class="outline-3">
+<h3 id="org8cfc1a0">Final Signal</h3>
+<div class="outline-text-3" id="text-org8cfc1a0">
 <p>
 The stronghold stands.<br />
 Provisioned in silence. Hardened by code.<br />

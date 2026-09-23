@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-11 Fri 12:13 -->
+<!-- 2026-09-23 Wed 13:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Your Hidden Container Engine - Systemd</title>
@@ -33,9 +33,9 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Your Hidden Container Engine - Systemd</h1>
-<div id="outline-container-org7e6e2cc" class="outline-2">
-<h2 id="org7e6e2cc">Your Hidden Container Engine - Systemd</h2>
-<div class="outline-text-2" id="text-org7e6e2cc">
+<div id="outline-container-orgf869ff9" class="outline-2">
+<h2 id="orgf869ff9">Your Hidden Container Engine - Systemd</h2>
+<div class="outline-text-2" id="text-orgf869ff9">
 <img src="/static/img/ops-tactics.jpg" alt="ops-tactics.jpg" class="post-image" />
 
 <p>
@@ -79,9 +79,9 @@ Its features are:<br />
 Ready to use. You just don't know about it.<br />
 </p>
 </div>
-<div id="outline-container-org03ebc2b" class="outline-3">
-<h3 id="org03ebc2b">systemd-nspawn</h3>
-<div class="outline-text-3" id="text-org03ebc2b">
+<div id="outline-container-org3b66859" class="outline-3">
+<h3 id="org3b66859">systemd-nspawn</h3>
+<div class="outline-text-3" id="text-org3b66859">
 <p>
 <code>systemd-nspawn</code> is part of the <code>systemd</code> ecosystem.<br />
 </p>
@@ -122,9 +122,9 @@ Create a configuration directory for the future containers:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org7acc80f" class="outline-3">
-<h3 id="org7acc80f">Architecture</h3>
-<div class="outline-text-3" id="text-org7acc80f">
+<div id="outline-container-org1687081" class="outline-3">
+<h3 id="org1687081">Architecture</h3>
+<div class="outline-text-3" id="text-org1687081">
 <p>
 Stop for a moment.<br />
 Let's see what architecture will be created here.<br />
@@ -152,9 +152,9 @@ On the containers:<br />
 </ul>
 </div>
 </div>
-<div id="outline-container-orgcc63dd4" class="outline-3">
-<h3 id="orgcc63dd4">Bootstrap A Container</h3>
-<div class="outline-text-3" id="text-orgcc63dd4">
+<div id="outline-container-org7cd6208" class="outline-3">
+<h3 id="org7cd6208">Bootstrap A Container</h3>
+<div class="outline-text-3" id="text-org7cd6208">
 <p>
 You want to create a Debian 13 container.<br />
 </p>
@@ -175,9 +175,9 @@ sudo debootstrap --include=systemd,dbus trixie /var/lib/machines/debian-containe
 </ol>
 </div>
 </div>
-<div id="outline-container-org6e879bc" class="outline-3">
-<h3 id="org6e879bc">Network Configuration</h3>
-<div class="outline-text-3" id="text-org6e879bc">
+<div id="outline-container-orgb12994c" class="outline-3">
+<h3 id="orgb12994c">Network Configuration</h3>
+<div class="outline-text-3" id="text-orgb12994c">
 <p>
 Remember: a bridge interface is configured on the host.<br />
 </p>
@@ -245,9 +245,9 @@ The container's own systemd manages the services inside it.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org7a23c7e" class="outline-3">
-<h3 id="org7a23c7e">Container Lifecycle Management</h3>
-<div class="outline-text-3" id="text-org7a23c7e">
+<div id="outline-container-orgf80c12e" class="outline-3">
+<h3 id="orgf80c12e">Container Lifecycle Management</h3>
+<div class="outline-text-3" id="text-orgf80c12e">
 <p>
 Start:<br />
 </p>
@@ -321,9 +321,9 @@ Remove the container image:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-orge804317" class="outline-3">
-<h3 id="orge804317">Templates</h3>
-<div class="outline-text-3" id="text-orge804317">
+<div id="outline-container-orgcbd6bfb" class="outline-3">
+<h3 id="orgcbd6bfb">Templates</h3>
+<div class="outline-text-3" id="text-orgcbd6bfb">
 <p>
 For fast deployment, some architects prefer to use machine templates.<br />
 It's a read-only machine that you clone with <code>machinectl</code>.<br />
@@ -385,9 +385,9 @@ Now you can clone it for new containers:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-orgc4bd97b" class="outline-3">
-<h3 id="orgc4bd97b">Final Whisper</h3>
-<div class="outline-text-3" id="text-orgc4bd97b">
+<div id="outline-container-org1d26bc2" class="outline-3">
+<h3 id="org1d26bc2">Final Whisper</h3>
+<div class="outline-text-3" id="text-org1d26bc2">
 <p>
 <code>systemd-nspawn</code> doesn't compete with other similar technologies.<br />
 It sits there.<br />
@@ -402,7 +402,7 @@ It has its place in the architecture.<br />
 For example:<br />
 </p>
 
-<pre class="example" id="org31bc8d6">
+<pre class="example" id="org9539ea6">
             [host]
               |
   |-----------|-------------|

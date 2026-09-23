@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-11 Fri 12:14 -->
+<!-- 2026-09-23 Wed 13:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>GPG Like A Ghost</title>
@@ -33,11 +33,11 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">GPG Like A Ghost</h1>
-<div id="outline-container-org4edea25" class="outline-2">
-<h2 id="org4edea25">GPG Like A Ghost</h2>
-<div class="outline-text-2" id="text-org4edea25">
+<div id="outline-container-org808eb37" class="outline-2">
+<h2 id="org808eb37">GPG Like A Ghost</h2>
+<div class="outline-text-2" id="text-org808eb37">
 
-<div id="org7a8a5c9" class="figure">
+<div id="org11b53c2" class="figure">
 <p><img src="file:///static/img/signals.jpg" alt="signals.jpg" class="post-image" /><br />
 </p>
 </div>
@@ -58,9 +58,9 @@ Ghost-level OPSEC is a life style.<br />
 <li><b>Subkeys</b> move in the world, doing your bidding <i>without exposing</i> your heart.<br /></li>
 </ul>
 </div>
-<div id="outline-container-org37e7e27" class="outline-3">
-<h3 id="org37e7e27">Install GPG</h3>
-<div class="outline-text-3" id="text-org37e7e27">
+<div id="outline-container-orgdcfaff5" class="outline-3">
+<h3 id="orgdcfaff5">Install GPG</h3>
+<div class="outline-text-3" id="text-orgdcfaff5">
 <div class="org-src-container">
 <pre class="src src-shell">sudo apt install gnupg2
 </pre>
@@ -71,9 +71,9 @@ No network whispers. Only the tool. Only control.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org2b6b0b3" class="outline-3">
-<h3 id="org2b6b0b3">Forge the Master Key</h3>
-<div class="outline-text-3" id="text-org2b6b0b3">
+<div id="outline-container-org0f55821" class="outline-3">
+<h3 id="org0f55821">Forge the Master Key</h3>
+<div class="outline-text-3" id="text-org0f55821">
 <div class="org-src-container">
 <pre class="src src-shell">gpg --full-gen-key
 </pre>
@@ -93,9 +93,9 @@ Record it in KeepassXC. Offline. Hidden.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org333ccc9" class="outline-3">
-<h3 id="org333ccc9">Establish Absolute Trust</h3>
-<div class="outline-text-3" id="text-org333ccc9">
+<div id="outline-container-orge10690b" class="outline-3">
+<h3 id="orge10690b">Establish Absolute Trust</h3>
+<div class="outline-text-3" id="text-orge10690b">
 <p>
 Trust nothing. Except <b>yourself</b>.<br />
 </p>
@@ -112,9 +112,9 @@ Trust nothing. Except <b>yourself</b>.<br />
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd736783" class="outline-3">
-<h3 id="orgd736783">Subkeys: The Shadows You Send Out</h3>
-<div class="outline-text-3" id="text-orgd736783">
+<div id="outline-container-orgcd1ac2b" class="outline-3">
+<h3 id="orgcd1ac2b">Subkeys: The Shadows You Send Out</h3>
+<div class="outline-text-3" id="text-orgcd1ac2b">
 <p>
 Master key sleeps. Subkeys act.<br />
 </p>
@@ -162,9 +162,9 @@ It belongs to the master. They never have their own.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orgcbfa195" class="outline-3">
-<h3 id="orgcbfa195">Backup the Master</h3>
-<div class="outline-text-3" id="text-orgcbfa195">
+<div id="outline-container-org7adfdc4" class="outline-3">
+<h3 id="org7adfdc4">Backup the Master</h3>
+<div class="outline-text-3" id="text-org7adfdc4">
 <p>
 Offline. Locked. Sealed.<br />
 </p>
@@ -190,9 +190,9 @@ Only then, delete the master from active machines.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org2a1baa6" class="outline-3">
-<h3 id="org2a1baa6">Backup Subkeys</h3>
-<div class="outline-text-3" id="text-org2a1baa6">
+<div id="outline-container-orgb827e15" class="outline-3">
+<h3 id="orgb827e15">Backup Subkeys</h3>
+<div class="outline-text-3" id="text-orgb827e15">
 <p>
 Subkeys move, master sleeps.<br />
 </p>
@@ -214,9 +214,9 @@ Redundancy is survival.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orgc791f44" class="outline-3">
-<h3 id="orgc791f44">Remove Master from Active Machine</h3>
-<div class="outline-text-3" id="text-orgc791f44">
+<div id="outline-container-org953ca74" class="outline-3">
+<h3 id="org953ca74">Remove Master from Active Machine</h3>
+<div class="outline-text-3" id="text-org953ca74">
 <div class="org-src-container">
 <pre class="src src-shell">gpg --delete-secret-and-public-keys ghost@silent.org
 </pre>
@@ -227,9 +227,9 @@ Offline. Always. The guardian sleeps.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org14ea51c" class="outline-3">
-<h3 id="org14ea51c">Deploy Subkeys on Clients</h3>
-<div class="outline-text-3" id="text-org14ea51c">
+<div id="outline-container-org52a9dc0" class="outline-3">
+<h3 id="org52a9dc0">Deploy Subkeys on Clients</h3>
+<div class="outline-text-3" id="text-org52a9dc0">
 <p>
 Subkeys act. Master remains unseen.<br />
 </p>
@@ -272,9 +272,9 @@ Only the master can reshape the shadows.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org2c743ab" class="outline-3">
-<h3 id="org2c743ab">Backup Strategy</h3>
-<div class="outline-text-3" id="text-org2c743ab">
+<div id="outline-container-org9cd8717" class="outline-3">
+<h3 id="org9cd8717">Backup Strategy</h3>
+<div class="outline-text-3" id="text-org9cd8717">
 <ol class="org-ol">
 <li><b>Master key</b><br />
 <ul class="org-ul">
