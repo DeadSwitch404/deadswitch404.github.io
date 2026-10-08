@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-25 Fri 07:52 -->
+<!-- 2026-10-08 Thu 15:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>FreeBSD - Run Your Gitea Server In Jails</title>
@@ -36,9 +36,9 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">FreeBSD - Run Your Gitea Server In Jails</h1>
-<div id="outline-container-org3beb9f8" class="outline-2">
-<h2 id="org3beb9f8">Our Model Of Self-hosting</h2>
-<div class="outline-text-2" id="text-org3beb9f8">
+<div id="outline-container-org9e8b4fa" class="outline-2">
+<h2 id="org9e8b4fa">Our Model Of Self-hosting</h2>
+<div class="outline-text-2" id="text-org9e8b4fa">
 <img src="/static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" />
 
 <p>
@@ -73,7 +73,7 @@ This whisper's <b>high-level-plan</b> is simple: every service gets its own <b>F
 Three jails. Three IP addresses. Compartmentalized model.<br />
 </p>
 
-<pre class="example" id="orgc3c0cbc">
+<pre class="example" id="org24fb3b6">
  Browser
    |
   TLS (self signed or Let's Encrypt)
@@ -85,9 +85,9 @@ Three jails. Three IP addresses. Compartmentalized model.<br />
 PostgreSQL
 </pre>
 </div>
-<div id="outline-container-org4f8cf21" class="outline-3">
-<h3 id="org4f8cf21">PostgreSQL</h3>
-<div class="outline-text-3" id="text-org4f8cf21">
+<div id="outline-container-orge3359b7" class="outline-3">
+<h3 id="orge3359b7">PostgreSQL</h3>
+<div class="outline-text-3" id="text-orge3359b7">
 <p>
 You must have a PostgreSQL server. In a <b>FreeBSD jail</b>.<br />
 It must be configured to accept remote connections.<br />
@@ -129,9 +129,9 @@ Configure PostgreSQL to listen on the required LAN address and permit the Gitea 
 </p>
 </div>
 </div>
-<div id="outline-container-orgb4cf5af" class="outline-3">
-<h3 id="orgb4cf5af">Nginx</h3>
-<div class="outline-text-3" id="text-orgb4cf5af">
+<div id="outline-container-org0d554b5" class="outline-3">
+<h3 id="org0d554b5">Nginx</h3>
+<div class="outline-text-3" id="text-org0d554b5">
 <p>
 You must have a well-configured Nginx server in another <b>FreeBSD jail</b>.<br />
 <b>Self-signed</b> certificates - Gitea must generate them in the Gitea jail.<br />
@@ -186,9 +186,9 @@ Set up the <code>/usr/local/etc/nginx/conf.d/gitea.conf</code> for HTTPS connect
 </div>
 </div>
 </div>
-<div id="outline-container-orge7b70a8" class="outline-3">
-<h3 id="orge7b70a8">Gitea</h3>
-<div class="outline-text-3" id="text-orge7b70a8">
+<div id="outline-container-orgf518b34" class="outline-3">
+<h3 id="orgf518b34">Gitea</h3>
+<div class="outline-text-3" id="text-orgf518b34">
 <p>
 Install Gitea with <code>pkg</code> in your <b>Gitea jail</b>:<br />
 </p>
@@ -267,9 +267,9 @@ service gitea start
 </div>
 </div>
 </div>
-<div id="outline-container-orgb3a7ec2" class="outline-3">
-<h3 id="orgb3a7ec2">Final Whisper</h3>
-<div class="outline-text-3" id="text-orgb3a7ec2">
+<div id="outline-container-orga396e83" class="outline-3">
+<h3 id="orga396e83">Final Whisper</h3>
+<div class="outline-text-3" id="text-orga396e83">
 <p>
 Gitea is the excellent tool to handle your source and text data.<br />
 It runs silently, compartmentalized and preferably secured in your FreeBSD jails.<br />

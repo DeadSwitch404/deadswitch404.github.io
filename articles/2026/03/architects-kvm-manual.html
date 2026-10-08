@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-23 Wed 13:13 -->
+<!-- 2026-10-08 Thu 15:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Architect's KVM Field Manual</title>
@@ -33,11 +33,11 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">The Architect's KVM Field Manual</h1>
-<div id="outline-container-orgff50a04" class="outline-2">
-<h2 id="orgff50a04">The Architect's KVM Field Manual</h2>
-<div class="outline-text-2" id="text-orgff50a04">
+<div id="outline-container-orgc78e6cf" class="outline-2">
+<h2 id="orgc78e6cf">The Architect's KVM Field Manual</h2>
+<div class="outline-text-2" id="text-orgc78e6cf">
 
-<div id="org8ce6c6a" class="figure">
+<div id="orge4e7e64" class="figure">
 <p><img src="file:///static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" /><br />
 </p>
 </div>
@@ -78,18 +78,18 @@ KVM is not a downgrade. It shifts responsibility to the Architect.<br />
 </p>
 </blockquote>
 </div>
-<div id="outline-container-orgf1ecb31" class="outline-3">
-<h3 id="orgf1ecb31">Install On Debian Linux</h3>
-<div class="outline-text-3" id="text-orgf1ecb31">
+<div id="outline-container-org92e7330" class="outline-3">
+<h3 id="org92e7330">Install On Debian Linux</h3>
+<div class="outline-text-3" id="text-org92e7330">
 <p>
 KVM runs on nearly all major Linux distributions.<br />
 Preparation and installation are similar across them.<br />
 <i>Visit the documentation of your distribution for the differences.</i><br />
 </p>
 </div>
-<div id="outline-container-orgf7e6762" class="outline-4">
-<h4 id="orgf7e6762">Pre-Checks</h4>
-<div class="outline-text-4" id="text-orgf7e6762">
+<div id="outline-container-org738bd68" class="outline-4">
+<h4 id="org738bd68">Pre-Checks</h4>
+<div class="outline-text-4" id="text-org738bd68">
 <ul class="org-ul">
 <li>In the BIOS/EFI verify that virtualization is supported <b>and enabled</b>.<br /></li>
 <li>Verify that the CPU supports virtualization.<br /></li>
@@ -101,9 +101,9 @@ Preparation and installation are similar across them.<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org1281132" class="outline-4">
-<h4 id="org1281132">Installation</h4>
-<div class="outline-text-4" id="text-org1281132">
+<div id="outline-container-org620247f" class="outline-4">
+<h4 id="org620247f">Installation</h4>
+<div class="outline-text-4" id="text-org620247f">
 <p>
 The required tooling can be installed directly from the Debian repository.<br />
 </p>
@@ -138,9 +138,9 @@ Log out and log in again for the group change to take effect.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org1342b07" class="outline-4">
-<h4 id="org1342b07">Post-Checks</h4>
-<div class="outline-text-4" id="text-org1342b07">
+<div id="outline-container-org8d46b10" class="outline-4">
+<h4 id="org8d46b10">Post-Checks</h4>
+<div class="outline-text-4" id="text-org8d46b10">
 <p>
 After installation <code>libvirtd</code> is enabled and running:<br />
 </p>
@@ -163,9 +163,9 @@ lsmod | grep kvm
 </div>
 </div>
 </div>
-<div id="outline-container-orgcaa1793" class="outline-3">
-<h3 id="orgcaa1793">Default Network (NAT)</h3>
-<div class="outline-text-3" id="text-orgcaa1793">
+<div id="outline-container-orgd592844" class="outline-3">
+<h3 id="orgd592844">Default Network (NAT)</h3>
+<div class="outline-text-3" id="text-orgd592844">
 <p>
 The default network allows virtual machines to access the internet behind NAT.<br />
 </p>
@@ -182,9 +182,9 @@ NAT is ideal for isolated virtual machines.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org71b3f3f" class="outline-3">
-<h3 id="org71b3f3f">Bridge Network</h3>
-<div class="outline-text-3" id="text-org71b3f3f">
+<div id="outline-container-org883a21d" class="outline-3">
+<h3 id="org883a21d">Bridge Network</h3>
+<div class="outline-text-3" id="text-org883a21d">
 <p>
 NAT isolates virtual machines.<br />
 </p>
@@ -249,9 +249,9 @@ After modifying <code>/etc/network/interfaces</code> restart networking or reboo
 </div>
 </div>
 </div>
-<div id="outline-container-org67e70ba" class="outline-3">
-<h3 id="org67e70ba">Storage Pools</h3>
-<div class="outline-text-3" id="text-org67e70ba">
+<div id="outline-container-org7f8650c" class="outline-3">
+<h3 id="org7f8650c">Storage Pools</h3>
+<div class="outline-text-3" id="text-org7f8650c">
 <p>
 The default KVM storage pool resides in <code>/var/lib/libvirt/images</code>.<br />
 It is recommended to mount this directory on a <b>dedicated</b> filesystem.<br />
@@ -282,9 +282,9 @@ virsh pool-autostart default
 </div>
 </div>
 </div>
-<div id="outline-container-org0e2287e" class="outline-3">
-<h3 id="org0e2287e">Virtual Image Formats</h3>
-<div class="outline-text-3" id="text-org0e2287e">
+<div id="outline-container-org6f1d596" class="outline-3">
+<h3 id="org6f1d596">Virtual Image Formats</h3>
+<div class="outline-text-3" id="text-org6f1d596">
 <p>
 KVM supports multiple virtual disk formats.<br />
 </p>
@@ -297,9 +297,9 @@ Most Architects use either <code>raw</code> or <code>qcow2</code>.<br />
 Many production environments combine <code>raw</code> disks with LVM snapshots for maximum performance and external snapshot control.<br />
 </p>
 </div>
-<div id="outline-container-org6cf4930" class="outline-4">
-<h4 id="org6cf4930">Raw</h4>
-<div class="outline-text-4" id="text-org6cf4930">
+<div id="outline-container-org90e5f33" class="outline-4">
+<h4 id="org90e5f33">Raw</h4>
+<div class="outline-text-4" id="text-org90e5f33">
 <ul class="org-ul">
 <li><code>raw</code> is a fast and reliable disk format.<br /></li>
 <li>It is a simple disk container with no metadata or snapshot features.<br /></li>
@@ -308,9 +308,9 @@ Many production environments combine <code>raw</code> disks with LVM snapshots f
 </ul>
 </div>
 </div>
-<div id="outline-container-org8e9539a" class="outline-4">
-<h4 id="org8e9539a">Qcow2</h4>
-<div class="outline-text-4" id="text-org8e9539a">
+<div id="outline-container-org7d53bfa" class="outline-4">
+<h4 id="org7d53bfa">Qcow2</h4>
+<div class="outline-text-4" id="text-org7d53bfa">
 <ul class="org-ul">
 <li><code>qcow2</code> introduces a small performance overhead due to metadata management.<br /></li>
 <li><code>qcow2</code> supports internal and external snapshotting.<br /></li>
@@ -327,9 +327,9 @@ For general server workloads <code>qcow2</code> is usually adequate.<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org333900d" class="outline-3">
-<h3 id="org333900d">Install Virtual Machines</h3>
-<div class="outline-text-3" id="text-org333900d">
+<div id="outline-container-org43d289d" class="outline-3">
+<h3 id="org43d289d">Install Virtual Machines</h3>
+<div class="outline-text-3" id="text-org43d289d">
 <p>
 <code>virt-install</code> installs virtual machines from the command line.<br />
 </p>
@@ -365,9 +365,9 @@ Alternatively the VM can be installed directly from the internet:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-orgb89cc2b" class="outline-3">
-<h3 id="orgb89cc2b">Clone Virtual Machines</h3>
-<div class="outline-text-3" id="text-orgb89cc2b">
+<div id="outline-container-org24081bf" class="outline-3">
+<h3 id="org24081bf">Clone Virtual Machines</h3>
+<div class="outline-text-3" id="text-org24081bf">
 <p>
 <code>virt-clone</code> creates copies of existing virtual machines.<br />
 </p>
@@ -389,25 +389,25 @@ The original VM should be powered off before cloning.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orge853c27" class="outline-3">
-<h3 id="orge853c27">Basic Virtual Machine Operations</h3>
-<div class="outline-text-3" id="text-orge853c27">
+<div id="outline-container-orgd8db7f9" class="outline-3">
+<h3 id="orgd8db7f9">Basic Virtual Machine Operations</h3>
+<div class="outline-text-3" id="text-orgd8db7f9">
 <p>
 <code>virsh</code> performs basic virtual machine operations.<br />
 </p>
 </div>
-<div id="outline-container-org38a576d" class="outline-4">
-<h4 id="org38a576d">Start</h4>
-<div class="outline-text-4" id="text-org38a576d">
+<div id="outline-container-org0b54042" class="outline-4">
+<h4 id="org0b54042">Start</h4>
+<div class="outline-text-4" id="text-org0b54042">
 <div class="org-src-container">
 <pre class="src src-shell">virsh start debian-clone
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgcaa2337" class="outline-4">
-<h4 id="orgcaa2337">Shutdown</h4>
-<div class="outline-text-4" id="text-orgcaa2337">
+<div id="outline-container-org6f97d95" class="outline-4">
+<h4 id="org6f97d95">Shutdown</h4>
+<div class="outline-text-4" id="text-org6f97d95">
 <p>
 If the guest OS supports ACPI or runs <code>qemu-ga</code>, the shutdown is graceful.<br />
 </p>
@@ -418,9 +418,9 @@ If the guest OS supports ACPI or runs <code>qemu-ga</code>, the shutdown is grac
 </div>
 </div>
 </div>
-<div id="outline-container-org630ca97" class="outline-4">
-<h4 id="org630ca97">Destroy</h4>
-<div class="outline-text-4" id="text-org630ca97">
+<div id="outline-container-org8b53b2c" class="outline-4">
+<h4 id="org8b53b2c">Destroy</h4>
+<div class="outline-text-4" id="text-org8b53b2c">
 <p>
 Destroy forces an immediate power off.<br />
 </p>
@@ -431,9 +431,9 @@ Destroy forces an immediate power off.<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org505b846" class="outline-4">
-<h4 id="org505b846">List</h4>
-<div class="outline-text-4" id="text-org505b846">
+<div id="outline-container-orgb35e035" class="outline-4">
+<h4 id="orgb35e035">List</h4>
+<div class="outline-text-4" id="text-orgb35e035">
 <div class="org-src-container">
 <pre class="src src-shell">virsh list
 virsh list --all
@@ -441,9 +441,9 @@ virsh list --all
 </div>
 </div>
 </div>
-<div id="outline-container-org6272077" class="outline-4">
-<h4 id="org6272077">Autostart</h4>
-<div class="outline-text-4" id="text-org6272077">
+<div id="outline-container-org8d19cd1" class="outline-4">
+<h4 id="org8d19cd1">Autostart</h4>
+<div class="outline-text-4" id="text-org8d19cd1">
 <p>
 Enable autostart to start the VM during host boot.<br />
 </p>
@@ -454,9 +454,9 @@ Enable autostart to start the VM during host boot.<br />
 </div>
 </div>
 </div>
-<div id="outline-container-orgd01f8fc" class="outline-4">
-<h4 id="orgd01f8fc">Undefine</h4>
-<div class="outline-text-4" id="text-orgd01f8fc">
+<div id="outline-container-orgf4ad38b" class="outline-4">
+<h4 id="orgf4ad38b">Undefine</h4>
+<div class="outline-text-4" id="text-orgf4ad38b">
 <p>
 Undefining a virtual machine removes its definition from the host.<br />
 </p>
@@ -472,9 +472,9 @@ Without <code>--remove-all-storage</code> the disk images remain on the filesyst
 </div>
 </div>
 </div>
-<div id="outline-container-org2c61fa4" class="outline-3">
-<h3 id="org2c61fa4">Resize Virtual Machines</h3>
-<div class="outline-text-3" id="text-org2c61fa4">
+<div id="outline-container-org07a4790" class="outline-3">
+<h3 id="org07a4790">Resize Virtual Machines</h3>
+<div class="outline-text-3" id="text-org07a4790">
 <p>
 One disk size rarely fits all services.<br />
 Cloned virtual machines often require disk resizing.<br />
@@ -520,9 +520,9 @@ After resizing the disk, expand the <b>partitions</b> and the <b>filesystem</b> 
 </p>
 </div>
 </div>
-<div id="outline-container-org2e5e833" class="outline-3">
-<h3 id="org2e5e833">Virtual Machine Snapshots</h3>
-<div class="outline-text-3" id="text-org2e5e833">
+<div id="outline-container-org0e2664f" class="outline-3">
+<h3 id="org0e2664f">Virtual Machine Snapshots</h3>
+<div class="outline-text-3" id="text-org0e2664f">
 <p>
 Virtual machines with <code>qcow2</code> storage support internal and external snapshots.<br />
 </p>
@@ -593,9 +593,9 @@ Delete snapshot:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-orgf248a17" class="outline-3">
-<h3 id="orgf248a17">Backup Strategy</h3>
-<div class="outline-text-3" id="text-orgf248a17">
+<div id="outline-container-orga3bf304" class="outline-3">
+<h3 id="orga3bf304">Backup Strategy</h3>
+<div class="outline-text-3" id="text-orga3bf304">
 <p>
 <b>Snapshots aren't backups.</b><br />
 </p>
@@ -612,9 +612,9 @@ They are recovery points.<br />
 They are not disaster recovery.<br />
 </p>
 </div>
-<div id="outline-container-org2a37649" class="outline-4">
-<h4 id="org2a37649">What Must Be Backed Up</h4>
-<div class="outline-text-4" id="text-org2a37649">
+<div id="outline-container-org0d95bfd" class="outline-4">
+<h4 id="org0d95bfd">What Must Be Backed Up</h4>
+<div class="outline-text-4" id="text-org0d95bfd">
 <p>
 A KVM virtual machine consists of:<br />
 </p>
@@ -638,9 +638,9 @@ Store it with your backups.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org1539a53" class="outline-4">
-<h4 id="org1539a53">Cold Backup (Recommended For Simplicity)</h4>
-<div class="outline-text-4" id="text-org1539a53">
+<div id="outline-container-orga9d58ff" class="outline-4">
+<h4 id="orga9d58ff">Cold Backup (Recommended For Simplicity)</h4>
+<div class="outline-text-4" id="text-orga9d58ff">
 <p>
 The simplest and safest method:<br />
 </p>
@@ -662,9 +662,9 @@ Simple. Predictable. Restorable.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org64fdb95" class="outline-4">
-<h4 id="org64fdb95">Hot Backup (Advanced)</h4>
-<div class="outline-text-4" id="text-org64fdb95">
+<div id="outline-container-orgee3fcef" class="outline-4">
+<h4 id="orgee3fcef">Hot Backup (Advanced)</h4>
+<div class="outline-text-4" id="text-orgee3fcef">
 <p>
 For running production systems:<br />
 </p>
@@ -679,9 +679,9 @@ Hot backups require planning and testing.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org7adb6f2" class="outline-4">
-<h4 id="org7adb6f2">Restore Procedure</h4>
-<div class="outline-text-4" id="text-org7adb6f2">
+<div id="outline-container-org89a86cd" class="outline-4">
+<h4 id="org89a86cd">Restore Procedure</h4>
+<div class="outline-text-4" id="text-org89a86cd">
 <p>
 A backup is valid only if it can be restored.<br />
 </p>
@@ -701,9 +701,9 @@ Test restore procedures regularly.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org777e5d6" class="outline-4">
-<h4 id="org777e5d6">Operator Rule</h4>
-<div class="outline-text-4" id="text-org777e5d6">
+<div id="outline-container-orgc4f4012" class="outline-4">
+<h4 id="orgc4f4012">Operator Rule</h4>
+<div class="outline-text-4" id="text-orgc4f4012">
 <ul class="org-ul">
 <li>Never rely on <code>qcow2</code> internal snapshots as backups.<br /></li>
 <li>Never keep backups on the same filesystem as the storage pool.<br /></li>
@@ -716,9 +716,9 @@ If you cannot restore it, you do not have a backup.<br />
 </div>
 </div>
 </div>
-<div id="outline-container-orgc773dc6" class="outline-3">
-<h3 id="orgc773dc6">Final Whisper</h3>
-<div class="outline-text-3" id="text-orgc773dc6">
+<div id="outline-container-org2e119e4" class="outline-3">
+<h3 id="org2e119e4">Final Whisper</h3>
+<div class="outline-text-3" id="text-org2e119e4">
 <p>
 KVM does not try to impress.<br />
 </p>

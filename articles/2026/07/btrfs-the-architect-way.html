@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-09-23 Wed 13:13 -->
+<!-- 2026-10-08 Thu 15:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Btrfs On Debian - The Architect Way</title>
@@ -33,9 +33,9 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Btrfs On Debian - The Architect Way</h1>
-<div id="outline-container-orga264cb8" class="outline-2">
-<h2 id="orga264cb8">Btrfs On Debian - The Architect Way</h2>
-<div class="outline-text-2" id="text-orga264cb8">
+<div id="outline-container-org62f8e85" class="outline-2">
+<h2 id="org62f8e85">Btrfs On Debian - The Architect Way</h2>
+<div class="outline-text-2" id="text-org62f8e85">
 <img src="/static/img/ghostware.jpg" alt="ghostware.jpg" class="post-image" />
 
 <p>
@@ -70,16 +70,16 @@ It is how difficult it will be to change tomorrow.<br />
 </p>
 </blockquote>
 </div>
-<div id="outline-container-orgfc7d4d5" class="outline-3">
-<h3 id="orgfc7d4d5">Expert Install</h3>
-<div class="outline-text-3" id="text-orgfc7d4d5">
+<div id="outline-container-org4470d47" class="outline-3">
+<h3 id="org4470d47">Expert Install</h3>
+<div class="outline-text-3" id="text-org4470d47">
 <p>
 The Netinstall ISO provides everything required.<br />
 You don't have to operate in a live environment.<br />
 You don't wander the uncertain.<br />
 </p>
 
-<pre class="example" id="orgfcf4daa">
+<pre class="example" id="orgcdd53c0">
 Boot the Debian installer -&gt; Choose the Advanced options -&gt; Go for the Expert install.
 </pre>
 
@@ -92,9 +92,9 @@ Configure the system as you want.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org9fd593e" class="outline-3">
-<h3 id="org9fd593e">Partitioning</h3>
-<div class="outline-text-3" id="text-org9fd593e">
+<div id="outline-container-org175ad53" class="outline-3">
+<h3 id="org175ad53">Partitioning</h3>
+<div class="outline-text-3" id="text-org175ad53">
 <p>
 An important decision. A structural change that cannot be easily reversed later.<br />
 </p>
@@ -112,9 +112,9 @@ You live with it the rest of the time.<br />
 </p>
 </blockquote>
 </div>
-<div id="outline-container-org7ad0e6e" class="outline-4">
-<h4 id="org7ad0e6e">Swap</h4>
-<div class="outline-text-4" id="text-org7ad0e6e">
+<div id="outline-container-org2364cfd" class="outline-4">
+<h4 id="org2364cfd">Swap</h4>
+<div class="outline-text-4" id="text-org2364cfd">
 <p>
 Memory strain is a headache.<br />
 Changing the architecture after installation isn't impossible - it's uncomfortable.<br />
@@ -135,9 +135,9 @@ A traditional swap partition makes it fast and well-structured.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org893b782" class="outline-4">
-<h4 id="org893b782">LUKS &amp; LVM</h4>
-<div class="outline-text-4" id="text-org893b782">
+<div id="outline-container-org330f3e0" class="outline-4">
+<h4 id="org330f3e0">LUKS &amp; LVM</h4>
+<div class="outline-text-4" id="text-org330f3e0">
 <p>
 Encryption isn't a question for a secure architecture.<br />
 The decision must be done early.<br />
@@ -166,7 +166,7 @@ The newly introduced layer gives maximum flexibility.<br />
 The swap must be encrypted.<br />
 </p>
 
-<pre class="example" id="org68f0f62">
+<pre class="example" id="org7badcd7">
   [Disk]
     |
     |--------------|
@@ -184,9 +184,9 @@ The swap must be encrypted.<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org13ff7d8" class="outline-3">
-<h3 id="org13ff7d8">Subvolumes</h3>
-<div class="outline-text-3" id="text-org13ff7d8">
+<div id="outline-container-orge76e95b" class="outline-3">
+<h3 id="orge76e95b">Subvolumes</h3>
+<div class="outline-text-3" id="text-orge76e95b">
 <p>
 Your decision about system partitions is crucial.<br />
 With Btrfs subvolumes it can happen after the installation.<br />
@@ -213,9 +213,9 @@ Or any system path/mount you need.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orgb96423e" class="outline-3">
-<h3 id="orgb96423e">Final Whisper</h3>
-<div class="outline-text-3" id="text-orgb96423e">
+<div id="outline-container-orgbb59bc0" class="outline-3">
+<h3 id="orgbb59bc0">Final Whisper</h3>
+<div class="outline-text-3" id="text-orgbb59bc0">
 <p>
 A secure architecture requires predictability.<br />
 The standard installer preserves that predictability.<br />
