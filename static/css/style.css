@@ -277,7 +277,7 @@ blockquote p {
 }
 
 img.thumb {
-  width: 200px;
+  width: 300px;
   height: auto;
   display: block;
   margin: 15px 15px 15px 0px;
@@ -301,7 +301,12 @@ img.post-image:hover {
 .category {
     font-weight: bold;
     color: #888;
-    margin: 0px 0px 0px 8px;
+    margin: 0px 0px 4px 8px;
+    padding: 0px 8px 0px 8px;
+    float: right;
+    border-left: 2px solid #888;
+    border-right: 2px solid #888;
+    border-radius: 3px;
 }
 
 /* Org Publish → Whisper Engine compatibility */
