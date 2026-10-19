@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-10-19 Mon 17:58 -->
+<!-- 2026-10-19 Mon 18:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Nspawn - Build A Tor-only XMPP Server In Containers</title>
@@ -36,9 +36,9 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Nspawn - Build A Tor-only XMPP Server In Containers</h1>
-<div id="outline-container-org565864a" class="outline-2">
-<h2 id="org565864a">The Plan</h2>
-<div class="outline-text-2" id="text-org565864a">
+<div id="outline-container-orgf66cc30" class="outline-2">
+<h2 id="orgf66cc30">The Plan</h2>
+<div class="outline-text-2" id="text-orgf66cc30">
 <img src="/static/img/ops-tactics.jpg" alt="ops-tactics" class="post-image" />
 
 <p>
@@ -57,9 +57,9 @@ All services are separated. They have their own container.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org0aba51a" class="outline-2">
-<h2 id="org0aba51a">The Tor Container Configuration</h2>
-<div class="outline-text-2" id="text-org0aba51a">
+<div id="outline-container-orgf7e78c4" class="outline-2">
+<h2 id="orgf7e78c4">The Tor Container Configuration</h2>
+<div class="outline-text-2" id="text-orgf7e78c4">
 <p>
 Enter the Tor container:<br />
 </p>
@@ -121,9 +121,9 @@ I use <code>youronion.onion</code> example through this article.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org0474bec" class="outline-2">
-<h2 id="org0474bec">The XMPP Container Configuration</h2>
-<div class="outline-text-2" id="text-org0474bec">
+<div id="outline-container-org609165a" class="outline-2">
+<h2 id="org609165a">The XMPP Container Configuration</h2>
+<div class="outline-text-2" id="text-org609165a">
 <p>
 Enter the XMPP container:<br />
 </p>
@@ -231,9 +231,9 @@ Generate the self-signed certificates:<br />
 </pre>
 </div>
 </div>
-<div id="outline-container-org23d0b73" class="outline-3">
-<h3 id="org23d0b73">MUC (Conference Room) Configuration</h3>
-<div class="outline-text-3" id="text-org23d0b73">
+<div id="outline-container-orgd3538c5" class="outline-3">
+<h3 id="orgd3538c5">MUC (Conference Room) Configuration</h3>
+<div class="outline-text-3" id="text-orgd3538c5">
 <p>
 Uncomment the <code>mam</code> module for <code>muc_mam</code> in the <b>global Prosody</b> configuration (<code>/etc/prosody/prosody.cfg.lua</code>).<br />
 </p>
@@ -253,9 +253,9 @@ Put the MUC setup in the vhost configuration to <code>/etc/prosody/conf.avail/xm
 </div>
 </div>
 </div>
-<div id="outline-container-org22f4fc7" class="outline-3">
-<h3 id="org22f4fc7">SQLite Storage Configuration</h3>
-<div class="outline-text-3" id="text-org22f4fc7">
+<div id="outline-container-orge3179c2" class="outline-3">
+<h3 id="orge3179c2">SQLite Storage Configuration</h3>
+<div class="outline-text-3" id="text-orge3179c2">
 <p>
 Install the necessary packages:<br />
 </p>
@@ -286,9 +286,9 @@ Restart the service:<br />
 </div>
 </div>
 </div>
-<div id="outline-container-orgc17d224" class="outline-2">
-<h2 id="orgc17d224">Final Whisper</h2>
-<div class="outline-text-2" id="text-orgc17d224">
+<div id="outline-container-orge602a6d" class="outline-2">
+<h2 id="orge602a6d">Final Whisper</h2>
+<div class="outline-text-2" id="text-orge602a6d">
 <p>
 XMPP is a text-based chat protocol.<br />
 For security considerations you don't read about file uploads or open registration in this article.<br />

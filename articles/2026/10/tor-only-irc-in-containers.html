@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-10-14 Wed 08:51 -->
+<!-- 2026-10-19 Mon 18:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Nspawn - Build A Tor-only IRC Server In Containers</title>
@@ -36,9 +36,9 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Nspawn - Build A Tor-only IRC Server In Containers</h1>
-<div id="outline-container-orgd0b9ad8" class="outline-2">
-<h2 id="orgd0b9ad8">Tor, The Dark Web And Your IRC Chat</h2>
-<div class="outline-text-2" id="text-orgd0b9ad8">
+<div id="outline-container-orgfa34de2" class="outline-2">
+<h2 id="orgfa34de2">Tor, The Dark Web And Your IRC Chat</h2>
+<div class="outline-text-2" id="text-orgfa34de2">
 <img src="/static/img/ops-tactics.jpg" alt="ops-tactics" class="post-image" />
 
 <p>
@@ -77,9 +77,9 @@ You build a <b>Tor-only IRC server</b> that:<br />
 </ul>
 </div>
 </div>
-<div id="outline-container-org6da9e74" class="outline-2">
-<h2 id="org6da9e74">The Plan - Nspawn Container Separation</h2>
-<div class="outline-text-2" id="text-org6da9e74">
+<div id="outline-container-org88b6612" class="outline-2">
+<h2 id="org88b6612">The Plan - Nspawn Container Separation</h2>
+<div class="outline-text-2" id="text-org88b6612">
 <p>
 You've <a href="https://silentarchitect.org/articles/2026/08/your-hidden-container-engine.html">already learnt about Nspawn</a> and container management.<br />
 Compartmentalization enhances the flexibility.<br />
@@ -104,13 +104,13 @@ Make sure the IRC container's port <code>6667</code> is not exposed outside the 
 </p>
 </div>
 </div>
-<div id="outline-container-org2baef1a" class="outline-2">
-<h2 id="org2baef1a">The Plan - Execution</h2>
-<div class="outline-text-2" id="text-org2baef1a">
+<div id="outline-container-org4546234" class="outline-2">
+<h2 id="org4546234">The Plan - Execution</h2>
+<div class="outline-text-2" id="text-org4546234">
 </div>
-<div id="outline-container-org8ee7479" class="outline-3">
-<h3 id="org8ee7479">Tor Container</h3>
-<div class="outline-text-3" id="text-org8ee7479">
+<div id="outline-container-org99f2d65" class="outline-3">
+<h3 id="org99f2d65">Tor Container</h3>
+<div class="outline-text-3" id="text-org99f2d65">
 <p>
 Log in to the <b>Tor container</b>.<br />
 Install the Tor service.<br />
@@ -170,9 +170,9 @@ sudo ss -tupln |grep tor
 </div>
 </div>
 </div>
-<div id="outline-container-org0b9d707" class="outline-3">
-<h3 id="org0b9d707">IRC Container</h3>
-<div class="outline-text-3" id="text-org0b9d707">
+<div id="outline-container-org43c493a" class="outline-3">
+<h3 id="org43c493a">IRC Container</h3>
+<div class="outline-text-3" id="text-org43c493a">
 <p>
 You can use any popular IRC service software in this container, like Ergo chat.<br />
 For the flexibility I chose <b>InspIRCd</b>.<br />
@@ -534,9 +534,9 @@ You can join your IRC server through a SOCKS5 Tor proxy.<br />
 </div>
 </div>
 </div>
-<div id="outline-container-orgf9456c9" class="outline-2">
-<h2 id="orgf9456c9">More NetAdmin Security</h2>
-<div class="outline-text-2" id="text-orgf9456c9">
+<div id="outline-container-orge9e6708" class="outline-2">
+<h2 id="orge9e6708">More NetAdmin Security</h2>
+<div class="outline-text-2" id="text-orge9e6708">
 <p>
 Load the <code>password_hash</code> module in InspIRCd.<br />
 Generate a hash for the NetAdmin password.<br />
@@ -548,9 +548,9 @@ Don't forget to <code>/rehash</code> the config on your server.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org3a7424e" class="outline-2">
-<h2 id="org3a7424e">Final Whisper</h2>
-<div class="outline-text-2" id="text-org3a7424e">
+<div id="outline-container-orge4c8b82" class="outline-2">
+<h2 id="orge4c8b82">Final Whisper</h2>
+<div class="outline-text-2" id="text-orge4c8b82">
 <p>
 The design is simple and reproducible.<br />
 </p>

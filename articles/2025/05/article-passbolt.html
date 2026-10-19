@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-10-14 Wed 08:51 -->
+<!-- 2026-10-19 Mon 18:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Password Management For Ghosts - Passbolt</title>
@@ -33,13 +33,13 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Password Management For Ghosts - Passbolt</h1>
-<div id="outline-container-org65a60e5" class="outline-2">
-<h2 id="org65a60e5">Password Management For Ghosts - Passbolt</h2>
-<div class="outline-text-2" id="text-org65a60e5">
+<div id="outline-container-orgc46f57c" class="outline-2">
+<h2 id="orgc46f57c">Password Management For Ghosts - Passbolt</h2>
+<div class="outline-text-2" id="text-orgc46f57c">
 </div>
-<div id="outline-container-orgba192a4" class="outline-3">
-<h3 id="orgba192a4">Signal trace: why Passbolt?</h3>
-<div class="outline-text-3" id="text-orgba192a4">
+<div id="outline-container-org38c83e5" class="outline-3">
+<h3 id="org38c83e5">Signal trace: why Passbolt?</h3>
+<div class="outline-text-3" id="text-org38c83e5">
 <p>
 DeadSwitch investigates open source tools not for visibility, but for survival.<br />
 No sponsorships. No affiliate codes. No fake enthusiasm.<br />
@@ -65,9 +65,9 @@ Use it, bend it, improve it - if you're one of those who still listens to the si
 </p>
 </div>
 </div>
-<div id="outline-container-org1c76cda" class="outline-3">
-<h3 id="org1c76cda">Mission Brief</h3>
-<div class="outline-text-3" id="text-org1c76cda">
+<div id="outline-container-org6d75c8c" class="outline-3">
+<h3 id="org6d75c8c">Mission Brief</h3>
+<div class="outline-text-3" id="text-org6d75c8c">
 <p>
 This operation details the deployment of Passbolt CE using Podman containers on Debian 12.<br />
 </p>
@@ -79,9 +79,9 @@ Just isolated container, controlled trust, and encryption under your command.<br
 </p>
 </div>
 </div>
-<div id="outline-container-org6771707" class="outline-3">
-<h3 id="org6771707">Requirements</h3>
-<div class="outline-text-3" id="text-org6771707">
+<div id="outline-container-orgb7a3dae" class="outline-3">
+<h3 id="orgb7a3dae">Requirements</h3>
+<div class="outline-text-3" id="text-orgb7a3dae">
 <ul class="org-ul">
 <li>Debian 12 (with hardened kernel preferred)<br /></li>
 <li>Podman installed and functional (v4 or later)<br /></li>
@@ -92,9 +92,9 @@ Just isolated container, controlled trust, and encryption under your command.<br
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfd3cb0d" class="outline-3">
-<h3 id="orgfd3cb0d">Step 1: Create the Podman network</h3>
-<div class="outline-text-3" id="text-orgfd3cb0d">
+<div id="outline-container-org5d6e43f" class="outline-3">
+<h3 id="org5d6e43f">Step 1: Create the Podman network</h3>
+<div class="outline-text-3" id="text-org5d6e43f">
 <p>
 Establish a dedicated network for compartmentalization.<br />
 </p>
@@ -105,9 +105,9 @@ Establish a dedicated network for compartmentalization.<br />
 </div>
 </div>
 </div>
-<div id="outline-container-org6752617" class="outline-3">
-<h3 id="org6752617">Step 2: Deploy the database container</h3>
-<div class="outline-text-3" id="text-org6752617">
+<div id="outline-container-org20d0a97" class="outline-3">
+<h3 id="org20d0a97">Step 2: Deploy the database container</h3>
+<div class="outline-text-3" id="text-org20d0a97">
 <p>
 Start the database container.<br />
 Inject secrets via environment variables. Avoid inline exposure.<br />
@@ -134,9 +134,9 @@ Replace passwords with secure values. Rotate regularly.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org60f97f7" class="outline-3">
-<h3 id="org60f97f7">Step 3: Deploy the passbolt container</h3>
-<div class="outline-text-3" id="text-org60f97f7">
+<div id="outline-container-orgfff7e9e" class="outline-3">
+<h3 id="orgfff7e9e">Step 3: Deploy the passbolt container</h3>
+<div class="outline-text-3" id="text-orgfff7e9e">
 <p>
 Create persistent volumes and launch the vault.<br />
 </p>
@@ -164,9 +164,9 @@ Ensure DNS resolves <code>passbolt.local</code> to the correct IP. Use <code>/et
 </p>
 </div>
 </div>
-<div id="outline-container-org45a387f" class="outline-3">
-<h3 id="org45a387f">Step 4: Inject the Admin user</h3>
-<div class="outline-text-3" id="text-org45a387f">
+<div id="outline-container-org7f50e8d" class="outline-3">
+<h3 id="org7f50e8d">Step 4: Inject the Admin user</h3>
+<div class="outline-text-3" id="text-org7f50e8d">
 <p>
 Once Passbolt is running, register the first admin user inside the container:<br />
 </p>
@@ -186,9 +186,9 @@ The command must run as <code>www-data</code> within the container to correctly 
 </p>
 </div>
 </div>
-<div id="outline-container-org6653c1f" class="outline-3">
-<h3 id="org6653c1f">Step 5: First Contact</h3>
-<div class="outline-text-3" id="text-org6653c1f">
+<div id="outline-container-org6a85eba" class="outline-3">
+<h3 id="org6a85eba">Step 5: First Contact</h3>
+<div class="outline-text-3" id="text-org6a85eba">
 <p>
 Initiate secure access using a hardened browser:<br />
 </p>
@@ -198,9 +198,9 @@ Initiate secure access using a hardened browser:<br />
 </p>
 </div>
 </div>
-<div id="outline-container-orgcc3336a" class="outline-3">
-<h3 id="orgcc3336a">Step 6: Security Cleanup</h3>
-<div class="outline-text-3" id="text-orgcc3336a">
+<div id="outline-container-orgd8b91c1" class="outline-3">
+<h3 id="orgd8b91c1">Step 6: Security Cleanup</h3>
+<div class="outline-text-3" id="text-orgd8b91c1">
 <p>
 Don't leave any credentials behind.<br />
 </p>
@@ -216,9 +216,9 @@ Always use safely-stored <code>.env</code> files in production.<br />
 </p>
 </div>
 </div>
-<div id="outline-container-org1672485" class="outline-3">
-<h3 id="org1672485">Alternative Way: Create a Podman pod like a Ghost</h3>
-<div class="outline-text-3" id="text-org1672485">
+<div id="outline-container-org65cac43" class="outline-3">
+<h3 id="org65cac43">Alternative Way: Create a Podman pod like a Ghost</h3>
+<div class="outline-text-3" id="text-org65cac43">
 <p>
 Create an empty pod:<br />
 </p>
@@ -275,9 +275,9 @@ You can create the pod with the <code>podman kube play passbolt-pod.yaml</code> 
 </p>
 </div>
 </div>
-<div id="outline-container-orgef634bf" class="outline-3">
-<h3 id="orgef634bf">Notes</h3>
-<div class="outline-text-3" id="text-orgef634bf">
+<div id="outline-container-org67b46a0" class="outline-3">
+<h3 id="org67b46a0">Notes</h3>
+<div class="outline-text-3" id="text-org67b46a0">
 <ul class="org-ul">
 <li>Run as non-root Podman user if security context allows.<br /></li>
 <li>Enforce HTTPS (Let's Encrypt or internal CA). <a href="https://www.passbolt.com/docs/hosting/configure/https/ce/docker-manual/">Official Documentation</a><br /></li>
@@ -288,9 +288,9 @@ You can create the pod with the <code>podman kube play passbolt-pod.yaml</code> 
 </ul>
 </div>
 </div>
-<div id="outline-container-org4558337" class="outline-3">
-<h3 id="org4558337">Ghost Whisper: Why this matters for small ops</h3>
-<div class="outline-text-3" id="text-org4558337">
+<div id="outline-container-org70860cc" class="outline-3">
+<h3 id="org70860cc">Ghost Whisper: Why this matters for small ops</h3>
+<div class="outline-text-3" id="text-org70860cc">
 <p>
 This stack runs lean and isolated. No daemon overhead. No exposed cloud surfaces.<br />
 Just you, your keys, and a vault cut from silence.<br />
